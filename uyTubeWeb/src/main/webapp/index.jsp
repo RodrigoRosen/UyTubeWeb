@@ -28,30 +28,42 @@
 		</nav>
 	</div>
 	<!-- Resto de la pag -->
-	<div class="body">		
-				<div class="col-" id="sideBar">
-					<ul class="list-unstyled components">
-						<li><a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Videos</a>
-							<ul class="collapse list-unstyled" id="homeSubmenu">
-								<li><a href="#">Añadir Video</a></li>
-								<li><a href="#">Modificar Video</a></li>
-								<li><a href="#">Consultar Video</a></li>
-								<li><a href="#">Comentar un Video</a></li>
-								<li><a href="#">Valorar Video</a></li>
-							</ul>
-						</li>
-						<li>
-							<a href="#pageSubmenu"  data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Listas de reproduccion</a>
-							<ul class="collapse list-unstyled" id="pageSubmenu">
-								<li><a href="#">Crear Lista de Reproduccion Particular</a></li>
-								<li><a href="#">Modificar Lista de Reproduccion</a></li>
-								<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
-								<li><a href="#">Quitar Video de Lista de Reproduccion</a></li>
-								<li><a href="#">Consulta de Lista de Reproduccion</a></li>
-							</ul>
-						</li>
-					</ul>
-				</div>
+	<div class="container">
+		<div class="body row">		
+					<iframe class="col-xs-12 col-sd-6" width="560" height="315" src="https://www.youtube.com/embed/xEqSOst1dg8" frameborder="0" allowfullscreen></iframe>
+<!-- 					<div class="col-xs-12 col-sd-3 col-md-3" id="espacio"> -->
+<!-- 					</div> -->
+					<div class="col-xs-12 col-sd-6 col-md-6 " id="sideBar" >
+						<ul class="list-unstyled components">
+							<li><a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Videos</a>
+								<ul class="collapse list-unstyled" id="homeSubmenu">
+									<li><a href="#">Añadir Video</a></li>
+									<li><a href="#">Modificar Video</a></li>
+									<li><a href="#">Consultar Video</a></li>
+									<li><a href="#">Comentar un Video</a></li>
+									<li><a href="#">Valorar Video</a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#pageSubmenu"  data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Listas de reproduccion</a>
+								<ul class="collapse list-unstyled" id="pageSubmenu">
+									<li><a href="#">Crear Lista de Reproduccion Particular</a></li>
+									<li><a href="#">Modificar Lista de Reproduccion</a></li>
+									<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
+									<li><a href="#">Quitar Video de Lista de Reproduccion</a></li>
+									<li><a href="#">Consulta de Lista de Reproduccion</a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#categoria"  data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Categorias</a>
+								<ul class="collapse list-unstyled" id="categoria">
+									<li><a href="altaCategoria.jsp">Crear Categoria</a></li>
+									<li><a href="#">Listar Categorias</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+		</div>
 	</div>
 		
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

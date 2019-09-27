@@ -83,25 +83,56 @@
 						    </div>	  
 						</div>
 						
-						<div class="form-group col-xs-12 col-sm-8 col-md-8 ">						
-							<div class="input-group mb-3 ">
-							  <div class="input-group-prepend">
-							    <span class="input-group-text " id="inputGroupFileAddon01">Upload</span>
-							  </div>
-							  <div class="custom-file">
-							    <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-							    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-							  </div>
-							</div>
+<!-- 						<div class="form-group row ">						 -->
+<!-- 							<div class="input-group mb-3 col-xs-12 col-sm-8 col-md-8 "> -->
+<!-- 							  <div class="input-group-prepend"> -->
+<!-- 							    <span class="input-group-text " id="inputGroupFileAddon01">Upload</span> -->
+<!-- 							  </div> -->
+<!-- 							  <div class="custom-file"> -->
+<!-- 							    <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"> -->
+<!-- 							    <label class="custom-file-label" for="inputGroupFile01">Choose file</label> -->
+<!-- 							  </div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+
+						
+						<div class="form-group row">
+					        <input id="img" name="img" type="file" class="file" data-browse-on-zone-click="true">
 						</div>
 
 						<div class="form-group row">
-							<button type="submit" id="btnFecha" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
+							 <input type="text" name="canal"
+								class="form-control col-xs-12 col-sm-8 col-md-8" id="canal"
+								aria-describedby="emailHelp" placeholder="Canal">
+						</div>
+
+						<div class="form-group row">
+							 <input type="text" name="descripcion"
+								class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion"
+								aria-describedby="emailHelp" placeholder="Descripcion">
 						</div>
 						
+						<div class="form-group row">
+							 <input type="text" name="privado"
+								class="form-control col-xs-12 col-sm-8 col-md-8" id="privado"
+								aria-describedby="emailHelp" placeholder="Es privado?">
+						</div>						
+
+						<div class="form-group row">
+							<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
+						</div>
+						
+
+
+
 			</div>
 		</form>
 		
+<!--  		<script> --> 
+<!-- 		    $(document).on('ready', function() { -->
+<!-- 	        $("#input-b5").fileinput({showCaption: true, dropZoneEnabled: true}); -->
+<!-- 		    }); -->
+<!-- 	    </script> --> 
 		
 		<script src="js/app.js" charset="utf-8"></script>
 	

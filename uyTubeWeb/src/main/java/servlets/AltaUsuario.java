@@ -1,6 +1,8 @@
 package servlets;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -36,7 +38,15 @@ public class AltaUsuario extends HttpServlet {
 		String email = request.getParameter("email");
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
+//		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+//		String fecha = request.getParameter("fechaNacimiento");
 		Date fechaNac = new Date();
+//		try {
+//			fechaNac = formatter.parse(fecha);;
+//		} catch (ParseException e) {
+//            
+//        }
+		
 		String img = request.getParameter("img");
 		String nombreCanal = request.getParameter("nombreCanal");
 		String descripcion = request.getParameter("descripcion");

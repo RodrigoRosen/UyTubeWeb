@@ -71,6 +71,7 @@
 										<label data-error="wrong" data-success="right"
 											for="modalLRInput11">Contrasena</label>
 									</div>
+									
 									<div class="text-center mt-2">
 										<button class="btn btn-info">
 											Log in <i class="fas fa-sign-in ml-1"></i>

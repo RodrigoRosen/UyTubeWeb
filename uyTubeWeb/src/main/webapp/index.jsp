@@ -74,7 +74,7 @@
 									
 									<div class="text-center mt-2">
 										<button class="btn btn-info">
-											Log in <i class="fas fa-sign-in ml-1"></i>
+											Iniciar <i class="fas fa-sign-in ml-1"></i>
 										</button>
 									</div>
 								</div>

@@ -39,7 +39,7 @@
 		</div>
 		<!-- Resto de la pag -->
 		<h1 class="container">Perfil</h1>
-		<form action="ConsultaUsuario" method="post">
+		<form action="Usuario" method="get">
 			<div class="container">
 						<div class="form-group row">
 							 <input type="text" name="nickname"
@@ -49,7 +49,7 @@
 						<div class="form-group row">
 							 <input type="text" name="email"
 								class="form-control col-xs-12 col-sm-8 col-md-8" id="email"
-								aria-describedby="emailHelp" placeholder=Email">
+								aria-describedby="emailHelp" placeholder="Email">
 						</div>
 						<div class="form-group row">
 							 <input type="text" name="nombre"
@@ -81,19 +81,7 @@
 						    </div>	  
 						</div>
 						
-<!-- 						<div class="form-group row ">						 -->
-<!-- 							<div class="input-group mb-3 col-xs-12 col-sm-8 col-md-8 "> -->
-<!-- 							  <div class="input-group-prepend"> -->
-<!-- 							    <span class="input-group-text " id="inputGroupFileAddon01">Upload</span> -->
-<!-- 							  </div> -->
-<!-- 							  <div class="custom-file"> -->
-<!-- 							    <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"> -->
-<!-- 							    <label class="custom-file-label" for="inputGroupFile01">Choose file</label> -->
-<!-- 							  </div> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
 
-						
 						<div class="form-group row">
 					        <input id="img" name="img" type="file" class="file" data-browse-on-zone-click="true">
 					        <img src="#" class="rounded float-left" alt="...">  <!-- INGRESAR LA IMG -->
@@ -128,11 +116,6 @@
 			</div>
 		</form>
 		
-<!--  		<script> --> 
-<!-- 		    $(document).on('ready', function() { -->
-<!-- 	        $("#input-b5").fileinput({showCaption: true, dropZoneEnabled: true}); -->
-<!-- 		    }); -->
-<!-- 	    </script> --> 
 		
 		<script src="js/app.js" charset="utf-8"></script>
 	

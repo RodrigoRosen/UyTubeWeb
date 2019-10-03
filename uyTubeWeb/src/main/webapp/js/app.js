@@ -6,3 +6,4 @@ $('.sg-fecha').datepicker({
     format: "dd/mm/yyyy",
     autoclose: true
 });
+

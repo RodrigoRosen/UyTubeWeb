@@ -113,7 +113,7 @@
 					<li><a href="#homeSubmenu" data-toggle="collapse"
 						aria-expanded="false" class="dropdown-toggle">Videos</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
-							<li><a href="#">Añadir Video</a></li>
+							<li><a href="altaVideo.jsp">Añadir Video</a></li>
 							<li><a href="#">Modificar Video</a></li>
 							<li><a href="#">Consultar Video</a></li>
 							<li><a href="#">Comentar un Video</a></li>

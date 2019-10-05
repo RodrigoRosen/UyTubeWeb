@@ -101,6 +101,8 @@
 
 	</div>
 	<!-- Resto de la pag -->
+	
+	<h2>${mensaje}</h2>
 	<div class="container">
 		<div class="body row">
 			<iframe class="col-xs-12 col-sd-6" width="560" height="315"

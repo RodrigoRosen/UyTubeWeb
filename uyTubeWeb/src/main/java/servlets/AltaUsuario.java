@@ -58,13 +58,16 @@ public class AltaUsuario extends HttpServlet {
 		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado);
 		Boolean ok = icon.ingresarUsuario(nickname, email, password, nombre, apellido, fechaNac, img, canal);
 		RequestDispatcher rd;
+		String resp = "index.jsp";
 		if(ok)
 			request.setAttribute("mensaje", "El usuario " + nickname + " a sido ingresado correctamente");
-		else
-			request.setAttribute("mensaje", "El usuario " + nickname + " o el email " + email + " ya existe!.");
+		else {
+			request.setAttribute("mensaje", "El usuario " + nickname + " o el email " + email + " ya existe!. Intentelo nuevamente");
+			resp = "altaUsuario.jsp";
+		}
 
-		rd = request.getRequestDispatcher("index.jsp");
-		doGet(request, response);
+		rd = request.getRequestDispatcher(resp);
+		rd.forward(request, response);
 	}
 
 }

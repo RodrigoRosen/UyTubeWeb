@@ -9,6 +9,7 @@
 
 
 <script src="libs/jquery-3.4.1.min.js" charset="utf-8"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -100,41 +101,41 @@
 
 
 	<!-- Resto de la pag -->
+	<h2>${mensaje}</h2>
 	<h1 class="container">Registro</h1>
 	<form action="AltaUsuario" method="post" name="AltaUsuario" id="altaUsuario">
 		<div class="container">
 			<div class="form-group row">
 				<input type="text" name="nickname"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="nickname"
-					aria-describedby="emailHelp" placeholder="Usuario">
+					aria-describedby="emailHelp" placeholder="Usuario" required>
 			</div>
 			<div class="form-group row">
-				<input type="text" name="email"
+				<input type="email" name="email"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="email"
-					aria-describedby="emailHelp" placeholder=Email	>
+					aria-describedby="emailHelp" placeholder=Email	required>
 			</div>
 			<div class="form-group row">
 				<input type="text" name="nombre"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre"
-					aria-describedby="emailHelp" placeholder="Nombre">
+					aria-describedby="emailHelp" placeholder="Nombre" required>
 			</div>
 			<div class="form-group row">
 				<input type="text" name="apellido"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="apellido"
-					aria-describedby="emailHelp" placeholder="Apellido">
+					aria-describedby="emailHelp" placeholder="Apellido" required>
 			</div>
 
 			<div class="form-group row">
 				<input type="password" name="contrasena"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="contrasena"
-					aria-describedby="emailHelp" placeholder="Contrasena">
+					 placeholder="Contrasena" required>
 			</div>
 
 			<div class="form-group row">
 				<input type="password" name="confcontrasena"
 					class="form-control col-xs-12 col-sm-8 col-md-8"
-					id="confcontrasena" aria-describedby="emailHelp"
-					placeholder="Confirmar contrasena">
+					id="confcontrasena" placeholder="Confirmar contrasena" required>
 			</div>
 
 
@@ -147,7 +148,7 @@
 				<div class="input-group date sg-fecha">
 					<input type="text" name="fechaNacimiento"
 						class="form-control col-xs-12 col-sm-8 col-md-8 "
-						id="fechaNacimiento" placeholder="Fecha de nacimiento"><span
+						id="fechaNacimiento" placeholder="Fecha de nacimiento" required><span
 						class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
 			</div>
@@ -161,19 +162,23 @@
 			<div class="form-group row">
 				<input type="text" name="descripcion"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion"
-					aria-describedby="emailHelp" placeholder="Descripcion">
+					aria-describedby="emailHelp" placeholder="Descripcion del canal">
 			</div>
 
-<!-- 			<div class="form-group row"> -->
-<!-- 				<input type="text" name="privado" -->
-<!-- 					class="form-control col-xs-12 col-sm-8 col-md-8" id="privado" -->
-<!-- 					aria-describedby="emailHelp" placeholder="Es privado?"> -->
-<!-- 			</div> -->
-			
-			<div class="form-check">
-			    <input type="checkbox" class="form-check-input" id="privado">
-			    <label class="form-check-label" for="materialUnchecked">Es Privado?</label>
+			<div class="form-group row">
+			  <select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="privado" >
+			    <option selected>El canal es privado?</option>
+			    <option value="Si">Si</option>
+			    <option value="No">No</option>
+			  </select>			
 			</div>
+			
+
+						
+<!-- 			<div class="form-check"> -->
+<!-- 			    <input type="checkbox" class="form-check-input" id="privado" name="privado"> -->
+<!-- 			    <label class="form-check-label" for="materialUnchecked">Es Privado?</label> -->
+<!-- 			</div> -->
 
 
 
@@ -183,95 +188,6 @@
 				<input id="img" name="img" type="file" class="file"
 					data-browse-on-zone-click="true">
 			</div>
-
-
-
-		<!--Modal: Login / Register Form-->
-<!-- 		<div class="modal fade" id="modalCanal" tabindex="-1" role="dialog" -->
-<!-- 			aria-labelledby="myModalLabel" aria-hidden="true"> -->
-<!-- 			<div class="modal-dialog cascading-modal" role="document"> -->
-<!-- 				Content -->
-<!-- 				<div class="modal-content"> -->
-<!-- 					Tab panels -->
-<!-- 					<div class="tab-content"> -->
-<!-- 						Panel 7 -->
-<!-- 						<div class="tab-pane fade in show active" id="panel7" -->
-<!-- 							role="tabpanel"> -->
-
-<!-- 							Body -->
-<!-- 							<div class="modal-body mb-1"> -->
-<!-- 								<label>Agregar Canal</label> -->
-<!-- 									<div class="container"> -->
-<!-- 										<div class="form-group row"> -->
-<!-- 										<input type="text" name="canal" -->
-<!-- 											class="form-control col-xs-12 col-sm-8 col-md-8" id="canal" -->
-<!-- 											aria-describedby="emailHelp" placeholder="Canal"> -->
-<!-- 										</div> -->
-							
-<!-- 										<div class="form-group row"> -->
-<!-- 											<input type="text" name="descripcion" -->
-<!-- 												class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion" -->
-<!-- 												aria-describedby="emailHelp" placeholder="Descripcion"> -->
-<!-- 										</div> -->
-							
-<!-- 										<div class="form-group row"> -->
-<!-- 											<input type="text" name="privado" -->
-<!-- 												class="form-control col-xs-12 col-sm-8 col-md-8" id="privado" -->
-<!-- 												aria-describedby="emailHelp" placeholder="Es privado?"> -->
-<!-- 										</div> -->
-<!-- 									</div> -->
-								
-<!-- 							</div> -->
-<!-- 							Footer -->
-<!-- 							<div class="modal-footer"> -->
-<!-- 								<div class="text-center mt-2"> -->
-<!-- 									<button class="btn btn-info"> -->
-<!-- 										Aceptar <i class="fas fa-sign-in ml-1"></i> -->
-<!-- 									</button> -->
-<!-- 								</div> -->
-<!-- 								<button type="button" -->
-<!-- 									class="btn btn-outline-info waves-effect ml-auto" -->
-<!-- 									data-dismiss="modal">Cerrar</button> -->
-<!-- 							</div> -->
-
-<!-- 						</div> -->
-
-<!-- 					</div> -->
-<!-- 					/.Content -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-
-
-
-
-
-
-			<!-- CANAL -->
-<!-- 			<div class="md-form mt-0" style="margin-left: 360px"> -->
-<!-- 				<button type="button" id="btnCanal" class="btn btn-primary">Agregar Canal</button> -->
-<!-- 			</div> -->
-<!-- 			<div class="modal fade" id="modalFec" tabindex="-1" role="dialog" -->
-<!-- 				aria-labelledby="myModalLabel" aria-hidden="true"> -->
-			
-<!-- 				<div class="form-group row"> -->
-<!-- 					<input type="text" name="canal" -->
-<!-- 						class="form-control col-xs-12 col-sm-8 col-md-8" id="canal" -->
-<!-- 						aria-describedby="emailHelp" placeholder="Canal"> -->
-<!-- 				</div> -->
-	
-<!-- 				<div class="form-group row"> -->
-<!-- 					<input type="text" name="descripcion" -->
-<!-- 						class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion" -->
-<!-- 						aria-describedby="emailHelp" placeholder="Descripcion"> -->
-<!-- 				</div> -->
-	
-<!-- 				<div class="form-group row"> -->
-<!-- 					<input type="text" name="privado" -->
-<!-- 						class="form-control col-xs-12 col-sm-8 col-md-8" id="privado" -->
-<!-- 						aria-describedby="emailHelp" placeholder="Es privado?"> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
 
 			<div class="form-group row">
 				<button type="submit" id="btnAceptar"
@@ -283,7 +199,6 @@
 
 		</div>
 	</form>
-
 	<script src="js/confCont.js" charset="utf-8"></script>
 	<script src="js/app.js" charset="utf-8"></script>
 	

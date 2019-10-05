@@ -44,20 +44,23 @@
 		</div>
 
 		<!--Modal: Login / Register Form-->
-		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog cascading-modal" role="document">
 				<!--Content-->
 				<div class="modal-content">
-						<!-- Tab panels -->
-						<div class="tab-content">
-							<!--Panel 7-->
-							<div class="tab-pane fade in show active" id="panel7"
-								role="tabpanel">
+					<!-- Tab panels -->
+					<div class="tab-content">
+						<!--Panel 7-->
+						<div class="tab-pane fade in show active" id="panel7"
+							role="tabpanel">
 
-								<!--Body-->
-								<div class="modal-body mb-1">
-									<label>Iniciar Sesion</label>
-								
+							<!--Body-->
+							<div class="modal-body mb-1">
+								<label>Iniciar Sesion</label>
+
+								<form action="Login" method="post">
+
 									<div class="md-form form-sm mb-5">
 										<i class="fas fa-envelope prefix"></i> <input type="nickname"
 											id="nickLogin" class="form-control form-control-sm validate">
@@ -71,29 +74,30 @@
 										<label data-error="wrong" data-success="right"
 											for="modalLRInput11">Contrasena</label>
 									</div>
-									
+
 									<div class="text-center mt-2">
-										<button class="btn btn-info">
+										<button id="login" type="submit" class="btn btn-info">
 											Iniciar <i class="fas fa-sign-in ml-1"></i>
 										</button>
 									</div>
+								</form>
+							</div>
+							<!--Footer-->
+							<div class="modal-footer">
+								<div class="options text-center text-md-right mt-1">
+									<p>
+										No tiene usuario? <a href="altaUsuario.jsp" class="blue-text">Registrarse!</a>
+									</p>
 								</div>
-								<!--Footer-->
-								<div class="modal-footer">
-									<div class="options text-center text-md-right mt-1">
-										<p>
-											No tiene usuario? <a href="altaUsuario.jsp" class="blue-text">Registrarse!</a>
-										</p>
-									</div>
-									<button type="button"
-										class="btn btn-outline-info waves-effect ml-auto"
-										data-dismiss="modal">Cerrar</button>
-								</div>
+								<button type="button"
+									class="btn btn-outline-info waves-effect ml-auto"
+									data-dismiss="modal">Cerrar</button>
+							</div>
 
 						</div>
 
 					</div>
-				<!--/.Content-->
+					<!--/.Content-->
 				</div>
 			</div>
 		</div>
@@ -153,5 +157,8 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+	<script src="js/app.">
+		
+	</script>
 </body>
 </html>

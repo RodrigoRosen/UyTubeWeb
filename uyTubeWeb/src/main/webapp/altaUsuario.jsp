@@ -166,7 +166,7 @@
 			</div>
 
 			<div class="form-group row">
-			  <select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="privado" >
+			  <select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="categoria" >
 			    <option selected>El canal es privado?</option>
 			    <option value="Si">Si</option>
 			    <option value="No">No</option>

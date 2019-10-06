@@ -173,7 +173,9 @@
 						aria-expanded="false" class="dropdown-toggle">Categorias</a>
 						<ul class="collapse list-unstyled" id="categoria">
 							<li><a href="altaCategoria.jsp">Crear Categoria</a></li>
-							<li><a href="listadoCategorias.jsp">Listar Categorias</a></li>
+							<form action="ListarCategorias" method="get">
+								<button type="submit" value="Submit" class="btn-link">Listar Categorias</button>
+							</form>							
 						</ul></li>
 					<li><a href="#usuario" data-toggle="collapse"
 						aria-expanded="false" class="dropdown-toggle">Usuarios</a>

@@ -129,7 +129,7 @@
 			<% if (categorias != null) { 
 				for (String cat : categorias) {
 			%>
-			<li class="list-group-item">${cat}</li>
+			<li class="list-group-item"><%=cat%></li>
 			<% } 
 			} %>
 		</ul>

@@ -47,8 +47,11 @@
 			<button type="button" id="btnModal" class="btn btn-primary">Entrar</button>
 		</div>
 		<% } else { %>
-		<div class="md-form mt-0" style="margin-left: 340px">
+		<div class="md-form mt-0" style="margin-left: 250px">
 			<h3><%= username%></h3>
+			<form action="LogOut" method="post">
+				<button type="submit" id="btnModalLogOut" class="btn btn-primary">Salir</button>
+			</form>
 		</div>
 		<% }; %> <!--Modal: Login / Register Form-->
 		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"

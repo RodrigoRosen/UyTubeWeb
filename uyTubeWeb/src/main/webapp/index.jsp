@@ -38,11 +38,19 @@
 			<input class="form-control" type="text" placeholder="Search"
 				aria-label="Search" id="searchBarPrincipalId" style="width: 450px">
 		</div>
+		<% 
+		String login = (String) session.getAttribute("login");
+		String username = (String) session.getAttribute("nickname");
+		if (login == null) { 
+		%>
 		<div class="md-form mt-0" style="margin-left: 360px">
 			<button type="button" id="btnModal" class="btn btn-primary">Entrar</button>
 		</div>
-
-		<!--Modal: Login / Register Form-->
+		<% } else { %>
+		<div class="md-form mt-0" style="margin-left: 340px">
+			<h3><%= username%></h3>
+		</div>
+		<% }; %> <!--Modal: Login / Register Form-->
 		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog cascading-modal" role="document">
@@ -104,8 +112,6 @@
 	</div>
 	<!-- Resto de la pag -->
 	<%
-		String username = (String) session.getAttribute("nickname");
-		String login = (String) session.getAttribute("login");
 		if (username != null && username.length() > 0) {
 	%>
 	<div class="alert alert-primary alert-dismissible fade show"
@@ -117,20 +123,19 @@
 		</button>
 	</div>
 	<%
-		} else if (login != null && login.length() > 0) {
+		} else  if (login != null && login.length() > 0) {
 	%>
 	<div class="alert alert-primary alert-dismissible fade show"
 		role="alert">
-		Hubo un problema en el inicio de sesión, verifica los datos ingresados.
+		Hubo un problema en el inicio de sesión, verifica los datos
+		ingresados.
 		<button type="button" class="close" data-dismiss="alert"
 			aria-label="Close">
 			<span aria-hidden="true">&times;</span>
 		</button>
-	</div>	
-	<%
-		}
-	%>
-<	<h2>${mensaje}</h2> 
+	</div>
+	<% } %>
+	<h2>${mensaje}</h2>
 	<div class="container">
 		<div class="body row">
 			<iframe class="col-xs-12 col-sd-6" width="560" height="315"

@@ -120,8 +120,8 @@
 			</div>
 		</div>
 		<!--Modal: Login / Register Form--> </nav>
-
 	</div>
+	
 	<% String mensaje = (String) request.getAttribute("mensaje");
 		if (mensaje != null && mensaje.equals("Existe una lista con el nombre ingresado.")) { %>
 	<div class="alert alert-danger alert-dismissible fade show"
@@ -163,7 +163,7 @@
 				</div>
 				<select
 					class="custom-select form-control col-xs-4 col-sm-4 col-md-4"
-					id="idCategoryList">
+					id="idCategoryList" name="categoria">
 					<option selected>Elegir...</option>
 					<%
 						ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias");
@@ -188,9 +188,10 @@
 	<script>
 		$(document).ready(function() {
 			var cats = <%=request.getAttribute("categorias")%>;
-			if (cats === undefined || cats === null)
-				$("#getAttr").click();
-			
+			var error = <%=request.getAttribute("error")%>;
+			var loaded = <%=request.getAttribute("loaded")%>
+			if (cats === undefined || cats === null && error === null && !loaded)
+				$("#getAttr").click();			
 		});
 	</script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

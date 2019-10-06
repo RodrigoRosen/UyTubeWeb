@@ -44,6 +44,7 @@ public class AltaLista extends HttpServlet {
 			ArrayList<String> categorias = icon.listarCategorias();
 			if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
 			RequestDispatcher rd;
+			request.setAttribute("loaded", true);
 			rd = request.getRequestDispatcher("/altaLista.jsp");
 			rd.forward(request, response);
 		}
@@ -60,7 +61,7 @@ public class AltaLista extends HttpServlet {
 		IControlador icon = fabrica.getIControlador();		
 		String nombreLista = (String) request.getParameter("nombreLista");
 		String Privada = (String) request.getParameter("privada");
-		String categoria = (String) request.getAttribute("categoria");
+		String categoria = (String) request.getParameter("categoria");
 		boolean privada = false;
 		if (Privada != null && Privada.equals("on")) privada = true;		
 		HttpSession session = request.getSession();
@@ -73,6 +74,7 @@ public class AltaLista extends HttpServlet {
 		}
 		else {
 			request.setAttribute("mensaje", "Existe una lista con el nombre ingresado.");
+			request.setAttribute("error", "Hubo un error.");
 			doGet(request, response);
 		}
 		RequestDispatcher rd;		

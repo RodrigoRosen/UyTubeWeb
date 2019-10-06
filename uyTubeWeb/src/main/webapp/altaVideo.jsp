@@ -68,7 +68,7 @@
 							<select name="category" class="form-control col-xs-12 col-sm-8 col-md-8" id="category"
 								aria-describedby="emailHelp">
 								<c:forEach items="${listCategory}" var="category">
-									<option value="${category.id}">${category.name}</option>
+									<option">${category.name}</option>
 								</c:forEach>
 							</select>
 						</div>						

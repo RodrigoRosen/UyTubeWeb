@@ -33,7 +33,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd;
-        rd = request.getRequestDispatcher("/login.jsp");
+        rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
 	}
 
@@ -51,23 +51,15 @@ public class Login extends HttpServlet {
         
         if (icon.login(usu, pwd)) {
         	session.setAttribute("nickname", usu);
+        	session.setAttribute("login", "Iniciaste sesión con éxito!");
         }
         else {
-        	request.setAttribute("error", "Usuario y/o contraseña inválida, por favor intente de nuevo.");
-        	RequestDispatcher rd;
-        	rd = request.getRequestDispatcher("/index.jsp");
-        	rd.forward(request, response);
+        	session.setAttribute("login", "Usuario y/o contraseña inválida, por favor intente de nuevo.");        	
         }
       
-
-//		try {
-//
-//		} catch (Exception e) {
-//			request.setAttribute("error", "Usuario y/o contrasenia no coinciden, vuelva a ingresar");
-//			RequestDispatcher rd;
-//			rd = request.getRequestDispatcher("/login.jsp");
-//			rd.forward(request, response);
-//		}
+        RequestDispatcher rd;
+    	rd = request.getRequestDispatcher("/index.jsp");
+        rd.forward(request, response);
 	}
 
 }

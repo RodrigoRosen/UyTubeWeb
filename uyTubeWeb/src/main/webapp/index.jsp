@@ -25,7 +25,6 @@
 <script src="js/bootstrap-datepicker.js" charset="utf-8"></script>
 <link rel="stylesheet" href="css/bootstrap-datepicker.css">
 
-
 </head>
 
 
@@ -63,18 +62,17 @@
 
 									<div class="md-form form-sm mb-5">
 										<i class="fas fa-envelope prefix"></i> <input type="nickname"
-											id="nickLogin" class="form-control form-control-sm validate">
-										<label data-error="wrong" data-success="right"
-											for="modalLRInput10">Usuario</label>
+											id="nickLogin" name="nickLogin"
+											class="form-control form-control-sm validate"> <label
+											data-error="wrong" data-success="right" for="modalLRInput10">Usuario</label>
 									</div>
 
 									<div class="md-form form-sm mb-4">
 										<i class="fas fa-lock prefix"></i> <input type="password"
-											id="passLogin" class="form-control form-control-sm validate">
-										<label data-error="wrong" data-success="right"
-											for="modalLRInput11">Contrasena</label>
+											id="passLogin" name="passLogin"
+											class="form-control form-control-sm validate"> <label
+											data-error="wrong" data-success="right" for="modalLRInput11">Contrasena</label>
 									</div>
-
 									<div class="text-center mt-2">
 										<button id="login" type="submit" class="btn btn-info">
 											Iniciar <i class="fas fa-sign-in ml-1"></i>
@@ -105,8 +103,34 @@
 
 	</div>
 	<!-- Resto de la pag -->
-	
-	<h2>${mensaje}</h2>
+	<%
+		String username = (String) session.getAttribute("nickname");
+		String login = (String) session.getAttribute("login");
+		if (username != null && username.length() > 0) {
+	%>
+	<div class="alert alert-primary alert-dismissible fade show"
+		role="alert">
+		Te logueaste exitosamente!
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<%
+		} else if (login != null && login.length() > 0) {
+	%>
+	<div class="alert alert-primary alert-dismissible fade show"
+		role="alert">
+		Hubo un problema en el inicio de sesión, verifica los datos ingresados.
+		<button type="button" class="close" data-dismiss="alert"
+			aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>	
+	<%
+		}
+	%>
+<	<h2>${mensaje}</h2> 
 	<div class="container">
 		<div class="body row">
 			<iframe class="col-xs-12 col-sd-6" width="560" height="315"
@@ -159,8 +183,5 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
-	<script src="js/app.">
-		
-	</script>
 </body>
 </html>

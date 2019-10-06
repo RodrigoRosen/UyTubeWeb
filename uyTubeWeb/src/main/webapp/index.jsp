@@ -175,6 +175,14 @@
 							<li><a href="altaCategoria.jsp">Crear Categoria</a></li>
 							<li><a href="listadoCategorias.jsp">Listar Categorias</a></li>
 						</ul></li>
+					<li><a href="#usuario" data-toggle="collapse"
+						aria-expanded="false" class="dropdown-toggle">Usuarios</a>
+						<ul class="collapse list-unstyled" id="usuario">
+							<li><a href="seguirUsuario.jsp">Seguir Usuario</a></li>
+							<li><a href="#">Dejar de Seguir</a></li>
+							<li><a href="#">Consultar Usuario</a></li>
+							<li><a href="#">Modificar Usuario</a></li>
+						</ul></li>
 				</ul>
 			</div>
 		</div>

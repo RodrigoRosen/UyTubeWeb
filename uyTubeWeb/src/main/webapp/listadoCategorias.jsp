@@ -25,10 +25,10 @@
 	<h3>Categorias</h3>
 	<div class="container">
 		<ul class="list-group">
-			<% if (categorias != null) { 
+			<% if (categorias != null) {
 				for (String cat : categorias) {
 			%>
-			<li class="list-group-item"><%=cat%></li>
+			<li class="list-group-item"><form action="ConsultaCategoria" method="get"><input type="submit" name="categoriaSeleccionada" value="<%=cat%>"></input></form></li>
 			<% } 
 			} %>
 		</ul>

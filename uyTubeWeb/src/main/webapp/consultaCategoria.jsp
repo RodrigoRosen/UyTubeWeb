@@ -1,35 +1,26 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.List"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.Map.Entry"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
-
-
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>UyTube</title>
-
-<!-- JQuery -->
+<meta charset="ISO-8859-1">
 <script src="libs/jquery-3.4.1.min.js" charset="utf-8"></script>
-
-
-<!-- CSS -->
+<script
+	src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
+<!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-
-<link href="css/created/indexLayout.css" rel="stylesheet" type="text/css">
+	crossorigin="anonymous" />
 
 <script src="js/bootstrap-datepicker.js" charset="utf-8"></script>
 <link rel="stylesheet" href="css/bootstrap-datepicker.css">
-
+<title>Consulta de categoria</title>
 </head>
-
-
 <body>
-	<!-- Barra Principal -->
 	<div class="container" id="navBarPrincipal">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light"> <img
 			src="imagenes/UyTube.png" class="img-fluid" height="50px"
@@ -56,7 +47,8 @@
 			</form>
 		</div>
 		<%
-			} ;
+			}
+			;
 		%> <!--Modal: Login / Register Form-->
 		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -117,36 +109,9 @@
 		<!--Modal: Login / Register Form--> </nav>
 
 	</div>
-	<!-- Resto de la pag -->
-	<%
-		if (username != null && username.length() > 0) {
-	%>
-	<div class="alert alert-primary alert-dismissible fade show"
-		role="alert">
-		Te logueaste exitosamente!
-		<button type="button" class="close" data-dismiss="alert"
-			aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-	<%
-		} else if (login != null && login.length() > 0) {
-	%>
-	<div class="alert alert-primary alert-dismissible fade show"
-		role="alert">
-		Hubo un problema en el inicio de sesión, verifica los datos
-		ingresados.
-		<button type="button" class="close" data-dismiss="alert"
-			aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-	<%
-		}
-	%>
-	<h2>${mensaje}</h2>
 	<div class="container-fluid text-center">
 		<div class="row content">
+
 			<div class="col-xs-6 col-sm-4 col-lg-2 sidenav" id="sideBar">
 				<ul class="list-unstyled components">
 					<li><a href="#homeSubmenu" data-toggle="collapse"
@@ -192,22 +157,47 @@
 						</ul></li>
 				</ul>
 			</div>
+			<!-- Logica del consulta lista -->
 			<div class="col-xs-12 col-xs-offset-12 row">
-				<iframe class="col-xs-12" width="560" height="315"
-					src="https://www.youtube.com/embed/xEqSOst1dg8" frameborder="0"
-					allowfullscreen></iframe>
-			</div>
-			<div class="col-sm-2 sidenav col-sm-offset-6">
-				<form style="visibility: hidden" action="index"
-					method="post">
-					<input type="submit" id="getAttr" value="Submit">
-				</form>
-				<jsp:include page="listadoCategorias.jsp" />
+				<h2>Listas</h2>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<th scope="col">Propietario</th>
+						<th scope="col">Nombre</th>
+					</thead>
+					<tbody>
+						<%
+							Map<String, String> videos = (Map<String, String>) request.getAttribute("videos");
+							Map<String, String> listas = (Map<String, String>) request.getAttribute("listas");
+							for (Entry<String, String> entry : listas.entrySet()) {
+						%>
+						<td><%=entry.getValue()%></td>
+						<td><%=entry.getKey()%></td>
+						<%
+							}
+						%>
+					</tbody>
+				</table>
+				<h2>Videos</h2>
+				<table class="table table-striped table-bordered">
+					<thead>
+						<th scope="col">Propietario</th>
+						<th scope="col">Nombre</th>
+					</thead>
+					<tbody>
+						<%
+							for (Entry<String, String> entry : videos.entrySet()) {
+						%>
+						<td><%=entry.getValue()%></td>
+						<td><%=entry.getKey()%></td>
+						<%
+							}
+						%>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>
-
-	<script src="js/app.js" charset="utf-8"></script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -219,13 +209,6 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
-	<script>
-		$(document).ready(function() {			
-			var catsLoaded = <%=request.getAttribute("catsLoaded")%>;
-			if (catsLoaded == null) 
-				$("#getAttr").click();
-		});
-	</script>
+		crossorigin="anonymous"></script>	
 </body>
 </html>

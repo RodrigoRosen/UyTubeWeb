@@ -153,7 +153,9 @@
 						aria-expanded="false" class="dropdown-toggle">Videos</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
 							<li><a href="altaVideo.jsp">Añadir Video</a></li>
-							<li><a href="#">Modificar Video</a></li>
+							<form action="ModificarDatosVideo" method="get">
+								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
+							</form>
 							<li><a href="#">Consultar Video</a></li>
 							<li><a href="#">Comentar un Video</a></li>
 							<li><a href="#">Valorar Video</a></li>

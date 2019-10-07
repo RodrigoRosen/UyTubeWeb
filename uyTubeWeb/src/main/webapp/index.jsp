@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
    "http://www.w3.org/TR/html4/loose.dtd">
-
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.List"%>
 <html>
 
 
@@ -38,22 +39,26 @@
 			<input class="form-control" type="text" placeholder="Search"
 				aria-label="Search" id="searchBarPrincipalId" style="width: 450px">
 		</div>
-		<% 
-		String login = (String) session.getAttribute("login");
-		String username = (String) session.getAttribute("nickname");
-		if (login == null) { 
+		<%
+			String login = (String) session.getAttribute("login");
+			String username = (String) session.getAttribute("nickname");
+			if (login == null) {
 		%>
 		<div class="md-form mt-0" style="margin-left: 360px">
 			<button type="button" id="btnModal" class="btn btn-primary">Entrar</button>
 		</div>
-		<% } else { %>
+		<%
+			} else {
+		%>
 		<div class="md-form mt-0" style="margin-left: 250px">
-			<h3><%= username%></h3>
+			<h3><%=username%></h3>
 			<form action="LogOut" method="post">
 				<button type="submit" id="btnModalLogOut" class="btn btn-primary">Salir</button>
 			</form>
 		</div>
-		<% }; %> <!--Modal: Login / Register Form-->
+		<%
+			} ;
+		%> <!--Modal: Login / Register Form-->
 		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog cascading-modal" role="document">
@@ -126,7 +131,7 @@
 		</button>
 	</div>
 	<%
-		} else  if (login != null && login.length() > 0) {
+		} else if (login != null && login.length() > 0) {
 	%>
 	<div class="alert alert-primary alert-dismissible fade show"
 		role="alert">
@@ -137,16 +142,13 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-	<% } %>
+	<%
+		}
+	%>
 	<h2>${mensaje}</h2>
-	<div class="container">
-		<div class="body row">
-			<iframe class="col-xs-12 col-sd-6" width="560" height="315"
-				src="https://www.youtube.com/embed/xEqSOst1dg8" frameborder="0"
-				allowfullscreen></iframe>
-			<!-- 					<div class="col-xs-12 col-sd-3 col-md-3" id="espacio"> -->
-			<!-- 					</div> -->
-			<div class="col-xs-12 col-sd-6 col-md-6 " id="sideBar">
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-xs-6 col-sm-4 col-lg-2 sidenav" id="sideBar">
 				<ul class="list-unstyled components">
 					<li><a href="#homeSubmenu" data-toggle="collapse"
 						aria-expanded="false" class="dropdown-toggle">Videos</a>
@@ -162,7 +164,8 @@
 							reproduccion</a>
 						<ul class="collapse list-unstyled" id="pageSubmenu">
 							<form action="AltaLista" method="get">
-								<li><a href="altaLista.jsp">Crear Lista de Reproduccion Particular</a></li>
+								<li><a href="altaLista.jsp">Crear Lista de Reproduccion
+										Particular</a></li>
 							</form>
 							<li><a href="#">Modificar Lista de Reproduccion</a></li>
 							<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
@@ -174,8 +177,9 @@
 						<ul class="collapse list-unstyled" id="categoria">
 							<li><a href="altaCategoria.jsp">Crear Categoria</a></li>
 							<form action="ListarCategorias" method="get">
-								<button type="submit" value="Submit" class="btn-link">Listar Categorias</button>
-							</form>							
+								<button type="submit" value="Submit" class="btn-link">Listar
+									Categorias</button>
+							</form>
 						</ul></li>
 					<li><a href="#usuario" data-toggle="collapse"
 						aria-expanded="false" class="dropdown-toggle">Usuarios</a>
@@ -186,6 +190,18 @@
 							<li><a href="#">Modificar Usuario</a></li>
 						</ul></li>
 				</ul>
+			</div>
+			<div class="col-xs-12 col-xs-offset-12 row">
+				<iframe class="col-xs-12" width="560" height="315"
+					src="https://www.youtube.com/embed/xEqSOst1dg8" frameborder="0"
+					allowfullscreen></iframe>
+			</div>
+			<div class="col-sm-2 sidenav col-sm-offset-6">
+				<form style="visibility: hidden" action="index"
+					method="post">
+					<input type="submit" id="getAttr" value="Submit">
+				</form>
+				<jsp:include page="listadoCategorias.jsp" />
 			</div>
 		</div>
 	</div>
@@ -203,5 +219,13 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+	<script>
+		$(document).ready(function() {			
+			var catsLoaded = <%=request.getAttribute("catsLoaded")%>;
+			if (catsLoaded == null) 
+				$("#getAttr").click();
+		});
+	</script>
 </body>
 </html>

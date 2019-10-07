@@ -17,7 +17,7 @@ import interfaces.IControlador;
 /**
  * Servlet implementation class ListarCategorias
  */
-@WebServlet("/ListarCategorias")
+@WebServlet("/index")
 public class ListarCategorias extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,12 +35,7 @@ public class ListarCategorias extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
-		ArrayList<String> categorias = icon.listarCategorias();
-		if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
-		RequestDispatcher view = request.getRequestDispatcher("listadoCategorias.jsp");
-		view.forward(request, response);
+		
 	}
 
 	/**
@@ -48,7 +43,13 @@ public class ListarCategorias extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		Fabrica fabrica = Fabrica.getInstancia();
+		IControlador icon = fabrica.getIControlador();
+		ArrayList<String> categorias = icon.listarCategorias();
+		if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
+		request.setAttribute("catsLoaded", true);
+		RequestDispatcher view = request.getRequestDispatcher("index.jsp");		
+		view.forward(request, response);
 	}
 
 }

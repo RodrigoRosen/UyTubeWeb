@@ -22,6 +22,7 @@
 </head>
 <body>	
 	<% ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias"); %>
+	<h3>Categorias</h3>
 	<div class="container">
 		<ul class="list-group">
 			<% if (categorias != null) { 

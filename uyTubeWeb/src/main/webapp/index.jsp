@@ -20,8 +20,7 @@
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
 
-<link href="/css/created/indexLayout.css" rel="stylesheet"
-	type="text/css">
+<link href="css/created/indexLayout.css" rel="stylesheet" type="text/css">
 
 <script src="js/bootstrap-datepicker.js" charset="utf-8"></script>
 <link rel="stylesheet" href="css/bootstrap-datepicker.css">

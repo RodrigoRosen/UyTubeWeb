@@ -1,28 +1,47 @@
-searchBarPrincipalId{
-    width: 350px;
+searchBarPrincipalId {
+	width: 350px;
 }
+
 .wrapper {
-    display: flex;
-    width: 100%;
+	display: flex;
+	width: 100%;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+	padding: 20px 0;
+	border-bottom: 1px solid #47748b;
 }
 
-#sideBar{
+#sideBar {
 	margin-left: 145px;
 	width: 200px
 }
+
 .btn-link {
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-    color: #0000EE;
-    padding: 0;
-    text-decoration: underline;
-    font-family: inherit;
-    font-size: inherit;
+	border: none;
+	outline: none;
+	background: none;
+	cursor: pointer;
+	color: #0000EE;
+	padding: 0;
+	text-decoration: underline;
+	font-family: inherit;
+	font-size: inherit;
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+	height: 450px
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	padding-top: 20px;
+	background-color: #f1f1f1;
+	height: 100%;
 }

@@ -36,6 +36,8 @@ public class ConsultaCategoria extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
+		ArrayList<String> categorias = icon.listarCategorias();
+		if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
 		String categoria = request.getParameter("categoriaSeleccionada");
 		if (categoria != null) {
 			Map<String, String> videos = icon.videosXCat(categoria);

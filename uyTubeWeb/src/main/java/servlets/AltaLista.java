@@ -70,6 +70,7 @@ public class AltaLista extends HttpServlet {
 		String resp = "altaLista.jsp";
 		if (icon.crearLista(user, nombreLista, privada, categoria)) {
 			request.setAttribute("mensaje", "La lista se creó correctamente");
+			icon.finCasoUso();
 			resp = "index.jsp";
 		}
 		else {

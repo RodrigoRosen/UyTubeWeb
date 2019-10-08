@@ -196,6 +196,9 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="col-sm-2 sidenav col-sm-offset-6">
+				<jsp:include page="listadoCategorias.jsp" />
+			</div>
 		</div>
 	</div>
 

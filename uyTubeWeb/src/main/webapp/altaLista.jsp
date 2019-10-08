@@ -135,9 +135,6 @@
  	<% } %>
 	
 	<h1 class="container">Datos de la lista</h1>
-	<form style="visibility: hidden" action="AltaLista" method="get">
-		<input type="submit" id="getAttr" value="Submit">
-	</form>
 	<form action="AltaLista" method="post">
 		<div class="container">
 			<div class="form-group row">
@@ -185,15 +182,6 @@
 		</div>
 
 	</form>
-	<script>
-		$(document).ready(function() {
-			var cats = <%=request.getAttribute("categorias")%>;
-			var error = <%=request.getAttribute("error")%>;
-			var loaded = <%=request.getAttribute("loaded")%>
-			if (cats === undefined || cats === null && error === null && !loaded)
-				$("#getAttr").click();			
-		});
-	</script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
 		crossorigin="anonymous"></script>

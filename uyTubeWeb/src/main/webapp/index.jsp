@@ -164,8 +164,8 @@
 						aria-expanded="false" class="dropdown-toggle">Listas de
 							reproduccion</a>
 						<ul class="collapse list-unstyled" id="pageSubmenu">
-							<form action="AltaLista" method="get">
-								<li><a href="altaLista.jsp">Crear Lista de Reproduccion
+							<form action="AltaLista" method="get">								
+								<li><a href="AltaLista">Crear Lista de Reproduccion
 										Particular</a></li>
 							</form>
 							<li><a href="#">Modificar Lista de Reproduccion</a></li>
@@ -198,10 +198,6 @@
 					allowfullscreen></iframe>
 			</div>
 			<div class="col-sm-2 sidenav col-sm-offset-6">
-				<form style="visibility: hidden" action="index"
-					method="post">
-					<input type="submit" id="getAttr" value="Submit">
-				</form>
 				<jsp:include page="listadoCategorias.jsp" />
 			</div>
 		</div>
@@ -220,12 +216,5 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
-	<script>
-		$(document).ready(function() {			
-			var catsLoaded = <%=request.getAttribute("catsLoaded")%>;
-			if (catsLoaded == null) 
-				$("#getAttr").click();
-		});
-	</script>
 </body>
 </html>

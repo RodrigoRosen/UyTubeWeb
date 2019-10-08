@@ -1,3 +1,8 @@
+<%@page import="datatypes.DtCanal"%>
+<%@page import="datatypes.DtUsuario"%>
+<%@page import="java.util.Date" %>
+<%@page import="java.util.Map"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -38,21 +43,40 @@
 			</nav>
 		</div>
 		<!-- Resto de la pag -->
+		<%
+		Map<DtUsuario, DtCanal> usr = (Map<DtUsuario, DtCanal>) request.getAttribute("usuario");
+		DtCanal canal = (DtCanal) request.getAttribute("");
+		DtUsuario usuario = (DtUsuario) request.getAttribute("nickname");
+		if(usuario != null){
+		String nickname = (String) request.getAttribute("nickname");
+		String email = (String) request.getAttribute("email");
+		String nombre = (String) request.getAttribute("nombre");
+		String apellido = (String) request.getAttribute("apellido");
+		Date fecha = (Date) request.getAttribute("fecha");
+		String img = (String) request.getAttribute("img");
+		String nom_canal = (String) request.getAttribute("nom_canal");
+		String descrpicion = (String) request.getAttribute("descripcion");
+		String privado = " "; //FALTA 
+		
+		
+		}
+		%>
+		
 		<h1 class="container">Perfil</h1>
-		<form action="Usuario" method="get">
+		<form action="Usuario" method="post">
 			<div class="container">
 						<div class="form-group row">
 							 <input type="text" name="nickname"
 								class="form-control col-xs-12 col-sm-8 col-md-8" id="nickname"
-								aria-describedby="emailHelp" placeholder="Usuario">
+								aria-describedby="emailHelp" placeholder="<%=nickname%>" value="<%=nickname%>">
 						</div>
 						<div class="form-group row">
 							 <input type="text" name="email"
 								class="form-control col-xs-12 col-sm-8 col-md-8" id="email"
-								aria-describedby="emailHelp" placeholder="Email">
+								aria-describedby="emailHelp" placeholder="<%=email%>">
 						</div>
 						<div class="form-group row">
-							 <input type="text" name="nombre"
+							 <output type="text" name="nombre"
 								class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre"
 								aria-describedby="emailHelp" placeholder="Nombre">
 						</div>
@@ -133,3 +157,4 @@
 	
 	</body>
 </html>
+

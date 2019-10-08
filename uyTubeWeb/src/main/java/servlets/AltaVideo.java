@@ -25,17 +25,28 @@ public class AltaVideo extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("nickname");
+		if (username != null) {
+			Fabrica fabrica = Fabrica.getInstancia();
+			IControlador icon = fabrica.getIControlador();
+			ArrayList<String> categorias = icon.listarCategorias();
+			if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
+			RequestDispatcher rd;
+			request.setAttribute("loaded", true);
+			rd = request.getRequestDispatcher("/altaVideo.jsp");
+			rd.forward(request, response);
+		}
+		else {
+			response.sendError(403);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
 		
-		ArrayList<String> listCategory = icon.listarCategorias();
-		request.setAttribute("listCategory", listCategory);
-		
-		String category = request.getParameter("category");
+		String categoria = (String) request.getParameter("categoria");
 		String nombre = request.getParameter("nombre");
 		String duracion = request.getParameter("duracion");
 		Integer dur = Integer.parseInt(duracion);
@@ -43,25 +54,40 @@ public class AltaVideo extends HttpServlet {
 		String descripcion = request.getParameter("descripcion");
 		Date fecha = new Date();
 		//request.getParameter("fechaVideo");
-		
-		HttpSession session = request.getSession();
-		String user = (String) session.getAttribute("nickname");
-		System.out.println("Llega hasta acaa");
-		System.out.println(user);
 
 		//Seleccion de Usuario y Categoria
+		HttpSession session = request.getSession();
+		String user = (String) session.getAttribute("nickname");
+		System.out.print(user);
 		icon.seleccionarUsuario(user);
-		if (category != null) {
-			icon.seleccionarCategoria(category);
+		System.out.print("Llega Hasta Aca");
+		if (categoria != null) {
+			icon.seleccionarCategoria(categoria);
 		}
-
+		
 		//Se ingresa el video
-		Boolean newVideo = icon.ingresarVideo(nombre, dur, url, descripcion, fecha);
+		String resp = "altaVideo.jsp";
+		System.out.print("Llega Hasta Aca");
+		System.out.print(nombre);
+		System.out.print(dur);
+		System.out.print(url);
+		System.out.print(descripcion);
+		System.out.print(fecha);
+		
+		if (icon.ingresarVideo(nombre, dur, url, descripcion, fecha)) {
+			icon.finCasoUso();
+			request.setAttribute("mensaje", "El video se subio correctamente");
+			resp = "index.jsp";
+		}
+		else {
+			request.setAttribute("mensaje", "Existe un video con el nombre ingresado.");
+			request.setAttribute("error", "No se pudo ingresar el video.");
+			doGet(request, response);
+		}
+		
 		RequestDispatcher rd;
-		//request.setAttribute("mensaje", "Se ha ingresado correctamente el video " + nombre);
 		rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
-		//doGet(request, response);
 	}
 
 }

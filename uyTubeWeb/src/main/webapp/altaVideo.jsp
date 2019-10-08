@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.List"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -19,7 +21,7 @@
 		<link rel="stylesheet" href="css/bootstrap-datepicker.css">	
 			
 			
-		<title>uyTube | Sign In</title>
+		<title>uyTube | Alta Video</title>
 	
 	</head>
 
@@ -65,21 +67,38 @@
 						</div>
 						
 						<div class="form-group row">
-							<select name="category" class="form-control col-xs-12 col-sm-8 col-md-8" id="category"
-								aria-describedby="emailHelp">
-								<c:forEach items="${listCategory}" var="category">
-									<option">${category.name}</option>
-								</c:forEach>
-							</select>
+							<select
+					class="custom-select form-control col-xs-4 col-sm-4 col-md-4"
+					id="idCategoryList" name="categoria">
+					<option selected>Seleccionar Categoria...</option>
+					<%
+						ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias");
+						if (categorias != null) {
+							for (String cat : categorias) {
+					%>
+					<option value="<%=cat%>"><%=cat%></option>
+					<%
+						}
+						}
+					%>
+				</select>
 						</div>						
 
 						<div class="form-group row">
-							<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
+							<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Subir Video</button>
 						</div>
 					</div>
 			</div>
 		</form>
-		
+		<script>
+		$(document).ready(function() {
+			var cats = <%=request.getAttribute("categorias")%>;
+			var error = <%=request.getAttribute("error")%>;
+			var loaded = <%=request.getAttribute("loaded")%>
+			if (cats === undefined || cats === null && error === null && !loaded)
+				$("#getAttr").click();			
+		});
+	</script>
 		<script src="js/app.js" charset="utf-8"></script>
 	
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

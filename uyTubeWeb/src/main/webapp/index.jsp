@@ -152,7 +152,10 @@
 					<li><a href="#homeSubmenu" data-toggle="collapse"
 						aria-expanded="false" class="dropdown-toggle">Videos</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
-							<li><a href="altaVideo.jsp">Añadir Video</a></li>
+							<form action="AltaVideo" method="get">
+								<!--<li><a href="altaVideo.jsp">Añadir Video</a></li>-->
+								<button type="submit" value="Submit" class="btn-link">Alta Video</button>
+							</form>
 							<form action="ModificarDatosVideo" method="get">
 								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
 							</form>

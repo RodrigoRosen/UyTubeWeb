@@ -40,8 +40,8 @@ public class ConsultaCategoria extends HttpServlet {
 		if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
 		String categoria = request.getParameter("categoriaSeleccionada");
 		if (categoria != null) {
-			Map<String, String> videos = icon.videosXCat(categoria);
-			Map<String, String> listas = icon.listasXCat(categoria);
+			Map<String, String> videos = icon.videosXCatPublicos(categoria);
+			Map<String, String> listas = icon.listasXCatPublicas(categoria);
 			request.setAttribute("videos", videos);
 			request.setAttribute("listas", listas);	
 		}

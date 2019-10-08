@@ -59,6 +59,7 @@ public class AltaLista extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();		
+		icon.ingresarTipoLista(false);
 		String nombreLista = (String) request.getParameter("nombreLista");
 		String Privada = (String) request.getParameter("privada");
 		String categoria = (String) request.getParameter("categoria");

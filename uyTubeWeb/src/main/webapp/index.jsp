@@ -159,7 +159,7 @@
 							<form action="ModificarDatosVideo" method="get">
 								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
 							</form>
-							<li><a href="#">Consultar Video</a></li>
+							<li><a href="consultarVideo.jsp">Consultar Video</a></li>
 							<li><a href="#">Comentar un Video</a></li>
 							<li><a href="#">Valorar Video</a></li>
 						</ul></li>

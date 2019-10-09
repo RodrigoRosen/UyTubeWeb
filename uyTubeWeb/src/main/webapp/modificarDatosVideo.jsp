@@ -34,9 +34,11 @@
 <body>
 	<!-- Barra Principal -->
 	<div class="container" id="navBarPrincipal">
-		<nav class="navbar navbar-expand-lg navbar-light bg-light"> <img
-			src="imagenes/UyTube.png" class="img-fluid" height="50px"
+		<nav class="navbar navbar-expand-lg navbar-light bg-light"> 
+		<a href="index.jsp"> 
+		<img src="imagenes/UyTube.png" class="img-fluid" height="50px"
 			width="150px">
+		</a>
 		<div class="md-form mt-0" style="margin-left: 40px">
 			<input class="form-control" type="text" placeholder="Search"
 				aria-label="Search" id="searchBarPrincipalId" style="width: 450px">
@@ -117,9 +119,9 @@
 	<% ArrayList<String> vids = (ArrayList<String>) request.getAttribute("videos"); %>
 	<form action="DatosVideo" method="post" name="ModificarDatosVideo" id="modificarDatosVideo">
 		<div class="container">
-			<div class="body row">
+<!-- 			<div class="body row"> -->
 				<div class="form-group row">
-				  <select class="custom-select col-xs-12 col-sm-4 col-md-4" id="vidsel" name="vidsel" >
+				  <select class="custom-select col-xs-8 col-sm-8 col-md-8" id="vidsel" name="vidsel" >
 				    <option selected>Seleccione un video</option>
 	    			<%
 	    			if(vids != null)
@@ -132,70 +134,90 @@
 					%>
 				    
 				  </select>	
-				  <button type="submit" id="btnModVid" class="btn btn-primary col-xs-12 col-sm-8 col-md-8">Mostrar Datos Video Seleccionado</button>
+				  <button type="submit" id="btnModVid" class="btn btn-primary col-xs-4 col-sm-4 col-md-4">Mostrar Datos Video Seleccionado</button>
 				</div>
 			</div>
-		</div>
+<!-- 		</div> -->
 	</form>
 	<%DtVideo dtvideo = (DtVideo) request.getAttribute("dtv"); 
 		String nombre = " ";
-		String duracion = "duracion";
+		String duracion = " ";
 		String url = " ";
 		String descripcion = " ";
 		String categoria = " ";
+		Boolean privado = false;
+		String esprivado = "";
 		if(dtvideo != null){
 			nombre = dtvideo.getNombre();
 			duracion = dtvideo.getDuracion().toString();
 			url = dtvideo.getUrl();
 			descripcion = dtvideo.getDescripcion();
 			categoria = dtvideo.getCategoria();
+			if(dtvideo.getPrivado())
+				esprivado = "si";
+			else 
+				esprivado = "no";
 		}
 	%>
 	<form action="ModificarDatosVideo" method="post" name="ModificarDatosVideo" id="modificarDatosVideo">
 		<div class="container">
 			<div class="form-group row">
+				<h3 class="col-xs-4 col-sm-4">Nombre</h3>
 				<input type="text" name="nombre"
-				class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre"
+				class="form-control col-xs-8 col-sm-8 col-md-8" id="nombre"
 				aria-describedby="emailHelp" placeholder="<%=nombre%>" value="<%=nombre%>">
 			</div>
 			<div class="form-group row">
+				 <h3 class="col-xs-4 col-sm-4">Duracion</h3>
 				 <input type="text" name="duracion"
-					class="form-control col-xs-12 col-sm-8 col-md-8" id="duracion"
+					class="form-control col-xs-8 col-sm-8 col-md-8" id="duracion"
 					aria-describedby="emailHelp" value=<%=duracion %>>
 			</div>
 			<div class="form-group row">
+				<h3 class="col-xs-4 col-sm-4">URL</h3>
 				 <input type="text" name="url"
-					class="form-control col-xs-12 col-sm-8 col-md-8" id="url"
+					class="form-control col-xs-8 col-sm-8 col-md-8" id="url"
 					aria-describedby="emailHelp" value="<%=url%>">
 			</div>
 			<div class="form-group row">
+				 <h3 class="col-xs-4 col-sm-4">Descripcion</h3>
 				 <input type="text" name="descripcion"
-					class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion"
+					class="form-control col-xs-8 col-sm-8 col-md-8" id="descripcion"
 					aria-describedby="emailHelp" value="<%=descripcion%>">
 			</div>
 		
 			<% ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias"); %>
-			
-			<select class="custom-select col-xs-12 col-sm-4 col-md-4" id="categoria" name="categoria" >
-			    <option selected><%=categoria%></option>
-    			<%
-    			if(categorias != null)
-				for (String cat : categorias) {
-				%>
-				<option value="<%=cat%>"><%=cat%>
-				</option>
-				<%
-					}
-				%>
-			    
-			  </select>	
-		
-		
-		
+			<div class="form-group row">
+				<h3 class="col-xs-4 col-sm-4">Categoria</h3>
+				<select class="custom-select col-xs-8 col-sm-8 col-md-8" id="categoria" name="categoria" >
+				    <option selected><%=categoria%></option>
+	    			<%
+	    			if(categorias != null)
+					for (String cat : categorias) {
+					%>
+					<option value="<%=cat%>"><%=cat%>
+					</option>
+					<%
+						}
+					%>
+				    
+				  </select>	
+			</div>
+			<div class="form-group row">
+				<h3 class="col-xs-4 col-sm-4">Es privado?</h3>
+				<select class="custom-select col-xs-8 col-sm-8 col-md-8" id="esprivado" name="esprivado" >
+				    <option selected><%=esprivado%></option>
+					<option value="si">si
+					</option>
+					<option value="no">no
+					</option>
+				    
+				  </select>	
+			</div>
 		
 
 			<div class="form-group row">
-				<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
+				<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-12 col-md-12 center-block">Modificar</button>
 			</div>
 		</div>
 	</form>

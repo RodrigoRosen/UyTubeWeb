@@ -67,6 +67,9 @@ public class ModificarDatosVideo extends HttpServlet {
 		String url = request.getParameter("url");
 		String descripcion = request.getParameter("descripcion");
 		Date fecha = new Date();
+		Boolean esprivado = false;
+		if(request.getParameter("esprivado").equals("si"))
+			esprivado = true;
 		//request.getParameter("fechaVideo");
 		
 		HttpSession session = request.getSession();
@@ -88,6 +91,7 @@ public class ModificarDatosVideo extends HttpServlet {
 		videoNew.setDescripcion(descripcion);
 		videoNew.setFechaPub(fecha);
 		videoNew.setCategoria(category);
+		videoNew.setPrivado(esprivado);
 		//Se ingresa el video
 		icon.editarVideo(videoNew);
 		RequestDispatcher rd;

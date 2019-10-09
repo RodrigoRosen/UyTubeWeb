@@ -156,9 +156,11 @@
 								<!--<li><a href="altaVideo.jsp">Añadir Video</a></li>-->
 								<button type="submit" value="Submit" class="btn-link">Alta Video</button>
 							</form>
+							<%if (username != null && username.length() > 0){ %>
 							<form action="ModificarDatosVideo" method="get">
 								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
 							</form>
+							<%}; %>
 							<li><a href="consultarVideo.jsp">Consultar Video</a></li>
 							<li><a href="#">Comentar un Video</a></li>
 							<li><a href="#">Valorar Video</a></li>

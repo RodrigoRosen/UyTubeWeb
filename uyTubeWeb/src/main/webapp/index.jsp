@@ -41,7 +41,7 @@
 		<%
 			String login = (String) session.getAttribute("login");
 			String username = (String) session.getAttribute("nickname");
-			if (login == null) {
+			if (login == null || login.equals("Usuario y/o contraseña inválida, por favor intente de nuevo.")) {
 		%>
 		<div class="md-form mt-0" style="margin-left: 360px">
 			<button type="button" id="btnModal" class="btn btn-primary">Entrar</button>

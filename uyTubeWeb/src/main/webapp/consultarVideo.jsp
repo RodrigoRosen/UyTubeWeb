@@ -7,6 +7,8 @@
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.Map.Entry"%>
 <%@ page import="java.util.Date"%>
+<%@ page import="javax.swing.JTree"%>
+<%@ page import="javax.xml.soap.Node"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="interfaces.Fabrica"%> 
 <%@ page import="interfaces.IControlador"%>
@@ -16,13 +18,17 @@
 	String login = (String) session.getAttribute("login");
 	String user = (String) se.getAttribute("nickname");
 	IControlador icon = Fabrica.getInstancia().getIControlador();
+	DtVideo v = null;
 	String nombre="Nombre";
 	String duracion="Duracion";
 	String fecha="Fecha";
 	String url="/url";
 	String cat="categoria";
+	Node root = null;
 	String desc="Descripcion";
+	String likes = " 0 me gusta,\t0 no me gusta";
 	boolean privado=true;
+	boolean propio=false;
 	HashMap<Integer,String> videos = icon.listarVideosPublicos();
 	HashMap<Integer,String> privados = new HashMap<Integer,String>();
 	if(login != null){
@@ -31,7 +37,7 @@
 	if(request.getAttribute("video")!= null){
 		int id = (Integer)request.getAttribute("video");		
 		if((videos.get(id) != null)||(login != null && privados.get(id) != null)){ //el video es publico o es del usuario logueado
-			DtVideo v = icon.findVideo(id);
+			v = icon.findVideo(id);
 			nombre = v.getNombre();
 			duracion = v.getDuracion().toString(); 
 			url = v.getUrl();
@@ -43,6 +49,17 @@
 				privado = true;
 			}else{
 				privado = false;
+			}
+			likes = v.getValoracionesPositivas().size()+" me gusta,\t"+v.getValoracionesNegativas().size()+" no me gusta";
+			if(login != null){			
+				icon.seleccionarUsuario(user);
+				if(icon.seleccionarVideo(v.getNombre()) != null){
+					propio = true;
+					root = getTreeRootNode();
+				}else{
+					propio = false;					
+				}
+				icon.finCasoUso();
 			}
 		}
 		//request.setAttribute("video", null);
@@ -98,8 +115,8 @@
 						}%>								
 					</select>			
 				</div>
-				<div class="form-group row">
 				<%if(login != null){%>
+				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Mis Privados:</label>
 					<select name="privados" class="form-control col-xs-12 col-sm-8 col-md-8" id="privados" onchange="this.form.submit()">
 						<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
@@ -107,9 +124,12 @@
 						for(Integer i: privados.keySet()){
 									%><option value="<%=i%>"><%=privados.get(i)%></option><%
 						}%>												
-					</select>	
-				<%}%>		
+					</select>		
 				</div>
+				<%}%>	
+			</div>
+		</form><form action="ConsultarVideo" method="post">
+			<div class="container">
 			</div>
 		</form>
 		<form action="ConsultarVideo" method="post">
@@ -156,7 +176,44 @@
 				    <option value="Si" <%if(privado){%> selected <%}%>>Si</option>
 				    <option value="No" <%if(!privado){%> selected <%}%>>No</option>
 				  </select>			
+				</div>
+				<div class="form-group row">
+					<label style="width:115px;padding-right:10px; padding-top:9px">Likes:</label>
+				    <input type="text" name="likes" class="form-control col-xs-12 col-sm-8 col-md-8" id="likes" ria-describedby="emailHelp" placeholder="<%=likes%>" disabled>	
 				</div>	
+				<%if(propio){%>
+				<div class="form-group row">
+					<label style="width:115px;padding-right:10px; padding-top:9px">Le Gusta:</label>
+					<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8" id="like">
+						<option  disabled="disabled" selected="selected">--Usuarios--</option>
+						<% 
+						for(String s: v.getValoracionesPositivas()){
+									%><option value="<%=s%>"><%=s%></option><%
+						}%>												
+					</select>		
+				</div>
+				<%}%>
+				<%if(propio){%>
+				<div class="form-group row">
+					<label style="width:115px;padding-right:10px; padding-top:9px">No le Gusta:</label>
+					<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8" id="dislike">
+						<option  disabled="disabled" selected="selected">--Usuarios--</option>
+						<% 
+						for(String s: v.getValoracionesNegativas()){
+									%><option value="<%=s%>"><%=s%></option><%
+						}%>												
+					</select>		
+				</div>
+				<%}%>
+				<%if(propio){%>
+				<div class="form-group row">
+					<c:forEach var="node" items="${node.children}">
+					    <!-- TODO: print the node here -->
+					    <c:set var="node" value="${node}" scope="request"/>
+					    <jsp:include page="node.jsp"/>
+					</c:forEach>		
+				</div>
+				<%}%>
 				<div class="form-group row">
 					<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
 				</div>

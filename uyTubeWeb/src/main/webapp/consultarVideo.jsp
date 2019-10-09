@@ -15,31 +15,37 @@
 	HttpSession se = request.getSession();
 	String login = (String) session.getAttribute("login");
 	String user = (String) se.getAttribute("nickname");
-	IControlador icon = Fabrica.getInstancia().getIControlador();%>
-<%!String nombre="Nombre";%>
-<%!String duracion="Duracion";%>
-<%!String fecha="Fecha";%>
-<%!String url="/url";%>
-<%!String cat="categoria";%>
-<%!String desc="Descripcion";%>
-<%!boolean privado=true;%>
-<%
+	IControlador icon = Fabrica.getInstancia().getIControlador();
+	String nombre="Nombre";
+	String duracion="Duracion";
+	String fecha="Fecha";
+	String url="/url";
+	String cat="categoria";
+	String desc="Descripcion";
+	boolean privado=true;
+	HashMap<Integer,String> videos = icon.listarVideosPublicos();
+	HashMap<Integer,String> privados = new HashMap<Integer,String>();
+	if(login != null){
+		privados = icon.listarVideosPrivados(user);
+	}
 	if(request.getAttribute("video")!= null){
-		int id = (Integer)request.getAttribute("video");
-		DtVideo v = icon.findVideo(id);
-		nombre = v.getNombre();
-		duracion = v.getDuracion().toString(); 
-		url = v.getUrl();
-		cat = v.getCategoria();
-		DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
-		fecha = dateFormat.format(v.getFechaPub());
-		desc = v.getDescripcion();
-		if(v.getPrivado()){
-			privado = true;
-		}else{
-			privado = false;
+		int id = (Integer)request.getAttribute("video");		
+		if((videos.get(id) != null)||(login != null && privados.get(id) != null)){ //el video es publico o es del usuario logueado
+			DtVideo v = icon.findVideo(id);
+			nombre = v.getNombre();
+			duracion = v.getDuracion().toString(); 
+			url = v.getUrl();
+			cat = v.getCategoria();
+			DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
+			fecha = dateFormat.format(v.getFechaPub());
+			desc = v.getDescripcion();
+			if(v.getPrivado()){
+				privado = true;
+			}else{
+				privado = false;
+			}
 		}
-		request.setAttribute("video", null);
+		//request.setAttribute("video", null);
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -87,7 +93,6 @@
 					<select name="publicos" class="form-control col-xs-12 col-sm-8 col-md-8" id="publicos" onchange="this.form.submit()">
 						<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
 						<% 
-						HashMap<Integer,String> videos = icon.listarVideosPublicos();
 						for(Integer i: videos.keySet()){
 									%><option value="<%=i%>"><%=videos.get(i)%></option><%
 						}%>								
@@ -99,7 +104,6 @@
 					<select name="privados" class="form-control col-xs-12 col-sm-8 col-md-8" id="privados" onchange="this.form.submit()">
 						<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
 						<% 
-						HashMap<Integer,String> privados = icon.listarVideosPrivados(user);
 						for(Integer i: privados.keySet()){
 									%><option value="<%=i%>"><%=privados.get(i)%></option><%
 						}%>												

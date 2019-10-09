@@ -29,24 +29,16 @@ public class ConsultarVideo extends HttpServlet {
         super();
     }
 
-	protected void users(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("doPost*****************************************************************************************************");
 		String aux = request.getParameter("publicos");
 		if(aux == null)
 			aux = request.getParameter("privados");
 		if(aux != null) {
-			System.out.println(aux+"*****************************************************************************************************");
 			request.setAttribute("video", Integer.valueOf(aux));
-		}else {
-			System.out.println("Null*****************************************************************************************************");
 		}
 		request.getRequestDispatcher("consultarVideo.jsp").forward(request, response);
 	}

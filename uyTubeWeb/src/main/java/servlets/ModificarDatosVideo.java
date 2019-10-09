@@ -49,6 +49,7 @@ public class ModificarDatosVideo extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher("modificarDatosVideo.jsp");
 		view.forward(request, response);
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

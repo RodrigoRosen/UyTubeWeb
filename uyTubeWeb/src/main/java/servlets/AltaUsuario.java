@@ -60,7 +60,7 @@ public class AltaUsuario extends HttpServlet {
 		RequestDispatcher rd;
 		String resp = "index.jsp";
 		if(ok)
-			request.setAttribute("mensaje", "El usuario " + nickname + " a sido ingresado correctamente");
+			request.setAttribute("mensaje", "El usuario " + nickname + " ha sido ingresado correctamente");
 		else {
 			request.setAttribute("mensaje", "El usuario " + nickname + " o el email " + email + " ya existe!. Intentelo nuevamente");
 			resp = "altaUsuario.jsp";

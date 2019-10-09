@@ -7,6 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+
 <script src="libs/jquery-3.4.1.min.js" charset="utf-8"></script>
 <script
 	src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
@@ -201,6 +202,7 @@
 			</div>
 		</div>
 	</div>
+	<script src="js/app.js" charset="utf-8"></script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

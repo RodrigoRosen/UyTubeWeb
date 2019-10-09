@@ -57,9 +57,7 @@ public class Login extends HttpServlet {
         	session.setAttribute("login", "Usuario y/o contraseña inválida, por favor intente de nuevo.");        	
         }
       
-        RequestDispatcher rd;
-    	rd = request.getRequestDispatcher("/index.jsp");
-        rd.forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/");
 	}
 
 }

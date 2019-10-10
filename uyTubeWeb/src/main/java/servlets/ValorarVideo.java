@@ -41,22 +41,33 @@ public class ValorarVideo extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		RequestDispatcher rd;
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
 		HttpSession session = request.getSession();
-		String userVal = (String) session.getAttribute("nickname");//se obtiene el usuario que valora
-		String userProp = request.getParameter("propietario");//propietario del video seleccionado en el consulta video
-		icon.seleccionarUsuario(userProp);/*Aca se debe usar el usuario propietario del video*/
-		icon.seleccionarVideo(request.getParameter("video"));//Se selecciona el video del propietario ya seleccionado
-		Boolean valor = null;
-		String valoracion = request.getParameter("valoracion");
-		if(valoracion.equals("positiva"))
-			valor = true;
-		else if(valoracion.equals("negativa"))
-			valor = false;		
-		icon.valorarVideo(userVal, valor);
-		RequestDispatcher rd;
-		request.setAttribute("mensaje", "Se ha valorado correctamente el video ");
+		String user = (String) session.getAttribute("nickname");//se obtiene el usuario que valora
+		String a = request.getParameter("aux");
+		String b = request.getParameter("likex");
+		if(a!=null && b!=null) {
+			System.out.println("if*"+a+"*"+b+"****************************************************************************");	
+			int id = Integer.valueOf(a);
+			int valoracion = Integer.valueOf(b);
+			Boolean valor = null;
+			if(valoracion > 0)
+				valor = true;
+			else
+				valor = false;		
+			boolean r = icon.valorarVideoPublico(id,user, valor);
+			if(r) {
+				request.setAttribute("mensaje", "Se ha valorado correctamente el video ");
+			}else {
+				request.setAttribute("mensaje", "Error al valorar el video ");
+				System.out.println("Error-valorarVideo****************************************************************************");			
+			}
+		}else {
+			request.setAttribute("mensaje", "Error al valorar el video ");
+			System.out.println("variable"+a+"-"+b+"****************************************************************************");				
+		}
 		rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
 		//doGet(request, response);

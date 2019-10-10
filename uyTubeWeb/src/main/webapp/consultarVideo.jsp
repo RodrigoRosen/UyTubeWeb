@@ -7,12 +7,11 @@
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.Map.Entry"%>
 <%@ page import="java.util.Date"%>
-<%@ page import="javax.swing.JTree"%>
-<%@ page import="javax.xml.soap.Node"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="interfaces.Fabrica"%> 
 <%@ page import="interfaces.IControlador"%>
 <%@ page import="datatypes.DtVideo"%>
+<%@ page import="datatypes.DtComentario"%>
 <% 
 	HttpSession se = request.getSession();
 	String login = (String) session.getAttribute("login");
@@ -24,18 +23,19 @@
 	String fecha="Fecha";
 	String url="/url";
 	String cat="categoria";
-	Node root = null;
 	String desc="Descripcion";
 	String likes = " 0 me gusta,\t0 no me gusta";
 	boolean privado=true;
 	boolean propio=false;
+	int id = -1;
+	int g= 0; // no hay valoraciones del usuario para el video
 	HashMap<Integer,String> videos = icon.listarVideosPublicos();
 	HashMap<Integer,String> privados = new HashMap<Integer,String>();
 	if(login != null){
 		privados = icon.listarVideosPrivados(user);
 	}
-	if(request.getAttribute("video")!= null){
-		int id = (Integer)request.getAttribute("video");		
+	if(request.getAttribute("video")!= null){	
+		id = (Integer)request.getAttribute("video");
 		if((videos.get(id) != null)||(login != null && privados.get(id) != null)){ //el video es publico o es del usuario logueado
 			v = icon.findVideo(id);
 			nombre = v.getNombre();
@@ -55,9 +55,20 @@
 				icon.seleccionarUsuario(user);
 				if(icon.seleccionarVideo(v.getNombre()) != null){
 					propio = true;
-					root = getTreeRootNode();
 				}else{
-					propio = false;					
+					propio = false;	
+					for(String s: v.getValoracionesPositivas()){
+						if(s.equals(user)){
+							g = 1; //el user le dio like al video
+						}
+					}
+					if(g != 0){
+						for(String s: v.getValoracionesNegativas()){
+							if(s.equals(user)){
+								g = -1; //el user le dio dislike al video
+							}
+						}						
+					}
 				}
 				icon.finCasoUso();
 			}
@@ -81,14 +92,24 @@
 			crossorigin="anonymous"/>
 			
 		<script src="js/bootstrap-datepicker.js" charset="utf-8"></script>
-		<link rel="stylesheet" href="css/bootstrap-datepicker.css">				
+		<link rel="stylesheet" href="css/bootstrap-datepicker.css">	
+		
+		<script>
+			function editar(bool){
+				if(bool){
+					document.getElementById("btnEditar").style.display = "none";
+					document.getElementById("valorar").style.display = "inline";
+				} else {
+					document.getElementById("btnEditar").style.display = "inline";
+					document.getElementById("valorar").style.display = "none";	
+				}
+			}
+		</script>		
 			
 		<title>uyTube | Consultar Video</title>
 	
 	</head>	
-	<body>
-		<div style="display:none;"><input type="text" name="aux" id="aux"></div>
-		
+	<body>		
 		<!-- Barra Principal -->
 		<div class="container" id="navBarPrincipal">
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -205,18 +226,34 @@
 					</select>		
 				</div>
 				<%}%>
+		</form>
+		<%if((login != null)&&(videos.get(id) != null)&&(privados.get(id) == null)){%>
+		<form action="ValorarVideo" method="post">
+			<div class="container">
+				<div class="form-group row" id="valorar" name="valorar" style="display:none">				
+					<div style="display:none;"><input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>"></div>
+					<select name="likex" class="form-control col-xs-12 col-sm-8 col-md-8" id="likex">
+						<%if(g == 0){%><option  disabled="disabled" selected="selected">--Seleccionar Opcion--</option><%}%>
+						<option value="1" <%if(g > 0){%>selected="selected"<%}%>>Me Gusta</option>
+						<option value="-1" <%if(g < 0){%>selected="selected"<%}%>>No Me Gusta</option>														
+					</select>
+					</br>
+					<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(false)">Cancelar</button>
+					<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>		
+				</div>
+				<div class="form-group row">
+					<button type="button" id="btnEditar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)">Valorar</button>
+				</div>	
+			</div>
+		</form>			
+		<%}%>	
+		<form action="ValorarVideo" method="post">
+			<div class="container">				
 				<%if(propio){%>
-				<div class="form-group row">
-					<c:forEach var="node" items="${node.children}">
-					    <!-- TODO: print the node here -->
-					    <c:set var="node" value="${node}" scope="request"/>
-					    <jsp:include page="node.jsp"/>
-					</c:forEach>		
-				</div>
+					<% for(DtComentario c: v.getCom()){%>
+						<div style="padding-left:<%=c.getNivel()*20%>px;" class="form-group row"><p><%=c.getNick()+": "+c.getTexto()%></p></div>
+					<%}%>
 				<%}%>
-				<div class="form-group row">
-					<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
-				</div>
 			</div>
 		</form>
 		

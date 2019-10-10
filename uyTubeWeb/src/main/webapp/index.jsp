@@ -173,7 +173,9 @@
 								<li><a href="AltaLista">Crear Lista de Reproduccion
 										Particular</a></li>
 							</form>
-							<li><a href="#">Modificar Lista de Reproduccion</a></li>
+							<form action="ModificarDatosLista" method="get">
+								<li><a href="ModificarDatosLista">Modificar Lista de Reproduccion</a></li>
+							</form>
 							<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
 							<li><a href="#">Quitar Video de Lista de Reproduccion</a></li>
 							<li><a href="#">Consulta de Lista de Reproduccion</a></li>

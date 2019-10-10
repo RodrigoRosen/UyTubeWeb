@@ -35,17 +35,34 @@
 	<!-- Barra Principal -->
 	<div class="container" id="navBarPrincipal">
 		<nav class="navbar navbar-expand-lg navbar-light bg-light"> 
-		<a href="index.jsp"> 
-		<img src="imagenes/UyTube.png" class="img-fluid" height="50px"
-			width="150px">
-		</a>
+			<a href="index.jsp">
+				<img src="imagenes/UyTube.png" class="img-fluid" height="50px"
+				width="150px">
+			</a>
 		<div class="md-form mt-0" style="margin-left: 40px">
 			<input class="form-control" type="text" placeholder="Search"
 				aria-label="Search" id="searchBarPrincipalId" style="width: 450px">
 		</div>
-
-
-<!--Modal: Login / Register Form-->
+		<%
+			String login = (String) session.getAttribute("login");
+			String username = (String) session.getAttribute("nickname");
+			if (login == null || login.equals("Usuario y/o contraseña inválida, por favor intente de nuevo.")) {
+		%>
+		<div class="md-form mt-0" style="margin-left: 360px">
+			<button type="button" id="btnModal" class="btn btn-primary">Entrar</button>
+		</div>
+		<%
+			} else {
+		%>
+		<div class="md-form mt-0" style="margin-left: 250px">
+			<h3><%=username%></h3>
+			<form action="LogOut" method="post">
+				<button type="submit" id="btnModalLogOut" class="btn btn-primary">Salir</button>
+			</form>
+		</div>
+		<%
+			} ;
+		%> <!--Modal: Login / Register Form-->
 		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog cascading-modal" role="document">
@@ -159,6 +176,15 @@
 				esprivado = "no";
 		}
 	%>
+	<%if(url != null){ %>
+			<div class="form-group" style="text-align:center">
+					<iframe class="col-xs-12" width="560" height="315"
+						src="<%=url%>" frameborder="0"
+						allowfullscreen></iframe>
+			</div>
+	<%}else{%>
+		<h2 style="text-align:center">La url del video no es correcta!</h2>
+	<%}; %>
 	<form action="ModificarDatosVideo" method="post" name="ModificarDatosVideo" id="modificarDatosVideo">
 		<div class="container">
 			<div class="form-group row">
@@ -220,7 +246,15 @@
 				<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-12 col-md-12 center-block">Modificar</button>
 			</div>
 		</div>
+
+		
+		
+		
 	</form>
+	
+<!-- 	https://www.youtube.com/embed/EqWRaAF6_WY -->
+
+
 
 	<script src="js/app.js" charset="utf-8"></script>
 	

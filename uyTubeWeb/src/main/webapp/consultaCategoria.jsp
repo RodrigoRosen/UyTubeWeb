@@ -159,8 +159,10 @@
 				</ul>
 			</div>
 			<!-- Logica del consulta lista -->
+			
 			<div class="col-xs-12 col-xs-offset-12 row">
 				<h2>Listas</h2>
+				<form id="Consulta Lista" action="ConsultaLista" method="GET" class="table table-striped table-bordered">
 				<table class="table table-striped table-bordered">
 					<thead>
 						<th scope="col">Propietario</th>
@@ -173,12 +175,22 @@
 							for (Entry<String, String> entry : listas.entrySet()) {
 						%>
 						<td><%=entry.getValue()%></td>
-						<td><%=entry.getKey()%></td>
+						<%
+							String idLista = entry.getKey().split(";")[0];
+							String nombreLista = entry.getKey().split(";")[1];
+						%>
+						<td><%=nombreLista%></td>
+						<td hidden><%=idLista%></td>
+						<td><form action="ConsultaLista" method="GET"><button type="button" class="btn btn-primary" onclick="consultaLista(<%=idLista%>)">
+						</button></form></td>
 						<%
 							}
 						%>
 					</tbody>
 				</table>
+				<input id="IDLISTA" name="IDLISTA" hidden>
+				</form>
+				
 				<h2>Videos</h2>
 				<table class="table table-striped table-bordered">
 					<thead>
@@ -190,7 +202,12 @@
 							for (Entry<String, String> entry : videos.entrySet()) {
 						%>
 						<td><%=entry.getValue()%></td>
-						<td><%=entry.getKey()%></td>
+						<%
+							String idVideo = entry.getKey().split(";")[0];
+								String nombreVideo = entry.getKey().split(";")[1];
+						%>
+						<td><%=nombreVideo%></td>
+						<td hidden><%=idVideo%></td>
 						<%
 							}
 						%>
@@ -203,6 +220,12 @@
 		</div>
 	</div>
 	<script src="js/app.js" charset="utf-8"></script>
+	<script type="text/javascript">
+			function consultaLista(idLista){
+				document.getElementById("IDLISTA").value = idLista;
+				document.getElementById("Consulta Lista").submit();				
+			}
+	</script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -214,6 +237,6 @@
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>	
+		crossorigin="anonymous"></script>
 </body>
 </html>

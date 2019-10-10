@@ -173,6 +173,7 @@
 						<%
 							Map<String, String> videos = (Map<String, String>) request.getAttribute("videos");
 							Map<String, String> listas = (Map<String, String>) request.getAttribute("listas");
+							if (listas.entrySet() != null){
 							for (Entry<String, String> entry : listas.entrySet()) {
 						%>
 						<td><%=entry.getValue()%></td>
@@ -185,6 +186,7 @@
 						</button></form></td>
 						<%
 							}
+						}
 						%>
 					</tbody>
 				</table>
@@ -198,7 +200,8 @@
 						<th scope="col">Nombre</th>
 					</thead>
 					<tbody>
-						<%
+						<% 
+							if (videos.entrySet() != null){
 							for (Entry<String, String> entry : videos.entrySet()) {
 						%>
 						<td><%=entry.getValue()%></td>
@@ -210,6 +213,7 @@
 						<td hidden><%=idVideo%></td>
 						<%
 							}
+						}
 						%>
 					</tbody>
 				</table>

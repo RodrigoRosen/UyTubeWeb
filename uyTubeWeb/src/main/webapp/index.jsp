@@ -197,7 +197,7 @@
 						</ul></li>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-xs-offset-12 row">
+			<div class="col-xs-12 col-xs-offset-12 row mx-auto">
 				<iframe class="col-xs-12" width="560" height="315"
 					src="https://www.youtube.com/embed/xEqSOst1dg8" frameborder="0"
 					allowfullscreen></iframe>

@@ -49,7 +49,6 @@ public class ValorarVideo extends HttpServlet {
 		String a = request.getParameter("aux");
 		String b = request.getParameter("likex");
 		if(a!=null && b!=null) {
-			System.out.println("if*"+a+"*"+b+"****************************************************************************");	
 			int id = Integer.valueOf(a);
 			int valoracion = Integer.valueOf(b);
 			Boolean valor = null;
@@ -61,14 +60,12 @@ public class ValorarVideo extends HttpServlet {
 			if(r) {
 				request.setAttribute("mensaje", "Se ha valorado correctamente el video ");
 			}else {
-				request.setAttribute("mensaje", "Error al valorar el video ");
-				System.out.println("Error-valorarVideo****************************************************************************");			
+				request.setAttribute("mensaje", "Error al valorar el video ");;			
 			}
 		}else {
-			request.setAttribute("mensaje", "Error al valorar el video ");
-			System.out.println("variable"+a+"-"+b+"****************************************************************************");				
+			request.setAttribute("mensaje", "Error al valorar el video ");		
 		}
-		rd = request.getRequestDispatcher("index.jsp");
+		rd = request.getRequestDispatcher("consultarVideo.jsp");
         rd.forward(request, response);
 		//doGet(request, response);
 	}

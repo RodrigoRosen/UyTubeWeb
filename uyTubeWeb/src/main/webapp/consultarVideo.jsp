@@ -16,81 +16,47 @@
 	HttpSession se = request.getSession();
 	String login = (String) session.getAttribute("login");
 	String user = (String) se.getAttribute("nickname");
+	
+	//logica para listar los videos
 	IControlador icon = Fabrica.getInstancia().getIControlador();
-	DtVideo v = null;
-	String nombre="Nombre";
-	String duracion="Duracion";
-	String fecha="Fecha";
-	String url="/url";
-	String cat="categoria";
-	String desc="Descripcion";
-	String likes = " 0 me gusta,\t0 no me gusta";
-	boolean privado=true;
-	boolean propio=false;
-	int id = -1;
-	int g= 0; // no hay valoraciones del usuario para el video
 	HashMap<Integer,String> videos = icon.listarVideosPublicos();
-	HashMap<Integer,String> privados = new HashMap<Integer,String>();
+	HashMap<Integer,String> privados = new HashMap<Integer,String>();	
 	if(login != null){
 		privados = icon.listarVideosPrivados(user);
 	}
-	if(request.getAttribute("video")!= null){	
-		id = (Integer)request.getAttribute("video");
-		if((videos.get(id) != null)||(login != null && privados.get(id) != null)){ //el video es publico o es del usuario logueado
-			v = icon.findVideo(id);
-			nombre = v.getNombre();
-			duracion = v.getDuracion().toString(); 
-			url = v.getUrl();
-			cat = v.getCategoria();
+
+	DtVideo v = null;
+	String fecha="Fecha";
+	String duracion="Duracion";
+	String likes = " 0 me gusta,\t0 no me gusta";
+	boolean propio=false;
+	int g= 0; // no hay valoraciones del usuario para el video	
+	if(request.getAttribute("video") != null){	
+		v = (DtVideo)request.getAttribute("video");
+		if(login != null){
+			propio = Boolean.TRUE.equals(request.getAttribute("propio"));
+			g = (Integer)request.getAttribute("gustar");			
+		}
+		if( (!v.getPrivado() )||(propio) ){ //el video es publico o es del usuario logueado
+			v = icon.findVideo(v.getId());
 			DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
 			fecha = dateFormat.format(v.getFechaPub());
-			desc = v.getDescripcion();
-			if(v.getPrivado()){
-				privado = true;
-			}else{
-				privado = false;
-			}
+			duracion = v.getDuracion().toString(); 
 			likes = v.getValoracionesPositivas().size()+" me gusta,\t"+v.getValoracionesNegativas().size()+" no me gusta";
-			if(login != null){			
-				icon.seleccionarUsuario(user);
-				if(icon.seleccionarVideo(v.getNombre()) != null){
-					propio = true;
-				}else{
-					propio = false;	
-					for(String s: v.getValoracionesPositivas()){
-						if(s.equals(user)){
-							g = 1; //el user le dio like al video
-						}
-					}
-					if(g != 0){
-						for(String s: v.getValoracionesNegativas()){
-							if(s.equals(user)){
-								g = -1; //el user le dio dislike al video
-							}
-						}						
-					}
-				}
-				icon.finCasoUso();
-			}
 		}
-		//request.setAttribute("video", null);
+	}else{		
+		v = new DtVideo(-1,"Nombre",true,null,"Descripcion",null,"categoria",null,"/url");
+		v.setCom(new ArrayList<DtComentario>());
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta charset="utf-8">
-		<meta name="viewport"
-			content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		
-		
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">		
 		<script src="libs/jquery-3.4.1.min.js" charset="utf-8"></script>
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet"
-			href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-			integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-			crossorigin="anonymous"/>
-			
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>			
 		<script src="js/bootstrap-datepicker.js" charset="utf-8"></script>
 		<link rel="stylesheet" href="css/bootstrap-datepicker.css">	
 		
@@ -123,153 +89,127 @@
 			</nav>
 		</div>
 		<!-- Resto de la pag -->
-		<h1 class="container">Consultar Video</h1>
-		<form action="ConsultarVideo" method="post">
+		<h1 class="container" style="align:center">Consultar Video</h1>
+		<!--selects -->
+		<form action="ConsultarVideo" method="post">	
 			<div class="container">
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Publicos:</label>
 					<select name="publicos" class="form-control col-xs-12 col-sm-8 col-md-8" id="publicos" onchange="this.form.submit()">
 						<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
-						<% 
-						for(Integer i: videos.keySet()){
-									%><option value="<%=i%>"><%=videos.get(i)%></option><%
-						}%>								
+						<%for(Integer i: videos.keySet()){%>
+							<option value="<%=i%>"> <%=videos.get(i)%> </option> 
+						<%}%>								
 					</select>			
 				</div>
 				<%if(login != null){%>
-				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Mis Privados:</label>
-					<select name="privados" class="form-control col-xs-12 col-sm-8 col-md-8" id="privados" onchange="this.form.submit()">
-						<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
-						<% 
-						for(Integer i: privados.keySet()){
-									%><option value="<%=i%>"><%=privados.get(i)%></option><%
-						}%>												
-					</select>		
-				</div>
+					<div class="form-group row">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Mis Privados:</label>
+						<select name="privados" class="form-control col-xs-12 col-sm-8 col-md-8" id="privados" onchange="this.form.submit()">
+							<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
+							<%for(Integer i: privados.keySet()){%>
+								<option value="<%=i%>"> <%=privados.get(i)%> </option>
+							<%}%>												
+						</select>		
+					</div>
 				<%}%>	
 			</div>
-		</form><form action="ConsultarVideo" method="post">
-			<div class="container">
-			</div>
 		</form>
-		<form action="ConsultarVideo" method="post">
+		<!--datosVideo -->
+		<form action="ConsultarVideo" method="post">	
 			<div class="container">
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Nombre:</label>
-					<input type="text" name="nombre"
-						class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre"
-						aria-describedby="emailHelp" placeholder="<%=nombre%>" disabled>
+					<input type="text" name="nombre" class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre" aria-describedby="emailHelp" placeholder="<%=v.getNombre()%>" disabled>
 				</div>
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Descripcion:</label>
-					 <input type="text" name="descripcion"
-						class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion"
-						aria-describedby="emailHelp" placeholder="<%=desc%>" disabled>
+					 <input type="text" name="descripcion" class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion" aria-describedby="emailHelp" placeholder="<%=v.getDescripcion()%>" disabled>
 				</div>
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Publicado:</label>
-					 <input type="text" name="fecha"
-						class="form-control col-xs-12 col-sm-8 col-md-8" id="fecha"
-						aria-describedby="emailHelp" placeholder="<%=fecha%>" disabled>
+					<input type="text" name="fecha" class="form-control col-xs-12 col-sm-8 col-md-8" id="fecha" aria-describedby="emailHelp" placeholder="<%=fecha%>" disabled>
 				</div>
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Duracion:</label>
-					 <input type="text" name="duracion"
-						class="form-control col-xs-12 col-sm-8 col-md-8" id="duracion"
-						aria-describedby="emailHelp" placeholder="<%=duracion%>" disabled>
+					 <input type="text" name="duracion" class="form-control col-xs-12 col-sm-8 col-md-8" id="duracion" aria-describedby="emailHelp" placeholder="<%=duracion%>" disabled>
 				</div>
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">URL:</label>
-					 <input type="text" name="url"
-						class="form-control col-xs-12 col-sm-8 col-md-8" id="url"
-						aria-describedby="emailHelp" placeholder="<%=url%>" disabled>
+					 <input type="text" name="url" class="form-control col-xs-12 col-sm-8 col-md-8" id="url" aria-describedby="emailHelp" placeholder="<%=v.getUrl()%>" disabled>
 				</div>
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Categoria:</label>
-					 <input type="text" name="categoria"
-						class="form-control col-xs-12 col-sm-8 col-md-8" id="categoria"
-						aria-describedby="emailHelp" placeholder="<%=cat%>" disabled>
+					<input type="text" name="categoria" class="form-control col-xs-12 col-sm-8 col-md-8" id="categoria" aria-describedby="emailHelp" placeholder="<%=v.getCategoria()%>" disabled>
 				</div>
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Es privado?</label>
-				  <select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="privado"  disabled>
-				    <option value="Si" <%if(privado){%> selected <%}%>>Si</option>
-				    <option value="No" <%if(!privado){%> selected <%}%>>No</option>
-				  </select>			
+					<select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="privado"  disabled>
+						<option value="Si" <%if(v.getPrivado()){%> selected <%}%>>Si</option>
+						<option value="No" <%if(!v.getPrivado()){%> selected <%}%>>No</option>
+					</select>			
 				</div>
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Likes:</label>
 				    <input type="text" name="likes" class="form-control col-xs-12 col-sm-8 col-md-8" id="likes" ria-describedby="emailHelp" placeholder="<%=likes%>" disabled>	
 				</div>	
-				<%if(propio){%>
-				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Le Gusta:</label>
-					<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8" id="like">
-						<option  disabled="disabled" selected="selected">--Usuarios--</option>
-						<% 
-						for(String s: v.getValoracionesPositivas()){
-									%><option value="<%=s%>"><%=s%></option><%
-						}%>												
-					</select>		
-				</div>
+				<%if((propio)&&(!v.getPrivado())){%>
+					<div class="form-group row">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Le Gusta:</label>
+						<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8" id="like">
+							<option  disabled="disabled" selected="selected">--Usuarios--</option>
+							<%for(String s: v.getValoracionesPositivas()){%>
+								<option value="<%=s%>"> <%=s%> </option>
+							<%}%>												
+						</select>		
+					</div>
+					<div class="form-group row">
+						<label style="width:115px;padding-right:10px; padding-top:9px">No le Gusta:</label>
+						<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8" id="dislike">
+							<option  disabled="disabled" selected="selected">--Usuarios--</option>
+							<%for(String s: v.getValoracionesNegativas()){%>
+								<option value="<%=s%>"><%=s%></option>
+							<%}%>												
+						</select>		
+					</div>
 				<%}%>
-				<%if(propio){%>
-				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">No le Gusta:</label>
-					<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8" id="dislike">
-						<option  disabled="disabled" selected="selected">--Usuarios--</option>
-						<% 
-						for(String s: v.getValoracionesNegativas()){
-									%><option value="<%=s%>"><%=s%></option><%
-						}%>												
-					</select>		
-				</div>
-				<%}%>
-		</form>
-		<%if((login != null)&&(videos.get(id) != null)&&(privados.get(id) == null)){%>
-		<form action="ValorarVideo" method="post">
-			<div class="container">
-				<div class="form-group row" id="valorar" name="valorar" style="display:none">				
-					<div style="display:none;"><input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>"></div>
-					<select name="likex" class="form-control col-xs-12 col-sm-8 col-md-8" id="likex">
-						<%if(g == 0){%><option  disabled="disabled" selected="selected">--Seleccionar Opcion--</option><%}%>
-						<option value="1" <%if(g > 0){%>selected="selected"<%}%>>Me Gusta</option>
-						<option value="-1" <%if(g < 0){%>selected="selected"<%}%>>No Me Gusta</option>														
-					</select>
-					</br>
-					<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(false)">Cancelar</button>
-					<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>		
-				</div>
-				<div class="form-group row">
-					<button type="button" id="btnEditar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)">Valorar</button>
-				</div>	
 			</div>
-		</form>			
-		<%}%>	
-		<form action="ValorarVideo" method="post">
-			<div class="container">				
-				<%if(propio){%>
-					<% for(DtComentario c: v.getCom()){%>
+		</form>
+		<%if((login != null)&&(!v.getPrivado())){%>
+			<!--valorarVideo -->
+			<form action="ValorarVideo" method="post">		
+				<div class="container">
+					<div class="form-group row" id="valorar" name="valorar" style="display:none">				
+						<div style="display:none;"><input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>"></div>
+						<select name="likex" class="form-control col-xs-12 col-sm-8 col-md-8" id="likex">
+							<%if(g == 0){%><option  disabled="disabled" selected="selected">--Seleccionar Opcion--</option><%}%>
+							<option value="1" <%if(g > 0){%>selected="selected"<%}%>>Me Gusta</option>
+							<option value="-1" <%if(g < 0){%>selected="selected"<%}%>>No Me Gusta</option>														
+						</select>
+						</br>
+						<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(false)">Cancelar</button>
+						<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>	
+					</div>
+					<div class="form-group row">
+						<button type="button" id="btnEditar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)">Valorar</button>
+					</div>		
+				</div>
+			</form>			
+		<%}%>			
+		<%if((login != null)&&(v != null)){%>
+			<!-- comentarVideo -->	
+			<form action="comentarVideo" method="post">		
+				<div class="container">	
+					<%for(DtComentario c: v.getCom()){%>
 						<div style="padding-left:<%=c.getNivel()*20%>px;" class="form-group row"><p><%=c.getNick()+": "+c.getTexto()%></p></div>
 					<%}%>
-				<%}%>
-			</div>
-		</form>
+				</div>
+			</form>
+		<%}%>
 		
-		<script src="js/app.js" charset="utf-8"></script>
-	
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-			crossorigin="anonymous"></script>
-		<script
-			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-			crossorigin="anonymous"></script>
-	
+		<script src="js/app.js" charset="utf-8"></script>	
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	</body>
 </html>

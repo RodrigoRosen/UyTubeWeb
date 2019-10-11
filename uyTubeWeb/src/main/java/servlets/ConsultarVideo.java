@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
+import datatypes.DtVideo;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 
@@ -34,11 +35,48 @@ public class ConsultarVideo extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String aux = request.getParameter("publicos");
 		if(aux == null)
 			aux = request.getParameter("privados");
 		if(aux != null) {
-			request.setAttribute("video", Integer.valueOf(aux));
+			IControlador icon = Fabrica.getIControlador();
+			DtVideo v = null;
+			try {
+				Integer i = Integer.valueOf(aux);
+				v = icon.findVideo(i);
+				request.setAttribute("video", v);
+				if(v != null) {	
+					HttpSession se = request.getSession();
+					String login = (String) se.getAttribute("login");
+					if(login != null) {
+						int gustar = 0;
+						boolean propio=false;
+						String user = (String) se.getAttribute("nickname");	
+						icon.seleccionarUsuario(user);
+						if(icon.seleccionarVideo(v.getNombre()) != null){
+							propio = true;
+						}
+						icon.finCasoUso();
+						if(!v.getPrivado()){
+							for(String s: v.getValoracionesPositivas()){
+								if(s.equals(user)){
+									gustar = 1; //el user le dio like al video
+								}
+							}
+							if(gustar == 0){
+								for(String s: v.getValoracionesNegativas()){
+									if(s.equals(user)){
+										gustar = -1; //el user le dio dislike al video
+									}
+								}						
+							}
+						}
+						request.setAttribute("gustar", gustar);
+						request.setAttribute("propio", propio);
+					}
+				}
+			}catch(Exception e) {}
 		}
 		request.getRequestDispatcher("consultarVideo.jsp").forward(request, response);
 	}

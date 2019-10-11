@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,19 +16,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 
 @WebServlet("/ConsultaUsuario")
-public class Usuario  extends HttpServlet {
+public class ConsultaUsuario  extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
     public ConsultaUsuario() {
         super();
     }
-
+    DtUsuario Usuario = null;
+	DtCanal Canal = null;
    
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,34 +39,38 @@ public class Usuario  extends HttpServlet {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
 		
-    //traigo todos los usuarios
-    //Map<String, String> usuarios = icon.
+		//traigo todos los usuarios
+		ArrayList<String> usuarios = icon.listarUsuarios();
     
 		//traigo la sesion para traer el usuario, para comparar si el seleccionado, es el consultado
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("logNick");
 		
-		//uso la función del controlador que devuelve el mapa de datos del uruario seleccionado
+		//uso la funciÃ³n del controlador que devuelve el mapa de datos del uruario seleccionado
 		 Map<DtUsuario, DtCanal> datos = icon.listarDatosUsuario(user);
 		 Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
-			DtUsuario usuario = null;
-			DtCanal canal = null;
 			while (it.hasNext()) {
 				Entry<DtUsuario, DtCanal> entry = it.next();
-				usuario = entry.getKey();
-				canal = entry.getValue();
+				Usuario = entry.getKey();
+				Canal = entry.getValue();
 			}
 			if (!datos.isEmpty()) request.setAttribute("usuario", datos);
 			
-      // De dónde saco si es private??
+      // De dÃ³nde saco si es private??
       // recordar que tiene que mostrar seguidos y seguidores (nombre y cantidad)
       // tiene que poder modificar los datos si la consulta es sobre el usuario logeado
       // tiene que poder acceder a listas y a videos del usuario
-      // consulta de video y consulta lista de reproducción
-      
+      // consulta de video y consulta lista de reproducciÃ³n
+ 
+			Map<String, DtUsuario> seguidores = Usuario.getSeguidores();
+			Map<String, DtUsuario> seguidos = Usuario.getSeguidos();
+			int num_seguidores=seguidores.size(), num_seguidors=seguidos.size();
+			
+			
+			
       //Map<String, String> videos = icon.;
 			
-			RequestDispatcher view = request.getRequestDispatcher("Usuario.jsp");
+			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");
 			view.forward(request, response);
 	}
 
@@ -68,7 +78,7 @@ public class Usuario  extends HttpServlet {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
 		
-		//en caso de que sea el logeado el que está consultando, se necesita poder modificar los datos del usuario
+		//en caso de que sea el logeado el que estÃ¡ consultando, se necesita poder modificar los datos del usuario
 		//No puede cambiar nickname ni correo
     String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
@@ -77,7 +87,7 @@ public class Usuario  extends HttpServlet {
 		Date fechaNac = new Date();
 		try {
 			fechaNac = formatter.parse(fecha);
-		} catch (ParseException e) {
+		} catch (java.text.ParseException e) {
 			System.out.println(e);
         }
 		
@@ -89,16 +99,18 @@ public class Usuario  extends HttpServlet {
 		System.out.println(request.getParameter("privado"));
 		if(request.getParameter("privado") == "Si")
 			privado = true;
-		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado);
-		//Boolean ok = icon.modificarUsuario(nickname, email, password, nombre, apellido, fechaNac, img, canal);
-    //revisar si asi se llama la función
+		DtCanal canal = new DtCanal(nombreCanal, descripcion, Usuario.getNickname(), privado);
+		icon.modificarUsuarioCanal(Usuario, Canal);
+		//Boolean ok = icon.modificarUsuarioCanal(Usuario., canal);nickname, email, password, nombre, apellido, fechaNac, img, canal);
+    //revisar si asi se llama la funciÃ³n
     
 		RequestDispatcher rd;
 		String resp = "index.jsp";
-		if(ok){
-			request.setAttribute("mensaje", "El usuario " + nickname + " ha sido modificado correctamente");
-		}else {
-			request.setAttribute("mensaje", "El usuario " + nickname + " o el email " + email + " ya existe!. Intentelo nuevamente");
+		try{
+			icon.modificarUsuarioCanal(Usuario, Canal);
+			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " ha sido modificado correctamente");
+		} catch (ParseException e) {
+			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " o el email " + Usuario.getEmail() + " ya existe!. Intentelo nuevamente");
 			resp = "altaUsuario.jsp";
 		}
 

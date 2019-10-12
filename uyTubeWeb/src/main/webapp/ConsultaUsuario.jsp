@@ -66,7 +66,7 @@
 		int num_seguidos=seguidos.size();
 		
 		Map<Integer, DtVideo> Videos = (Map<Integer, DtVideo>)request.getAttribute("Videos");
-		Map<Integer, DtLista> Listas = (Map<Integer, DtVideo>)request.getAttribute("Listas");
+		Map<Integer, DtLista> Listas = (Map<Integer, DtVLista>)request.getAttribute("Listas");
 		%>
 		
 		<h1 class="container">Perfil</h1>

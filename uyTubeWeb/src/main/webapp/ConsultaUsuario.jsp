@@ -5,6 +5,7 @@
 <%@page import="java.util.Date" %>
 <%@page import="java.util.Map"%>
 <%@ page import="java.util.Map.Entry"%>
+<%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -46,27 +47,68 @@
 			</nav>
 		</div>
 		<!-- Resto de la pag -->
+		<%ArrayList<String> usrs = (ArrayList<String>) request.getAttribute("usuarios"); %>
+		<form action="Usuarios" method="post" name="ConsultaUsuario" id="ConslutaUsuario">
+		<div class="container">
+				<div class="form-group row">
+				  <select class="custom-select col-xs-8 col-sm-8 col-md-8" id="vidsel" name="vidsel" >
+				    <option selected>Seleccione un usuario</option>
+	    			<%
+	    			if(usrs != null)
+					for (String usuario : usrs) {
+					%>
+					<option value="<%=usuario%>"><%=usuario%>
+					</option>
+					<%
+						}
+					%>
+				    
+				  </select>	
+				  <button type="submit" id="consultaUsr" class="btn btn-primary col-xs-4 col-sm-4 col-md-4">Mostrar datos del usuario seleccionado</button>
+				</div>
+			</div>
+		</form>
 		<%
-		Map<DtUsuario, DtCanal> usr = (Map<DtUsuario, DtCanal>) request.getAttribute("usuario");
+		DtUsuario dtusuario = (DtUsuario) request.getAttribute("Usuario");
 		String sesion = (String) request.getAttribute("user");
 		
-		String nickname = (String) request.getAttribute("nickname");
-		String email = (String) request.getAttribute("email");
-		String nombre = (String) request.getAttribute("nombre");
-		String apellido = (String) request.getAttribute("apellido");
-		Date fecha = (Date) request.getAttribute("fecha");
-		String img = (String) request.getAttribute("img");
-		String nom_canal = (String) request.getAttribute("nom_canal");
-		String descripcion = (String) request.getAttribute("descripcion");
-		Boolean privado = (Boolean) request.getAttribute("privado"); 
-		Map<String, DtUsuario> seguidores =(Map<String, DtUsuario>)request.getAttribute("seguidores");
-		Map<String, DtUsuario> seguidos = (Map<String, DtUsuario>)request.getAttribute("seguidos");
+		Date fecha;
+		String nickname = "";
+		String email = "";
+		String nombre = "";
+		String apellido = "";
+		String img = "";
+		String nom_canal = "";
+		String descripcion = "";
+		Boolean privado = false;
 		
-		int num_seguidores=seguidores.size();
-		int num_seguidos=seguidos.size();
+		DtUsuario usr = (DtUsuario) request.getAttribute("Usuario");
+		DtCanal cnl = (DtCanal) request.getAttribute("Canal");
 		
-		Map<Integer, DtVideo> Videos = (Map<Integer, DtVideo>)request.getAttribute("Videos");
-		Map<Integer, DtLista> Listas = (Map<Integer, DtVLista>)request.getAttribute("Listas");
+		if (usr!=null){
+			nickname= usr.getNickname();
+			email =usr.getEmail();
+			nombre=usr.getNombre();
+			apellido=usr.getApellido();
+			fecha=usr.getFechaNac();
+			img=usr.getImg();
+			nom_canal=cnl.getNombre();
+			descripcion=cnl.getDescripcion();
+			privado=cnl.isPrivado();
+			if (usr.getSeguidores()!=null){
+				ArrayList<String> seguidores =(ArrayList<String>)request.getAttribute("seguidores");	
+			}
+			if (usr.getSeguidos()!=null){
+				ArrayList<String> seguidos = (ArrayList<String>)request.getAttribute("seguidos");	
+			}
+			if (cnl.getListaVideos()!=null){
+				ArrayList<String> Videos = (ArrayList<String>)request.getAttribute("Videos");
+			}
+			if (cnl.getListasReproduccion()!=null){
+				ArrayList<String> Lista = (ArrayList<String>)request.getAttribute("Lista");	
+			}
+
+		}
 		%>
 		
 		<h1 class="container">Perfil</h1>
@@ -137,8 +179,8 @@
 						</div>						
 
 						<div class="form-group row">
-							<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4"><a href="index.jsp">Aceptar</a></button>
-							<% if (sesion!=nickname) {  %>
+							<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4"><a href="index.jsp"  style="color:white">Aceptar</a></button>
+							<% if (sesion==nickname) {  %>
 							<button type="submit" id="btnAceptar" class="btn btn-secundary col-xs-12 col-sm-4 col-md-4">Modificar</button>
 							<% } %>
 						</div>

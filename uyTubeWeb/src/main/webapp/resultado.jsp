@@ -3,6 +3,8 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
+<%@page import="datatypes.DtVideo"%>
+<%@page import="datatypes.DtUsuario"%>
 <html>
 
 
@@ -176,9 +178,7 @@
 								<li><a href="AltaLista">Crear Lista de Reproduccion
 										Particular</a></li>
 							</form>
-							<form action="ModificarDatosLista" method="get">
-								<li><a href="ModificarDatosLista">Modificar Lista de Reproduccion</a></li>
-							</form>
+							<li><a href="#">Modificar Lista de Reproduccion</a></li>
 							<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
 							<li><a href="#">Quitar Video de Lista de Reproduccion</a></li>
 							<li><a href="#">Consulta de Lista de Reproduccion</a></li>
@@ -202,14 +202,43 @@
 						</ul></li>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-xs-offset-12 row mx-auto">
-				<iframe class="col-xs-12" width="560" height="315"
-					src="https://www.youtube.com/embed/eywqpprrXX8" frameborder="0"
-					allowfullscreen></iframe>
-			</div>
-			<div class="col-sm-2 sidenav col-sm-offset-6">
-				<jsp:include page="listadoCategorias.jsp" />
-			</div>
+			<div class="md-form mt-0">
+				<%
+				if(request.getAttribute("videos") != null){
+					ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
+					String url;
+					String img;
+					String nombrevid;
+					String descripcionvid;
+					for(DtVideo dtvideo : videos){
+						url = "https://www.youtube.com/embed/"+dtvideo.getUrl();
+						img = "https://i.ytimg.com/vi/" + dtvideo.getUrl() +"/default.jpg";
+						nombrevid = dtvideo.getNombre();
+						descripcionvid = dtvideo.getDescripcion();
+						System.out.println(img +" = "+ url);
+					%>
+					<div class="row">
+						<div class=" container col-xs-12 col-sm-4">
+							<a href="consultarVideo.jsp">
+								<img class="hover"src="<%=img%>">	
+							</a>
+						</div>
+						<div class="container col-xs-12 col-sm-8">
+							<h3><%=nombrevid%></h3>
+							<h4><%=descripcionvid%></h4>
+						</div>
+					</div>
+				<%}
+				}else{
+				%>	
+					<h3>Sin Resultado...</h3>
+					
+				<%}; %>
+			</div>	
+				<div class="col-sm-2 sidenav col-sm-offset-6">
+					<jsp:include page="listadoCategorias.jsp" />
+				</div>
+			
 		</div>
 	</div>
 	

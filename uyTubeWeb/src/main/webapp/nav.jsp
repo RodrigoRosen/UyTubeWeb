@@ -1,6 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="index.jsp"><img src="imagenes/UyTube.png"
-		class="img-fluid" height="50px" width="150px"></a>
+	<a class="navbar-brand" href="index.jsp"><img
+		src="imagenes/UyTube.png" class="img-fluid" height="50px"
+		width="150px"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -10,7 +11,7 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			
+
 			<!-- MENU VIDEO -->
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
@@ -18,11 +19,11 @@
 				aria-expanded="false"> Videos </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-					<a class="dropdown-item" href="altaVideo.jsp">
-						<form action="AltaVideo" method="get">
-							<button type="submit" value="Submit" class="btn-link"></button>
-						</form>Alta Video
-					</a>
+
+					<form action="AltaVideo" method="get">
+						<li><button class="dropdown-item" type="submit" value="Submit" class="btn-link">Alta Video</button></li>
+					</form>
+
 					<%
 						String login = (String) session.getAttribute("login");
 						String username = (String) session.getAttribute("nickname");
@@ -35,10 +36,8 @@
 					<%
 						} else {
 					%>
-					<form action="ModificarDatosVideo" method="get">
-						<li><a class="dropdown-item nav-link disabled" href="#"
-							tabindex="-1" aria-disabled="true">Modificar Video</a></li>
-					</form>
+					<a class="dropdown-item nav-link disabled" href="#" tabindex="-1"
+						aria-disabled="true">Modificar Video</a>
 					<%
 						}
 						;
@@ -53,14 +52,39 @@
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Listas </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<%
+						if (username != null && username.length() > 0) {
+					%>
 					<form action="AltaLista" method="get">
 						<a class="dropdown-item" href="AltaLista">Crear Lista
 							Particular</a>
 					</form>
+					<%
+						} else {
+					%>
+					<a class="dropdown-item disabled" href="#" tabindex="-1"
+						aria-disabled="true">Crear Lista</a>
+					<%
+						}
+						;
+					%>
+					<%
+						if (username != null && username.length() > 0) {
+					%>
 					<form action="ModificarDatosLista" method="get">
 						<a class="dropdown-item" href="ModificarDatosLista">Modificar
 							Lista</a>
 					</form>
+					<%
+						} else {
+					%>
+					<a class="dropdown-item disabled" href="#" tabindex="-1"
+						aria-disabled="true">Modificar Lista</a>
+					<%
+						}
+						;
+					%>
+
 					<a class="dropdown-item" href="#">Agregar Video a Lista</a> <a
 						class="dropdown-item" href="#">Quitar Video de Lista</a> <a
 						class="dropdown-item" href="#">Consultar Lista</a>

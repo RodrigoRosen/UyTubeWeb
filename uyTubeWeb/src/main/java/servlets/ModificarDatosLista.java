@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import org.hibernate.Session;
 
 import datatypes.DtLista;
@@ -25,85 +24,76 @@ import interfaces.Fabrica;
 import interfaces.IControlador;
 
 /**
- * Servlet implementation class ModificarLista 
+ * Servlet implementation class ModificarLista
  */
 @WebServlet("/ModificarDatosLista")
 public class ModificarDatosLista extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ModificarDatosLista() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ModificarDatosLista() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		DtUsuario dtuser  = icon.seleccionarUsuario(user);/*Aca se debe usar el usuario logeado*/
+		DtUsuario dtuser = icon.seleccionarUsuario(user);/* Aca se debe usar el usuario logeado */
 		List<DtLista> listed = icon.listarListasParticulares(dtuser);
 		ArrayList<String> listas = new ArrayList<String>();
-		for(DtLista l: listed) {
+		for (DtLista l : listed) {
 			listas.add(l.getNombre());
 		}
-		if (!listas.isEmpty()) request.setAttribute("listas", listas);
+		if (!listas.isEmpty())
+			request.setAttribute("listas", listas);
 		RequestDispatcher view = request.getRequestDispatcher("modificarDatosLista.jsp");
 		view.forward(request, response);
 	}
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
-		
-		ArrayList<String> listCategory = icon.listarCategorias();
-		request.setAttribute("listCategory", listCategory);
-		
-		String nombre = request.getParameter("nombre");
-		Boolean esprivado = false;
-		if(request.getParameter("esprivado").equals("si")) {
-			esprivado = true;
-		}
-		Boolean esdefecto = false;
-		if(request.getParameter("esdefecto").equals("si")) {
-			esdefecto = true;
-		}
-		String category = request.getParameter("categoria");
-		
 		HttpSession session = request.getSession();
-		String user = (String) session.getAttribute("nickname");
 
-		//Seleccion de Usuario y Categoria
-		icon.seleccionarUsuario(user);
-		icon.seleccionarCategoria(category);
-		if (category != null) {
-			icon.seleccionarCategoria(category);
+		String user = (String) session.getAttribute("nickname");
+		DtUsuario usuario = icon.seleccionarUsuario(user);
+
+		// Nuevos Valores
+		String nombre = request.getParameter("nombre");
+		String newNombre = request.getParameter("newNombre");
+		Boolean newPrivado = false;
+		if (request.getParameter("newPrivado").equals("si")) {
+			newPrivado = true;
 		}
-		System.out.println("Llega hasta acaa4");
-		System.out.println(nombre);
+		String newCategory = request.getParameter("newCategoria");
 		DtLista oldLista = icon.seleccionarLista(nombre);
-		System.out.println("Llega hasta acaa4");
-		DtLista newLista = oldLista;
-		System.out.println(newLista.getNombre());
-		newLista.setNombre(nombre);
-		newLista.setPrivado(esprivado);
-		newLista.setDefecto(esdefecto);
-		newLista.setCategoria(category);
-		//Se ingresa el video
-		icon.modificarListaParticular(oldLista ,newLista);
+		DtLista newLista = new DtLista();
+		newLista.setNombre(newNombre);
+		newLista.setPrivado(newPrivado);
+		newLista.setCategoria(newCategory);
+
+		// Se modifica la lista
+		icon.listarListasParticulares(usuario);
+		icon.modificarListaParticular(oldLista, newLista);
 		RequestDispatcher rd;
 		request.setAttribute("mensaje", "Se ha modificado correctamente la lista " + nombre);
 		rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
-		//doGet(request, response);
+		rd.forward(request, response);
 	}
 
 }

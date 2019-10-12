@@ -43,7 +43,7 @@
 		</div>
 
 
-<!--Modal: Login / Register Form-->
+		<!--Modal: Login / Register Form-->
 		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog cascading-modal" role="document">
@@ -105,8 +105,8 @@
 	</div>
 	<!-- Resto de la pag -->
 
-<%-- 	<h2>${mensaje}</h2> --%>
-		<div class="alert alert-primary alert-dismissible fade show"
+	<%-- 	<h2>${mensaje}</h2> --%>
+	<div class="alert alert-primary alert-dismissible fade show"
 		role="alert">
 		${mensaje}
 		<button type="button" class="close" data-dismiss="alert"
@@ -114,95 +114,128 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-	<% ArrayList<String> lists = (ArrayList<String>) request.getAttribute("listas"); %>
-	<form action="DatosLista" method="post" name="ModificarDatosLista" id="modificarDatosLista">
+	<%
+		ArrayList<String> lists = (ArrayList<String>) request.getAttribute("listas");
+	%>
+	<form action="DatosLista" method="post" name="ModificarDatosLista"
+		id="modificarDatosLista">
 		<div class="container">
 			<div class="body row">
 				<div class="form-group row">
-				  <select class="custom-select col-xs-12 col-sm-4 col-md-4" id="listsel" name="listsel" >
-				    <option selected>Seleccione una lista</option>
-	    			<%
-	    			if(lists != null)
-					for (String lista : lists) {
-					%>
-					<option value="<%=lista%>"><%=lista%>
-					</option>
-					<%
-						}
-					%>
-				    
-				  </select>	
-				  <button type="submit" id="btnModList" class="btn btn-primary col-xs-12 col-sm-8 col-md-8">Mostrar Datos Lista</button>
+					<select class="custom-select col-xs-8 col-sm-8 col-md-8"
+						id="listsel" name="listsel">
+						<option selected>Seleccione una lista</option>
+						<%
+							if (lists != null)
+								for (String lista : lists) {
+						%>
+						<option value="<%=lista%>"><%=lista%>
+						</option>
+						<%
+							}
+						%>
+
+					</select>
+					<button type="submit" id="btnModList"
+						class="btn btn-primary col-xs-4 col-sm-4 col-md-4">Mostrar
+						Datos Lista</button>
 				</div>
 			</div>
 		</div>
 	</form>
-	<%DtLista dtlista = (DtLista) request.getAttribute("dtl"); 
+	<%
+		DtLista dtlista = (DtLista) request.getAttribute("dtl");
 		String nombre = " ";
+		String newNombre = " ";
 		Boolean privado = false;
 		String esprivado = "";
-		Boolean defecto = false;
-		String esdefecto = "";
+		String newPrivado = "";
 		String categoria = " ";
-		if(dtlista != null){
+		String newCategoria = " ";
+		if (dtlista != null) {
 			nombre = dtlista.getNombre();
-			defecto = dtlista.isDefecto();
+			newNombre = nombre;
 			categoria = dtlista.getCategoria();
-			if(dtlista.isPrivado())
+			newCategoria = categoria;
+			if (dtlista.isPrivado()) {
 				esprivado = "si";
-			else 
+				newPrivado = "si";
+			} else {
 				esprivado = "no";
-			if(dtlista.isDefecto())
-				esdefecto = "si";
-			else 
-				esdefecto = "no";
+				newPrivado = "no";
+			}
 		}
 	%>
-	<form action="ModificarDatosLista" method="post" name="ModificarDatosLista" id="modificarDatosLista">
+	<form action="ModificarDatosLista" method="post"
+		name="ModificarDatosLista" id="modificarDatosLista">
 		<div class="container">
 			<div class="form-group row">
+				<h6 class="col-xs-2 col-sm-2">Nombre</h6>
 				<input type="text" name="nombre"
-				class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre"
-				aria-describedby="emailHelp" placeholder="<%=nombre%>" value="<%=nombre%>">
-			</div>
-			
-				<div class="form-group row">
-				<h3 class="col-xs-4 col-sm-4">Es privado?</h3>
-				<select class="custom-select col-xs-8 col-sm-8 col-md-8" id="esprivado" name="esprivado" >
-				    <option selected><%=esprivado%></option>
-					<option value="si">si
-					</option>
-					<option value="no">no
-					</option>
-				    
-				  </select>	
+					class="form-control col-xs-4 col-sm-4 col-md-4" id="nombre"
+					aria-describedby="emailHelp" placeholder="<%=nombre%>"
+					value="<%=nombre%>" readonly>
+				<h6 class="col-xs-2 col-sm-2">Nuevo Nombre:</h6>
+				<input type="text" name="newNombre"
+					class="form-control col-xs-4 col-sm-4 col-md-4" id="newNombre"
+					aria-describedby="emailHelp" placeholder="<%=newNombre%>"
+					value="<%=newNombre%>">
 			</div>
 			<div class="form-group row">
-				<h3 class="col-xs-4 col-sm-4">Es defecto?</h3>
-				<select class="custom-select col-xs-8 col-sm-8 col-md-8" id="esdefecto" name="esdefecto" >
-				    <option selected><%=esdefecto%></option>
-					<option value="si">si
-					</option>
-					<option value="no">no
-					</option>
-				    
-				  </select>	
+				<h6 class="col-xs-2 col-sm-2">Privado</h6>
+				<select class="custom-select col-xs-4 col-sm-4 col-md-4"
+					id="esprivado" name="esprivado" disabled="true">
+					<option selected><%=esprivado%></option>
+					<!-- <option value="si">si</option>
+					<option value="no">no</option>-->
+				</select>
+				<h6 class="col-xs-2 col-sm-2">Nuevo Privado</h6>
+				<select class="custom-select col-xs-4 col-sm-4 col-md-4"
+					id="newPrivado" name="newPrivado">
+					<option selected><%=esprivado%></option>
+					<option value="si">si</option>
+					<option value="no">no</option>
+
+				</select>
 			</div>
-			<% ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias"); %>
-			<select class="custom-select col-xs-12 col-sm-4 col-md-4" id="categoria" name="categoria" >
-			    <option selected><%=categoria%></option>
-    			<%
-    			if(categorias != null)
-				for (String cat : categorias) {
-				%>
-				<option value="<%=cat%>"><%=cat%>
-				</option>
-				<%
-					}
-				%>			    
-			  </select>
+			<%
+				ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias");
+			%>
 			<div class="form-group row">
-				<button type="submit" id="btnAceptar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
+				<h6 class="col-xs-2 col-sm-2">Categoria</h6>
+				<select class="custom-select col-xs-4 col-sm-4 col-md-4"
+					id="categoria" name="categoria" disabled="true">
+					<option selected><%=categoria%></option>
+					<!-- 
+					<%
+						if (categorias != null)
+							for (String cat : categorias) {
+					%>
+					<option value="<%=cat%>"><%=cat%>
+					</option>
+					<%
+						}
+					%>-->
+
+				</select>
+				<h6 class="col-xs-2 col-sm-2">Nueva Categoria</h6>
+				<select class="custom-select col-xs-4 col-sm-4 col-md-4"
+					id="newCategoria" name="newCategoria">
+					<option selected><%=categoria%></option>
+					<%
+						if (categorias != null)
+							for (String cat : categorias) {
+					%>
+					<option value="<%=cat%>"><%=cat%>
+					</option>
+					<%
+						}
+					%>
+				</select>
+			</div>
+			<div class="form-group row">
+				<button type="submit" id="btnAceptar"
+					class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>
 			</div>
 		</div>
 	</form>

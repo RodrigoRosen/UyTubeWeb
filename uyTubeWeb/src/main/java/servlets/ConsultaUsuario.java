@@ -20,6 +20,8 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
+import datatypes.DtVideo;
+import datatypes.DtLista;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 
@@ -62,13 +64,23 @@ public class ConsultaUsuario  extends HttpServlet {
       // tiene que poder acceder a listas y a videos del usuario
       // consulta de video y consulta lista de reproducciÃ³n
  
+			String nickname = Usuario.getNickname();
+			String email = Usuario.getEmail();
+			String nombre = Usuario.getNombre();
+			String apellido = Usuario.getApellido();
+			Date fecha = Usuario.getFechaNac();
+			String img = Usuario.getImg();
+			String nom_canal = Canal.getNombre();
+			String descripcion = Canal.getDescripcion();
+			boolean privado = Canal.isPrivado(); 
+			
 			Map<String, DtUsuario> seguidores = Usuario.getSeguidores();
 			Map<String, DtUsuario> seguidos = Usuario.getSeguidos();
-			int num_seguidores=seguidores.size(), num_seguidors=seguidos.size();
 			
+			int num_seguidores=seguidores.size(), num_seguidos=seguidos.size();
 			
-			
-      //Map<String, String> videos = icon.;
+			Map<Integer, DtVideo> Videos = Canal.getListaVideos();
+			Map<Integer, DtLista> Listas = Canal.getListasReproduccion();
 			
 			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");
 			view.forward(request, response);
@@ -100,18 +112,16 @@ public class ConsultaUsuario  extends HttpServlet {
 		if(request.getParameter("privado") == "Si")
 			privado = true;
 		DtCanal canal = new DtCanal(nombreCanal, descripcion, Usuario.getNickname(), privado);
-		icon.modificarUsuarioCanal(Usuario, Canal);
-		//Boolean ok = icon.modificarUsuarioCanal(Usuario., canal);nickname, email, password, nombre, apellido, fechaNac, img, canal);
-    //revisar si asi se llama la funciÃ³n
-    
+		DtUsuario usuario = new DtUsuario(Usuario.getNickname());
+		
 		RequestDispatcher rd;
 		String resp = "index.jsp";
 		try{
-			icon.modificarUsuarioCanal(Usuario, Canal);
+			icon.modificarUsuarioCanal(usuario, canal);
 			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " ha sido modificado correctamente");
 		} catch (ParseException e) {
-			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " o el email " + Usuario.getEmail() + " ya existe!. Intentelo nuevamente");
-			resp = "altaUsuario.jsp";
+			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " no se ha podido modificar. Intentelo nuevamente");
+			resp = "ConsultaUsuario.jsp";
 		}
 
 		rd = request.getRequestDispatcher(resp);

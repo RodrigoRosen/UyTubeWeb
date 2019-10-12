@@ -119,13 +119,11 @@
 				<select class="custom-select col-xs-4 col-sm-4 col-md-4"
 					id="esprivado" name="esprivado" disabled="true">
 					<option selected><%=esprivado%></option>
-					<!-- <option value="si">si</option>
-					<option value="no">no</option>-->
 				</select>
 				<h6 class="col-xs-2 col-sm-2">Nuevo Privado</h6>
 				<select class="custom-select col-xs-4 col-sm-4 col-md-4"
 					id="newPrivado" name="newPrivado">
-					<option selected><%=esprivado%></option>
+					<option selected><%=newPrivado%></option>
 					<option value="si">si</option>
 					<option value="no">no</option>
 

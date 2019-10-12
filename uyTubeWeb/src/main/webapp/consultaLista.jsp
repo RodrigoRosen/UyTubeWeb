@@ -3,6 +3,9 @@
 <%@ page import="datatypes.DtLista"%>
 <%@ page import="datatypes.DtVideo"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.Map.Entry"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,66 +209,177 @@
 						</ul></li>
 				</ul>
 			</div>
+			<%
+						DtLista datosLista = (DtLista) request.getAttribute("datosLista");
+					%>
+
+			<div class="modal fade" id="agregarVideo" tabindex="-1" role="dialog"
+				aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Agregar video</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form id="Agregar Video" action="AgregarVideoLista" method="post">
+							<div class="modal-body mx-auto">
+								
+								<input type="text" name="IDVIDEO" class="form-control-group"
+								id="IDVIDEO" hidden>
+								<input type="text" name="TEXTVIDEO" class="form-control-group"
+								id="TEXTVIDEO" hidden>
+								<input type="text" name="nombreLista" hidden value="<%=datosLista.getNombre()%>">
+								<div class="form-group row ">
+									<div class="input-group-prepend">
+										<label class="input-group-text" for="inputGroupSelect01">Mis
+											Videos Privados</label>
+									</div>
+									<select
+										class="custom-select form-control col-xs-4 col-sm-4 col-md-4"
+										id="vidPrivado" name="vidPrivado">
+										<option selected>Elegir...</option>
+										<%
+											HashMap<Integer, String> videosPrivados = (HashMap<Integer, String>) request.getAttribute("videosPrivados");
+											if (videosPrivados != null && videosPrivados.size() > 0) {
+												for (Entry<Integer,String> entry : videosPrivados.entrySet()) {
+										%>
+										<option value="<%=entry.getKey()%>"><%=entry.getValue()%></option>
+										<%
+											}
+										}
+										%>
+									</select>
+									<div class="input-group-prepend">
+										<label class="input-group-text" for="inputGroupSelect01">Todos
+											los videos publicos disponibles</label>
+									</div>
+									<select
+										class="custom-select form-control col-xs-4 col-sm-4 col-md-4"
+										id="vidPublico" name="vidPublico">
+										<option selected>Elegir...</option>
+										<%
+											HashMap<Integer, String> videosPublicos = (HashMap<Integer, String>) session.getAttribute("videosPublicos");
+											if (videosPublicos != null && videosPublicos.size() > 0) {
+												for (Entry<Integer,String> entry : videosPublicos.entrySet()) {
+										%>
+										<option value="<%=entry.getKey()%>"><%=entry.getValue()%></option>
+										<%
+											}
+										}
+										%>
+									</select>
+								</div>
+								<div class="text-center mt-2"></div>
+							</div>
+							<div class="modal-footer-center">
+								<button id="submitAdd" type="button" onclick="agregarVideo()" class="btn btn-info">
+									Agregar video <i class="fas fa-sign-in ml-1"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+
+
 
 			<form class="mx-auto col-sm-6">
-				<%
-					DtLista datosLista = (DtLista) request.getAttribute("datosLista");
-				%>
-				<div class="form-group row">
-					<label for="lblNombreLista" class="col-sm-2 col-form-label">Nombre
-						de Lista</label>
-					<div class="col-sm-10">
-						<input type="text" readonly class="form-control-plaintext"
-							id="nombreLista" value="<%=datosLista.getNombre()%>">
+				<div class="container">
+					
+					<div class="form-group row">
+						<div class="form-group row">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon1">Nombre
+									de lista</span>
+							</div>
+							<input type="text" name="nombreLista" class="form-control-group"
+								id="txtNombreLista" readonly value="<%=datosLista.getNombre()%>">
+						</div>
 					</div>
-				</div>
-				<div class="form-group row">
-					<label for="lblPrivado" class="col-sm-2 col-form-label">Privado</label>
-					<div class="col-sm-10">
-						<input onclick="return false"
+					<div class="form-group row">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon2">Privada?</span>
+						</div>
+						<input type="checkbox"
 							style="width: 35px; height: 20px; margin-left: 20px; margin-top: 7px"
-							type="checkbox" value="<%=datosLista.isPrivado()%>">
+							name="privada" onclick="return false" id="chkPrivada"
+							value="<%=datosLista.isPrivado()%>">
 					</div>
+					<%
+						if (datosLista.getCategoria() != null) {
+					%>
+					<div class="form-group row">
+						<div class="form-group row">
+							<div class="input-group-prepend">
+								<span class="input-group-text" id="basic-addon3">Categoria</span>
+							</div>
+							<input type="text" readonly class="form-control-plaintext-group"
+								id="nombreCategoria" value="<%=datosLista.getCategoria()%>">
+							<i class="fas fa-tags" style="text-align: Center"></i>
+						</div>
+					</div>
+					<%
+						}
+					%>
 
-				</div>
-				<%
-					if (datosLista.getCategoria() != null) {
-				%>
-				<div class="form-group row">
-					<label for="lblNombreCategoria" class="col-sm-2 col-form-label">Categoria</label>
-					<div class="col-sm-4 inline">
-						<i class="fas fa-tags group"></i> <input type="text" readonly
-							class="form-control-plaintext-group" id="nombreCategoria"
-							value="<%=datosLista.getCategoria()%>">
+					<div class="form-group row">
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#agregarVideo">Agregar video a lista</button>
 					</div>
+					<%
+						ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
+						if (videos != null && videos.size() != 0) {
+					%>
+					<div class="form-group row  ">
+						<ul class="list-group px-md-5">
+							<%
+								boolean esDuenio = (boolean) request.getAttribute("esDuenio");
+									for (DtVideo vid : videos) {
+							%>
+							<%
+								if (vid.getPrivado() && esDuenio) {
+							%>
+							<li class="list-group-item"><%=vid.getNombre()%></li>
+							<%
+								} else if (!vid.getPrivado()) {
+							%>
+							<li class="list-group-item"><%=vid.getNombre()%></li>
+							<%
+								}
+									}
+							%>
+						</ul>
+					</div>
+					<%
+						}
+					%>
 				</div>
-				<%
-					}
-				%>
-				<%
-					ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
-					if (videos != null && videos.size() != 0) {
-				%>
-				<div class="form-group row  ">
-					<ul class="list-group px-md-5">
-						<%
-							for (DtVideo vid : videos) {
-						%>
-						<li class="list-group-item"><%=vid.getNombre()%></li>
-						<%
-							}
-						%>
-					</ul>
-				</div>
-				<%
-					}
-				%>
 			</form>
 			<div class="col-sm-2 sidenav col-sm-offset-6">
 				<jsp:include page="listadoCategorias.jsp" />
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		function agregarVideo(){
+				var id = document.getElementById("vidPrivado").value;
+				var text = $('#vidPrivado').find(":selected").text();
+				if (id == 0 || id == undefined || id == "Elegir...")  {
+					id = document.getElementById("vidPublico").value;
+					text = $('#vidPublico').find(":selected").text();
+				}
+				document.getElementById("IDVIDEO").value = id;				
+				document.getElementById("TEXTVIDEO").value = text;
+				document.getElementById("Agregar Video").submit();
+				
+
+			}
+	</script>
 
 	<script src="js/app.js" charset="utf-8"></script>
 

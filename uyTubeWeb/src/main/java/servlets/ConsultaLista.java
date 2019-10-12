@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import antlr.Parser;
 import datatypes.DtLista;
@@ -38,9 +40,22 @@ public class ConsultaLista extends HttpServlet {
 		// TODO Auto-generated method stub
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
-		int id = Integer.parseInt(request.getParameter("IDLISTA"));
+		String idString = (String) request.getParameter("IDLISTA");		
+		int id = Integer.parseInt(idString);
+		HttpSession session = request.getSession();
+		String username = (String) session.getAttribute("nickname");		
+		if (idString != null && id != 0) {
 		DtLista datosLista = icon.findLista(id);
+		String duenio = null;		
 		if (datosLista != null) {
+			if (username != null) {
+				duenio = icon.findDuenioLista(id);
+				if (duenio.equals(username)) {
+					request.setAttribute("esDuenio", true);
+					HashMap<Integer,String> videosPrivados = icon.listarVideosPrivados(username);
+					if (videosPrivados != null) request.setAttribute("videosPrivados", videosPrivados);		
+				}
+			}
 			request.setAttribute("datosLista", datosLista);
 			ArrayList<DtVideo> videos = icon.videosEnListaPublica(datosLista);
 			if (videos != null) request.setAttribute("videos", videos);
@@ -51,6 +66,10 @@ public class ConsultaLista extends HttpServlet {
 		}
 		RequestDispatcher view = request.getRequestDispatcher("consultaLista.jsp");
 		view.forward(request, response);
+		}
+		else {
+			response.sendError(403);
+		}
 		
 	}
 

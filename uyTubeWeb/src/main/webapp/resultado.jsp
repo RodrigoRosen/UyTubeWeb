@@ -204,7 +204,12 @@
 						</ul></li>
 				</ul>
 			</div>
+			
+			
+			
+			
 			<div class="md-form mt-0">
+			<h2>Videos</h2>
 				<%
 				if(request.getAttribute("videos") != null){
 					ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
@@ -212,16 +217,18 @@
 					String img;
 					String nombrevid;
 					String descripcionvid;
+					Integer id;
 					for(DtVideo dtvideo : videos){
 						url = "https://www.youtube.com/embed/"+dtvideo.getUrl();
 						img = "https://i.ytimg.com/vi/" + dtvideo.getUrl() +"/default.jpg";
 						nombrevid = dtvideo.getNombre();
 						descripcionvid = dtvideo.getDescripcion();
 						System.out.println(img +" = "+ url);
+						id =dtvideo.getId();
 					%>
 					<div class="row">
 						<div class=" container col-xs-12 col-sm-4">
-							<a href="consultarVideo.jsp">
+							<a href="ConsultarVideo?id=<%=id%>">
 								<img class="hover"src="<%=img%>">	
 							</a>
 						</div>
@@ -236,7 +243,79 @@
 					<h3>Sin Resultado...</h3>
 					
 				<%}; %>
+				
+				<h2>Listas</h2>
+				<%
+				if(request.getAttribute("listas") != null){
+					ArrayList<DtLista> listas = (ArrayList<DtLista>) request.getAttribute("listas");
+					String nombrelist;
+					String categorialist;
+					Integer id;
+					for(DtLista dtlista : listas){
+						nombrelist = dtlista.getNombre();
+						categorialist = dtlista.getCategoria();
+						id = dtlista.getId();
+					%>
+					<div class="row">
+						<div class=" container col-xs-12 col-sm-4">
+							<a href="ConsultaLista?IDLISTA=<%=id%>">
+								<h3><%=nombrelist%></h3>
+							</a>
+						</div>
+						<div class="container col-xs-12 col-sm-8">
+							<h4><%=categorialist%></h4>
+						</div>
+					</div>
+				<%}
+				}else{
+				%>	
+					<h3>Sin Resultado...</h3>
+					
+				<%}; %>
+				
+				
+				
+				<h2>Canales</h2>
+					<div class="row">
+						<div class=" container col-xs-12 col-sm-4">
+<%-- 							<a href="ConsultaLista?IDLISTA=<%=id%>"> --%>
+								<h3>Nombre</h3>
+<!-- 							</a> -->
+						</div>
+						<div class="container col-xs-12 col-sm-8">
+							<h4>Propietario</h4>
+						</div>
+					</div>
+				<%
+				if(request.getAttribute("canales") != null){
+					ArrayList<DtCanal> canales = (ArrayList<DtCanal>) request.getAttribute("canales");
+					String nomCanal;
+					String descCanal;
+					String propietario;
+					for(DtCanal dtcanal : canales){
+						nomCanal = dtcanal.getNombre();
+						descCanal = dtcanal.getDescripcion();
+						propietario = dtcanal.getNick();
+					%>
+					<div class="row">
+						<div class=" container col-xs-12 col-sm-4">
+<%-- 							<a href="ConsultaLista?IDLISTA=<%=id%>"> --%>
+								<h3><%=nomCanal%></h3>
+<!-- 							</a> -->
+						</div>
+						<div class="container col-xs-12 col-sm-8">
+							<h4><%=propietario%></h4>
+						</div>
+					</div>
+				<%}
+				}else{
+				%>	
+					<h3>Sin Resultado...</h3>
+					
+				<%}; %>			
+				
 			</div>	
+			
 				<div class="col-sm-2 sidenav col-sm-offset-6">
 					<jsp:include page="listadoCategorias.jsp" />
 				</div>

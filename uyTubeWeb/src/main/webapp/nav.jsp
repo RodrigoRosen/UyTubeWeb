@@ -1,7 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="index.jsp"><img
-		src="imagenes/UyTube.png" class="img-fluid" height="50px"
-		width="150px"></a>
+	<form action="Index" method="get">
+		<input class="navbar-brand" type="image" src="imagenes/UyTube.png"
+			height="auto" width="150px">
+	</form>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -19,14 +20,26 @@
 				aria-expanded="false"> Videos </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-
-					<form action="AltaVideo" method="get">
-						<li><button class="dropdown-item" type="submit" value="Submit" class="btn-link">Alta Video</button></li>
-					</form>
-
 					<%
 						String login = (String) session.getAttribute("login");
 						String username = (String) session.getAttribute("nickname");
+						if (username != null && username.length() > 0) {
+					%>
+					<form action="AltaVideo" method="get">
+						<li><button class="dropdown-item" type="submit"
+								value="Submit" class="btn-link">Alta Video</button></li>
+					</form>
+					<%
+						} else {
+					%>
+					<a class="dropdown-item disabled" href="#" tabindex="-1"
+						aria-disabled="true">Alta Video</a>
+					<%
+						}
+						;
+					%>
+
+					<%
 						if (username != null && username.length() > 0) {
 					%>
 					<form action="ModificarDatosVideo" method="get">
@@ -36,7 +49,7 @@
 					<%
 						} else {
 					%>
-					<a class="dropdown-item nav-link disabled" href="#" tabindex="-1"
+					<a class="dropdown-item disabled" href="#" tabindex="-1"
 						aria-disabled="true">Modificar Video</a>
 					<%
 						}
@@ -97,12 +110,11 @@
 				aria-expanded="false"> Categorias </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="altaCategoria.jsp">Crear
-						Categoria</a> <a class="dropdown-item" href="listadoCategorias">
-						<form action="ListarCategorias" method="get">
-							<button type="submit" value="Submit" class="btn-link"></button>
-						</form> Listar Categorias
-					</a>
-
+						Categoria</a>
+					<form action="ListarCategorias" method="get">
+						<li><button class="dropdown-item" type="submit"
+								value="Submit" class="btn-link">Listar Categorias</button></li>
+					</form>
 				</div></li>
 
 			<!-- MENU USUARIO -->

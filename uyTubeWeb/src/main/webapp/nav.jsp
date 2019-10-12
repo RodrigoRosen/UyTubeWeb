@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="#"><img src="imagenes/UyTube.png"
+	<a class="navbar-brand" href="index.jsp"><img src="imagenes/UyTube.png"
 		class="img-fluid" height="50px" width="150px"></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
@@ -10,10 +10,7 @@
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link" href="#">Home
-					<span class="sr-only">(current)</span>
-			</a></li>
-
+			
 			<!-- MENU VIDEO -->
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"

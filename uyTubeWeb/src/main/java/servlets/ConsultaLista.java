@@ -51,7 +51,7 @@ public class ConsultaLista extends HttpServlet {
 			if (username != null) {
 				duenio = icon.findDuenioLista(id);
 				if (duenio.equals(username)) {
-					request.setAttribute("esDuenio", true);
+					request.setAttribute("Propietario", "Propietario");
 					HashMap<Integer,String> videosPrivados = icon.listarVideosPrivados(username);
 					if (videosPrivados != null) request.setAttribute("videosPrivados", videosPrivados);		
 				}

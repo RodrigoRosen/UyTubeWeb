@@ -58,8 +58,7 @@
 				</form>
 			</div>
 			<%
-				}
-				;
+				} ;
 			%>
 			<!--Modal: Login / Register Form-->
 			<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
@@ -170,8 +169,7 @@
 								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
 							</form>
 							<%
-								}
-								;
+								} ;
 							%>
 							<li><a href="consultarVideo.jsp">Consultar Video</a></li>
 							<li><a href="#">Comentar un Video</a></li>
@@ -210,8 +208,8 @@
 				</ul>
 			</div>
 			<%
-						DtLista datosLista = (DtLista) request.getAttribute("datosLista");
-					%>
+				DtLista datosLista = (DtLista) request.getAttribute("datosLista");
+			%>
 
 			<div class="modal fade" id="agregarVideo" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -226,12 +224,12 @@
 						</div>
 						<form id="Agregar Video" action="AgregarVideoLista" method="post">
 							<div class="modal-body mx-auto">
-								
+
 								<input type="text" name="IDVIDEO" class="form-control-group"
-								id="IDVIDEO" hidden>
-								<input type="text" name="TEXTVIDEO" class="form-control-group"
-								id="TEXTVIDEO" hidden>
-								<input type="text" name="nombreLista" hidden value="<%=datosLista.getNombre()%>">
+									id="IDVIDEO" hidden> <input type="text"
+									name="TEXTVIDEO" class="form-control-group" id="TEXTVIDEO"
+									hidden> <input type="text" name="nombreLista" hidden
+									value="<%=datosLista.getNombre()%>">
 								<div class="form-group row ">
 									<div class="input-group-prepend">
 										<label class="input-group-text" for="inputGroupSelect01">Mis
@@ -244,12 +242,12 @@
 										<%
 											HashMap<Integer, String> videosPrivados = (HashMap<Integer, String>) request.getAttribute("videosPrivados");
 											if (videosPrivados != null && videosPrivados.size() > 0) {
-												for (Entry<Integer,String> entry : videosPrivados.entrySet()) {
+												for (Entry<Integer, String> entry : videosPrivados.entrySet()) {
 										%>
 										<option value="<%=entry.getKey()%>"><%=entry.getValue()%></option>
 										<%
 											}
-										}
+											}
 										%>
 									</select>
 									<div class="input-group-prepend">
@@ -263,19 +261,20 @@
 										<%
 											HashMap<Integer, String> videosPublicos = (HashMap<Integer, String>) session.getAttribute("videosPublicos");
 											if (videosPublicos != null && videosPublicos.size() > 0) {
-												for (Entry<Integer,String> entry : videosPublicos.entrySet()) {
+												for (Entry<Integer, String> entry : videosPublicos.entrySet()) {
 										%>
 										<option value="<%=entry.getKey()%>"><%=entry.getValue()%></option>
 										<%
 											}
-										}
+											}
 										%>
 									</select>
 								</div>
 								<div class="text-center mt-2"></div>
 							</div>
 							<div class="modal-footer-center">
-								<button id="submitAdd" type="button" onclick="agregarVideo()" class="btn btn-info">
+								<button id="submitAdd" type="button" onclick="agregarVideo()"
+									class="btn btn-info">
 									Agregar video <i class="fas fa-sign-in ml-1"></i>
 								</button>
 							</div>
@@ -290,7 +289,7 @@
 
 			<form class="mx-auto col-sm-6">
 				<div class="container">
-					
+
 					<div class="form-group row">
 						<div class="form-group row">
 							<div class="input-group-prepend">
@@ -326,50 +325,70 @@
 					<%
 						}
 					%>
-					
-<%-- 					<%   --%>
-<!-- // 						boolean esDuenio = (boolean) request.getAttribute("esDuenio"); -->
-					
-<!-- // 						if (esDuenio) { -->
-<%-- 					%> --%>
-					
-<%-- 					<% } %> --%>
-					
+
 					<%
-						ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
-						if (videos != null && videos.size() != 0) {
-							boolean owner = (boolean) request.getAttribute("esDuenio");
+						String duenio = (String) request.getAttribute("Propietario");
 					%>
 					<div class="form-group row  ">
-						<% if (owner){ %>
-						<div class="form-group row">
+						<%
+							if (duenio != null && duenio.equals("Propietario")) {
+						%>
+						<div class="form-group">
 							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#agregarVideo">Agregar video a lista</button>
+								data-target="#agregarVideo">Agregar video a lista<i class="fas fa-plus-circle px-md-2"></i></button>
 						</div>
-						<% } %>
-						<ul class="list-group px-md-5">
-							<%
-								
+						<%
+							}
+						%>
+						<%
+							ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
+							if (videos != null && videos.size() != 0) {
+						%>
+						<div class="container">
+							<ul class="list-group px-md-5">
+								<%
 									for (DtVideo vid : videos) {
-							%>
-							<%
-								if (vid.getPrivado() && owner) {
-							%>
-							<li class="list-group-item"><%=vid.getNombre()%></li>
-							<%
-								} else if (!vid.getPrivado()) {
-							%>
-							<li class="list-group-item"><%=vid.getNombre()%></li>
-							<%
-								}
+								%>
+								<%
+									if (vid.getPrivado() && duenio != null && duenio.equals("Propietario")) {
+								%>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center"><%=vid.getNombre()%>
+									<button type="button" class="btn btn-danger"
+										onclick="quitarVideo('<%=vid.getNombre()%>')">
+										<i class="fas fa-minus-circle"></i>
+									</button></li>
+								<%
+									} else if (!vid.getPrivado()) {
+								%>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center"><%=vid.getNombre()%>
+									<%
+										if (duenio != null && duenio.equals("Propietario")) {
+									%>
+									<button type="button" class="btn btn-danger"
+										onclick="quitarVideo('<%=vid.getNombre()%>')">
+										<%
+											}
+										%>
+										<i class="fas fa-minus-circle"></i>
+									</button></li>
+								<%
 									}
-							%>
-						</ul>
+										}
+								%>
+							</ul>
+						</div>
 					</div>
 					<%
 						}
 					%>
 				</div>
+			</form>
+			<form id="Quitar Video Lista" action="QuitarVideoLista" method="post">
+				<input type="text" name="VideoDeleteName" class="form-control-group"
+					id="VideoDeleteName" hidden> <input type="text"
+					name="listaSelected" hidden value="<%=datosLista.getNombre()%>">
 			</form>
 			<div class="col-sm-2 sidenav col-sm-offset-6">
 				<jsp:include page="listadoCategorias.jsp" />
@@ -377,19 +396,39 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		function agregarVideo(){
-				var id = document.getElementById("vidPrivado").value;
-				var text = $('#vidPrivado').find(":selected").text();
-				if (id == 0 || id == undefined || id == "Elegir...")  {
-					id = document.getElementById("vidPublico").value;
-					text = $('#vidPublico').find(":selected").text();
-				}
-				document.getElementById("IDVIDEO").value = id;				
-				document.getElementById("TEXTVIDEO").value = text;
-				document.getElementById("Agregar Video").submit();
-				
-
+		$("#vidPrivado").change(function(){
+			var vid = document.getElementById("vidPrivado").value;
+			if (vid != "Elegir...")	 {
+				$("#vidPublico").prop('disabled',true);
 			}
+			else {
+				$("#vidPublico").prop('disabled',false);
+			}
+		});
+		$("#vidPublico").change(function(){
+			var vid = document.getElementById("vidPublico").value;
+			if (vid != "Elegir..."){
+				$("#vidPrivado").prop('disabled',true);
+			}
+			else {
+				$("#vidPrivado").prop('disabled',false);
+			}
+		});
+		function agregarVideo() {
+			var id = document.getElementById("vidPrivado").value;
+			var text = $('#vidPrivado').find(":selected").text();
+			if (id == 0 || id == undefined || id == "Elegir...") {
+				id = document.getElementById("vidPublico").value;
+				text = $('#vidPublico').find(":selected").text();
+			}
+			document.getElementById("IDVIDEO").value = id;
+			document.getElementById("TEXTVIDEO").value = text;
+			document.getElementById("Agregar Video").submit();
+		};
+		function quitarVideo(nameVideo) {
+			document.getElementById("VideoDeleteName").value = nameVideo;
+			document.getElementById("Quitar Video Lista").submit();
+		};
 	</script>
 
 	<script src="js/app.js" charset="utf-8"></script>

@@ -24,6 +24,7 @@ import datatypes.DtVideo;
 import datatypes.DtLista;
 import interfaces.Fabrica;
 import interfaces.IControlador;
+import logica.Video;
 
 @WebServlet("/ConsultaUsuario")
 public class ConsultaUsuario  extends HttpServlet {
@@ -43,7 +44,8 @@ public class ConsultaUsuario  extends HttpServlet {
 		
 		//traigo todos los usuarios
 		ArrayList<String> usuarios = icon.listarUsuarios();
-    
+		if (!usuarios.isEmpty()) request.setAttribute("usuarios", usuarios);
+		
 		//traigo la sesion para traer el usuario, para comparar si el seleccionado, es el consultado
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("logNick");
@@ -58,29 +60,33 @@ public class ConsultaUsuario  extends HttpServlet {
 			}
 			if (!datos.isEmpty()) request.setAttribute("usuario", datos);
 			
-      // De dÃ³nde saco si es private??
-      // recordar que tiene que mostrar seguidos y seguidores (nombre y cantidad)
-      // tiene que poder modificar los datos si la consulta es sobre el usuario logeado
-      // tiene que poder acceder a listas y a videos del usuario
-      // consulta de video y consulta lista de reproducciÃ³n
- 
-			String nickname = Usuario.getNickname();
-			String email = Usuario.getEmail();
-			String nombre = Usuario.getNombre();
-			String apellido = Usuario.getApellido();
-			Date fecha = Usuario.getFechaNac();
-			String img = Usuario.getImg();
-			String nom_canal = Canal.getNombre();
-			String descripcion = Canal.getDescripcion();
-			boolean privado = Canal.isPrivado(); 
 			
-			Map<String, DtUsuario> seguidores = Usuario.getSeguidores();
-			Map<String, DtUsuario> seguidos = Usuario.getSeguidos();
+			Map<String, DtUsuario> seguidor = Usuario.getSeguidores();			
+			ArrayList<String> seguidores = new ArrayList();
+			for (DtUsuario Usr : seguidor.values()) {
+				seguidores.add(Usr.getNickname());
+			}	
+			
+			Map<String, DtUsuario> seguid = Usuario.getSeguidos();
+			ArrayList<String> seguidos = new ArrayList();
+			for (DtUsuario Usr : seguid.values()) {
+				seguidos.add(Usr.getNickname());
+			}
 			
 			int num_seguidores=seguidores.size(), num_seguidos=seguidos.size();
 			
-			Map<Integer, DtVideo> Videos = Canal.getListaVideos();
-			Map<Integer, DtLista> Listas = Canal.getListasReproduccion();
+			Map<Integer, DtVideo> Video = Canal.getListaVideos();
+			ArrayList<String> Videos = new ArrayList();
+			for (DtVideo vdo : Video.values()) {
+				Videos.add(vdo.getNombre());
+			}
+			
+			Map<Integer, DtLista> Lista = Canal.getListasReproduccion();
+			ArrayList<String> Listas = new ArrayList();
+			for (DtLista lst : Lista.values()) {
+				Videos.add(lst.getNombre());
+			}
+			
 			
 			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");
 			view.forward(request, response);

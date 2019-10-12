@@ -5,6 +5,8 @@
 <%@ page import="java.util.List"%>
 <%@page import="datatypes.DtVideo"%>
 <%@page import="datatypes.DtUsuario"%>
+<%@page import="datatypes.DtLista"%>
+<%@page import="datatypes.DtCanal"%>
 <html>
 
 

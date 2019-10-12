@@ -119,7 +119,7 @@
 		<div class="container">
 			<div class="body row">
 				<div class="form-group row">
-				  <select class="custom-select col-xs-12 col-sm-4 col-md-4" id="listsel" name="lsitsel" >
+				  <select class="custom-select col-xs-12 col-sm-4 col-md-4" id="listsel" name="listsel" >
 				    <option selected>Seleccione una lista</option>
 	    			<%
 	    			if(lists != null)

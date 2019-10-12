@@ -67,25 +67,19 @@ public class ModificarDatosLista extends HttpServlet {
 		ArrayList<String> listCategory = icon.listarCategorias();
 		request.setAttribute("listCategory", listCategory);
 		
-		System.out.println("Llega hasta acaa1");
 		String nombre = request.getParameter("nombre");
 		Boolean esprivado = false;
-		System.out.println("Llega hasta acaa1");
 		if(request.getParameter("esprivado").equals("si")) {
-			System.out.println("Llega hasta acaa1");
 			esprivado = true;
 		}
-		System.out.println("Llega hasta acaa2");
 		Boolean esdefecto = false;
 		if(request.getParameter("esdefecto").equals("si")) {
 			esdefecto = true;
 		}
-		System.out.println("Llega hasta acaa3");
 		String category = request.getParameter("categoria");
 		
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		System.out.println("Llega hasta acaa4");
 
 		//Seleccion de Usuario y Categoria
 		icon.seleccionarUsuario(user);
@@ -93,8 +87,11 @@ public class ModificarDatosLista extends HttpServlet {
 		if (category != null) {
 			icon.seleccionarCategoria(category);
 		}
+		System.out.println("Llega hasta acaa4");
+		System.out.println(nombre);
 		DtLista oldLista = icon.seleccionarLista(nombre);
-		DtLista newLista = icon.seleccionarLista(nombre);
+		System.out.println("Llega hasta acaa4");
+		DtLista newLista = oldLista;
 		System.out.println(newLista.getNombre());
 		newLista.setNombre(nombre);
 		newLista.setPrivado(esprivado);

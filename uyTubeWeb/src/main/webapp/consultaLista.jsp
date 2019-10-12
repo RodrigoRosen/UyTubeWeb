@@ -65,67 +65,13 @@
 	<%
 		}
 	%>
-	<h2>${mensaje}</h2>
-	<div class="container-fluid text-center">
-		<div class="row content">
-			<div class="col-xs-6 col-sm-4 col-lg-2 sidenav" id="sideBar">
-				<ul class="list-unstyled components">
-					<li><a href="#homeSubmenu" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Videos</a>
-						<ul class="collapse list-unstyled" id="homeSubmenu">
-							<form action="AltaVideo" method="get">
-								<!--<li><a href="altaVideo.jsp">Añadir Video</a></li>-->
-								<button type="submit" value="Submit" class="btn-link">Alta
-									Video</button>
-							</form>
-							<%
-								if (username != null && username.length() > 0) {
-							%>
-							<form action="ModificarDatosVideo" method="get">
-								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
-							</form>
-							<%
-								} ;
-							%>
-							<li><a href="consultarVideo.jsp">Consultar Video</a></li>
-							<li><a href="#">Comentar un Video</a></li>
-							<li><a href="#">Valorar Video</a></li>
-						</ul></li>
-					<li><a href="#pageSubmenu" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Listas de
-							reproduccion</a>
-						<ul class="collapse list-unstyled" id="pageSubmenu">
-							<form action="AltaLista" method="get">
-								<li><a href="AltaLista">Crear Lista de Reproduccion
-										Particular</a></li>
-							</form>
-							<li><a href="#">Modificar Lista de Reproduccion</a></li>
-							<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
-							<li><a href="#">Quitar Video de Lista de Reproduccion</a></li>
-							<li><a href="#">Consulta de Lista de Reproduccion</a></li>
-						</ul></li>
-					<li><a href="#categoria" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Categorias</a>
-						<ul class="collapse list-unstyled" id="categoria">
-							<li><a href="altaCategoria.jsp">Crear Categoria</a></li>
-							<form action="ListarCategorias" method="get">
-								<button type="submit" value="Submit" class="btn-link">Listar
-									Categorias</button>
-							</form>
-						</ul></li>
-					<li><a href="#usuario" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Usuarios</a>
-						<ul class="collapse list-unstyled" id="usuario">
-							<li><a href="seguirUsuario.jsp">Seguir Usuario</a></li>
-							<li><a href="#">Dejar de Seguir</a></li>
-							<li><a href="#">Consultar Usuario</a></li>
-							<li><a href="#">Modificar Usuario</a></li>
-						</ul></li>
-				</ul>
-			</div>
-			<%
+	<%
 				DtLista datosLista = (DtLista) request.getAttribute("datosLista");
 			%>
+	<h2>${mensaje}</h2>
+	<div class="container">
+		<div class="row">			
+			
 
 			<div class="modal fade" id="agregarVideo" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -200,10 +146,7 @@
 			</div>
 
 
-
-
-
-			<form class="mx-auto col-sm-6">
+			<form class="col-sm-9">
 				<div class="container">
 
 					<div class="form-group row">
@@ -306,10 +249,11 @@
 					id="VideoDeleteName" hidden> <input type="text"
 					name="listaSelected" hidden value="<%=datosLista.getNombre()%>">
 			</form>
-			<div class="col-sm-2 sidenav col-sm-offset-6">
+			<div class="sidenav col-sm-3">
 				<jsp:include page="listadoCategorias.jsp" />
 			</div>
 		</div>
+		
 	</div>
 	<script type="text/javascript">
 		$("#vidPrivado").change(function(){

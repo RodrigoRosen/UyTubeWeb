@@ -11,13 +11,16 @@
 </head>
 <body>	
 	<% ArrayList<String> categorias = (ArrayList<String>) session.getAttribute("categorias"); %>
-	<h3>Categorias</h3>
+	
 	<div class="container">
+		<h3 class="d-block p-2 bg-dark text-white text-center">Categorias</h3>
 		<ul class="list-group">
 			<% if (categorias != null) {
 				for (String cat : categorias) {
 			%>
-			<li class="list-group-item"><form action="ConsultaCategoria" method="get"><input type="submit" name="categoriaSeleccionada" value="<%=cat%>"></input></form></li>
+			<li class="list-group-item list-group-item-action list-group-item-primary"><form action="ConsultaCategoria" method="get">
+			<a class="text-uppercase font-weight-bold" href="ConsultaCategoria?categoriaSeleccionada=<%=cat%>"><%=cat%></a>			
+			</form></li>
 			<% } 
 			} %>
 		</ul>

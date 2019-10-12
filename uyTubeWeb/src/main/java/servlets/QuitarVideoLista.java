@@ -55,6 +55,7 @@ public class QuitarVideoLista extends HttpServlet {
 			icon.videosEnLista(lst);
 			DtVideo vid = new DtVideo(0,nombreVideo,false,null,null,0,null,null,null);
 			icon.quitarVideo(vid);
+			icon.finCasoUso();
 		}
 		response.sendRedirect(request.getContextPath() + "/");	
 	}

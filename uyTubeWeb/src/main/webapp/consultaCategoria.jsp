@@ -77,7 +77,7 @@
 			</div>
 			<!-- Logica del consulta lista -->
 
-			<div class="col-xs-12 col-xs-offset-12 row">
+			<div class="col-xs-12 col-xs-offset-12 row mx-auto">
 				<h2>Listas</h2>
 				<form id="Consulta Lista" action="ConsultaLista" method="GET"
 					class="table table-striped table-bordered">
@@ -99,13 +99,8 @@
 									String idLista = entry.getKey().split(";")[0];
 											String nombreLista = entry.getKey().split(";")[1];
 								%>
-								<td><%=nombreLista%></td>
-								<td><form action="ConsultaLista" method="GET">
-										<button type="button" class="btn"
-											onclick="consultaLista(<%=idLista%>)">
-											<i class="fa fa-search"></i>
-										</button>
-									</form></td>
+								<td><a href="ConsultaLista?IDLISTA=<%=idLista%>" ><%=nombreLista%></a></td>
+								
 							</tr>
 							<%
 								}
@@ -133,8 +128,7 @@
 								String idVideo = entry.getKey().split(";")[0];
 										String nombreVideo = entry.getKey().split(";")[1];
 							%>
-							<td><%=nombreVideo%></td>
-							<td hidden><%=idVideo%></td>
+							<td><a href="ConsultaVideo?id=<%=idVideo%>"><%=nombreVideo%></a></td>
 						</tr>
 						<%
 							}
@@ -149,12 +143,6 @@
 		</div>
 	</div>
 	<script src="js/app.js" charset="utf-8"></script>
-	<script type="text/javascript">
-			function consultaLista(idLista){
-				document.getElementById("IDLISTA").value = idLista;
-				document.getElementById("Consulta Lista").submit();				
-			}
-	</script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

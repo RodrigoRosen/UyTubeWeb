@@ -16,7 +16,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script src="js/bootstrap-datepicker.js" charset="utf-8"></script>
 <link rel="stylesheet" href="css/bootstrap-datepicker.css">
@@ -49,8 +50,7 @@
 			</form>
 		</div>
 		<%
-			}
-			;
+			} ;
 		%> <!--Modal: Login / Register Form-->
 		<div class="modal fade" id="modalFec" tabindex="-1" role="dialog"
 			aria-labelledby="myModalLabel" aria-hidden="true">
@@ -160,39 +160,46 @@
 				</ul>
 			</div>
 			<!-- Logica del consulta lista -->
-			
+
 			<div class="col-xs-12 col-xs-offset-12 row">
 				<h2>Listas</h2>
-				<form id="Consulta Lista" action="ConsultaLista" method="GET" class="table table-striped table-bordered">
-				<table class="table table-striped table-bordered">
-					<thead>
-						<th scope="col">Propietario</th>
-						<th scope="col">Nombre</th>
-					</thead>
-					<tbody>
-						<%
-							Map<String, String> videos = (Map<String, String>) request.getAttribute("videos");
-							Map<String, String> listas = (Map<String, String>) request.getAttribute("listas");
-							if (listas.entrySet() != null){
-							for (Entry<String, String> entry : listas.entrySet()) {
-						%>
-						<td><%=entry.getValue()%></td>
-						<%
-							String idLista = entry.getKey().split(";")[0];
-							String nombreLista = entry.getKey().split(";")[1];
-						%>
-						<td><%=nombreLista%></td>
-						<td><form action="ConsultaLista" method="GET"><button type="button" class="btn" onclick="consultaLista(<%=idLista%>)"><i class="fa fa-search"></i>
-						</button></form></td>
-						<%
-							}
-						}
-						%>
-					</tbody>
-				</table>
-				<input id="IDLISTA" name="IDLISTA" hidden>
+				<form id="Consulta Lista" action="ConsultaLista" method="GET"
+					class="table table-striped table-bordered">
+					<table class="table table-striped table-bordered">
+						<thead>
+							<th scope="col">Propietario</th>
+							<th scope="col">Nombre</th>
+						</thead>
+						<tbody>
+							<%
+								Map<String, String> videos = (Map<String, String>) request.getAttribute("videos");
+								Map<String, String> listas = (Map<String, String>) request.getAttribute("listas");
+								if (listas.entrySet() != null) {
+									for (Entry<String, String> entry : listas.entrySet()) {
+							%>
+							<tr>
+								<td><%=entry.getValue()%></td>
+								<%
+									String idLista = entry.getKey().split(";")[0];
+											String nombreLista = entry.getKey().split(";")[1];
+								%>
+								<td><%=nombreLista%></td>
+								<td><form action="ConsultaLista" method="GET">
+										<button type="button" class="btn"
+											onclick="consultaLista(<%=idLista%>)">
+											<i class="fa fa-search"></i>
+										</button>
+									</form></td>
+							</tr>
+							<%
+								}
+								}
+							%>
+						</tbody>
+					</table>
+					<input id="IDLISTA" name="IDLISTA" hidden>
 				</form>
-				
+
 				<h2>Videos</h2>
 				<table class="table table-striped table-bordered">
 					<thead>
@@ -200,20 +207,22 @@
 						<th scope="col">Nombre</th>
 					</thead>
 					<tbody>
-						<% 
-							if (videos.entrySet() != null){
-							for (Entry<String, String> entry : videos.entrySet()) {
-						%>
-						<td><%=entry.getValue()%></td>
 						<%
-							String idVideo = entry.getKey().split(";")[0];
-								String nombreVideo = entry.getKey().split(";")[1];
+							if (videos.entrySet() != null) {
+								for (Entry<String, String> entry : videos.entrySet()) {
 						%>
-						<td><%=nombreVideo%></td>
-						<td hidden><%=idVideo%></td>
+						<tr>
+							<td><%=entry.getValue()%></td>
+							<%
+								String idVideo = entry.getKey().split(";")[0];
+										String nombreVideo = entry.getKey().split(";")[1];
+							%>
+							<td><%=nombreVideo%></td>
+							<td hidden><%=idVideo%></td>
+						</tr>
 						<%
 							}
-						}
+							}
 						%>
 					</tbody>
 				</table>

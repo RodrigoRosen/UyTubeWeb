@@ -56,6 +56,9 @@ public class ConsultaLista extends HttpServlet {
 					if (videosPrivados != null) request.setAttribute("videosPrivados", videosPrivados);		
 				}
 			}
+			else {
+				request.setAttribute("esDuenio", false);
+			}
 			request.setAttribute("datosLista", datosLista);
 			ArrayList<DtVideo> videos = icon.videosEnListaPublica(datosLista);
 			if (videos != null) request.setAttribute("videos", videos);

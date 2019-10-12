@@ -326,23 +326,34 @@
 					<%
 						}
 					%>
-
-					<div class="form-group row">
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#agregarVideo">Agregar video a lista</button>
-					</div>
+					
+<%-- 					<%   --%>
+<!-- // 						boolean esDuenio = (boolean) request.getAttribute("esDuenio"); -->
+					
+<!-- // 						if (esDuenio) { -->
+<%-- 					%> --%>
+					
+<%-- 					<% } %> --%>
+					
 					<%
 						ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
 						if (videos != null && videos.size() != 0) {
+							boolean owner = (boolean) request.getAttribute("esDuenio");
 					%>
 					<div class="form-group row  ">
+						<% if (owner){ %>
+						<div class="form-group row">
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#agregarVideo">Agregar video a lista</button>
+						</div>
+						<% } %>
 						<ul class="list-group px-md-5">
 							<%
-								boolean esDuenio = (boolean) request.getAttribute("esDuenio");
+								
 									for (DtVideo vid : videos) {
 							%>
 							<%
-								if (vid.getPrivado() && esDuenio) {
+								if (vid.getPrivado() && owner) {
 							%>
 							<li class="list-group-item"><%=vid.getNombre()%></li>
 							<%

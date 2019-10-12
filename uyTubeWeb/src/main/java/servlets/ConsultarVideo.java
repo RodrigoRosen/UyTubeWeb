@@ -31,6 +31,62 @@ public class ConsultarVideo extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		IControlador icon = Fabrica.getIControlador();
+		String aux = request.getParameter("id");
+		DtVideo v = null;
+		if(aux != null) {
+			try {
+				Integer i = Integer.valueOf(aux);
+				v = icon.findVideo(i.intValue());
+				if(v != null) {
+					request.setAttribute("video", v);
+					HttpSession se = request.getSession();
+					String login = (String) se.getAttribute("login");
+					if(login != null) {
+						int gustar = 0;
+						boolean propio=false;
+						String user = (String) se.getAttribute("nickname");	
+						icon.seleccionarUsuario(user);
+						if(icon.seleccionarVideo(v.getNombre()) != null){
+							propio = true;
+						}
+						if(v.getPrivado() && !propio) {
+							request.setAttribute("mensaje", "ERROR al consultar el video.");
+							request.getRequestDispatcher("index.jsp").forward(request, response);							
+						}
+						icon.finCasoUso();
+						if(!v.getPrivado()){
+							for(String s: v.getValoracionesPositivas()){
+								if(s.equals(user)){
+									gustar = 1; //el user le dio like al video
+								}
+							}
+							if(gustar == 0){
+								for(String s: v.getValoracionesNegativas()){
+									if(s.equals(user)){
+										gustar = -1; //el user le dio dislike al video
+									}
+								}						
+							}
+						}
+						request.setAttribute("gustar", gustar);
+						request.setAttribute("propio", propio);
+						request.getRequestDispatcher("consultarVideo.jsp").forward(request, response);
+					}else if(v.getPrivado()) {
+						request.setAttribute("mensaje", "ERROR al consultar el video.");
+						request.getRequestDispatcher("index.jsp").forward(request, response);
+					}else {
+						request.getRequestDispatcher("consultarVideo.jsp").forward(request, response);
+					}
+				}
+				request.setAttribute("mensaje", "ERROR al consultar el video.");
+				request.getRequestDispatcher("index.jsp").forward(request, response);			
+			}catch(Exception e) {
+				request.setAttribute("mensaje", "ERROR al consultar el video.");
+				request.getRequestDispatcher("index.jsp").forward(request, response);
+			}
+		}
+		
 		
 	}
 

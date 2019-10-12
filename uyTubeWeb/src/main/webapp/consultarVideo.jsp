@@ -16,14 +16,7 @@
 	HttpSession se = request.getSession();
 	String login = (String) session.getAttribute("login");
 	String user = (String) se.getAttribute("nickname");
-	
-	//logica para listar los videos
 	IControlador icon = Fabrica.getInstancia().getIControlador();
-	HashMap<Integer,String> videos = icon.listarVideosPublicos();
-	HashMap<Integer,String> privados = new HashMap<Integer,String>();	
-	if(login != null){
-		privados = icon.listarVideosPrivados(user);
-	}
 
 	DtVideo v = null;
 	String fecha="Fecha";
@@ -31,6 +24,7 @@
 	String likes = " 0 me gusta,\t0 no me gusta";
 	boolean propio=false;
 	int g= 0; // no hay valoraciones del usuario para el video	
+	
 	if(request.getAttribute("video") != null){	
 		v = (DtVideo)request.getAttribute("video");
 		if(login != null){
@@ -38,7 +32,6 @@
 			g = (Integer)request.getAttribute("gustar");			
 		}
 		if( (!v.getPrivado() )||(propio) ){ //el video es publico o es del usuario logueado
-			v = icon.findVideo(v.getId());
 			DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
 			fecha = dateFormat.format(v.getFechaPub());
 			duracion = v.getDuracion().toString(); 
@@ -63,14 +56,25 @@
 		<script>
 			function editar(bool){
 				if(bool){
-					document.getElementById("btnEditar").style.display = "none";
+					document.getElementById("botones").style.display = "none";
 					document.getElementById("valorar").style.display = "inline";
 				} else {
-					document.getElementById("btnEditar").style.display = "inline";
+					document.getElementById("botones").style.display = "inline";
 					document.getElementById("valorar").style.display = "none";	
 				}
 			}
-		</script>		
+		</script>
+		<script>
+			function modificar(bool){
+				if(bool){
+					document.getElementById("botones").style.display = "none";
+					document.getElementById("valorar").style.display = "inline";
+				} else {
+					document.getElementById("botones").style.display = "inline";
+					document.getElementById("valorar").style.display = "none";	
+				}
+			}
+		</script>			
 			
 		<title>uyTube | Consultar Video</title>
 	
@@ -90,33 +94,13 @@
 		</div>
 		<!-- Resto de la pag -->
 		<h1 class="container" style="align:center">Consultar Video</h1>
-		<!--selects -->
-		<form action="ConsultarVideo" method="post">	
+		<!--datosVideo -->
+		<form action="ConsultarVideo" method="post">				
 			<div class="container">
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Publicos:</label>
-					<select name="publicos" class="form-control col-xs-12 col-sm-8 col-md-8" id="publicos" onchange="this.form.submit()">
-						<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
-						<%for(Integer i: videos.keySet()){%>
-							<option value="<%=i%>"> <%=videos.get(i)%> </option> 
-						<%}%>								
-					</select>			
-				</div>
-				<%if(login != null){%>
-					<div class="form-group row">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Mis Privados:</label>
-						<select name="privados" class="form-control col-xs-12 col-sm-8 col-md-8" id="privados" onchange="this.form.submit()">
-							<option  disabled="disabled" selected="selected">--Seleccionar Video--</option>
-							<%for(Integer i: privados.keySet()){%>
-								<option value="<%=i%>"> <%=privados.get(i)%> </option>
-							<%}%>												
-						</select>		
-					</div>
-				<%}%>	
+				
+				</div>	
 			</div>
-		</form>
-		<!--datosVideo -->
-		<form action="ConsultarVideo" method="post">	
 			<div class="container">
 				<div class="form-group row">
 					<label style="width:115px;padding-right:10px; padding-top:9px">Nombre:</label>
@@ -172,6 +156,20 @@
 							<%}%>												
 						</select>		
 					</div>
+				<%}%>					
+				<%if((login != null)&&(v != null)){%>
+					<!-- Botones otros CU -->
+					<%System.out.println("botones ########################################################################################################## botones"); %>	
+					<div class="container">
+						<div class="form-group row" id="botones" name="botones">	
+							<%if((login != null)&&(propio)){%>
+								<button type="button" id="btnEditar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="modificar(true)">Editar</button>								
+							<%}%>
+							<%if((login != null)&&(!v.getPrivado())){%>
+								<button type="button" id="btnValorar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)">Valorar</button>							
+							<%}%>
+						</div>					
+					</div>
 				<%}%>
 			</div>
 		</form>
@@ -189,10 +187,7 @@
 						</br>
 						<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(false)">Cancelar</button>
 						<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>	
-					</div>
-					<div class="form-group row">
-						<button type="button" id="btnEditar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)">Valorar</button>
-					</div>		
+					</div>	
 				</div>
 			</form>			
 		<%}%>			

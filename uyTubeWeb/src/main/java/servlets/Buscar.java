@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import datatypes.DtCanal;
+import datatypes.DtLista;
 import datatypes.DtVideo;
 import interfaces.Fabrica;
 import interfaces.IControlador;
@@ -38,6 +40,13 @@ public class Buscar extends HttpServlet {
 		String dato = request.getParameter("buscar");
 		ArrayList <DtVideo> videos = icon.buscarVideosPublicos(dato);
 		if (!videos.isEmpty()) request.setAttribute("videos", videos);
+		
+		ArrayList <DtCanal> canales = icon.buscarCanalesPublicos(dato);
+		if(!canales.isEmpty()) request.setAttribute("canales", canales);
+		
+		ArrayList <DtLista> listas = icon.buscarListasPublicas(dato);
+		if(!listas.isEmpty()) request.setAttribute("listas", listas);
+		
 		RequestDispatcher view = request.getRequestDispatcher("resultado.jsp");
 		view.forward(request, response);
 	}

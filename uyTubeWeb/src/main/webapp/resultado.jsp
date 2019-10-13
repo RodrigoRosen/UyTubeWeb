@@ -208,7 +208,7 @@
 			
 			
 			
-			<div class="md-form mt-0">
+			<div class="md-form mt-0 ">
 			<h2>Videos</h2>
 				<%
 				if(request.getAttribute("videos") != null){

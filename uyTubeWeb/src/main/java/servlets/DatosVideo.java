@@ -32,7 +32,8 @@ public class DatosVideo extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	 */ 
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();

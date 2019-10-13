@@ -107,7 +107,6 @@ public class ModificarDatosVideo extends HttpServlet {
 		icon.finCasoUso();
 		rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
-		//doGet(request, response);
 	}
 
 }

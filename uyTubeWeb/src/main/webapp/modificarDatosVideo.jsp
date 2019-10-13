@@ -70,6 +70,7 @@
 			</div>
 <!-- 		</div> -->
 	</form>
+	
 	<%DtVideo dtvideo = (DtVideo) request.getAttribute("dtv"); 
 		String nombre = " ";
 		String duracion = " ";

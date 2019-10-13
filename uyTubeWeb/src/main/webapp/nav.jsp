@@ -133,7 +133,7 @@
 						;
 					%>
 					<a class="dropdown-item" href="#">Dejar de Seguir</a> <a
-						class="dropdown-item" href="ConsultaUsuario.jsp">Consultar Usuario</a> <a
+						class="dropdown-item" href="#">Consultar Usuario</a> <a
 						class="dropdown-item" href="#">Modificar Usuario</a>
 				</div></li>
 		</ul>

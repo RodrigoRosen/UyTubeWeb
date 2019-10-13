@@ -46,6 +46,7 @@ public class DatosVideo extends HttpServlet {
 		if(dtv != null) request.setAttribute("dtv", dtv);
 		ArrayList<String> categorias = icon.listarCategorias();
 		if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
+		icon.finCasoUso();
 		RequestDispatcher rd = request.getRequestDispatcher("modificarDatosVideo.jsp");
 		rd.forward(request, response);
 	}

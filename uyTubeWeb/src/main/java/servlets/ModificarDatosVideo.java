@@ -63,6 +63,7 @@ public class ModificarDatosVideo extends HttpServlet {
 		
 		String category = request.getParameter("categoria");
 		String nombre = request.getParameter("nombre");
+		String nomViejo = request.getParameter("nombreViejo");
 		String duracion = request.getParameter("duracion");
 		Integer dur = Integer.parseInt(duracion);
 		String url = request.getParameter("url");
@@ -84,19 +85,26 @@ public class ModificarDatosVideo extends HttpServlet {
 		if (category != null) {
 			icon.seleccionarCategoria(category);
 		}
-		DtVideo videoNew = icon.seleccionarVideo(nombre);
-		System.out.println(videoNew.getNombre());
-		videoNew.setNombre(nombre);
-		videoNew.setDuracion(dur);
-		videoNew.setUrl(url);
-		videoNew.setDescripcion(descripcion);
-		videoNew.setFechaPub(fecha);
-		videoNew.setCategoria(category);
-		videoNew.setPrivado(esprivado);
-		//Se ingresa el video
-		icon.editarVideo(videoNew);
+		DtVideo videoNew = icon.seleccionarVideo(nomViejo);
 		RequestDispatcher rd;
-		request.setAttribute("mensaje", "Se ha modificado correctamente el video " + nombre);
+		if(videoNew != null) {
+			System.out.println(videoNew.getNombre());
+			System.out.println(category);
+			videoNew.setNombre(nombre);
+			videoNew.setDuracion(dur);
+			videoNew.setUrl(url);
+			videoNew.setDescripcion(descripcion);
+			videoNew.setFechaPub(fecha);
+			videoNew.setCategoria(category);
+			videoNew.setPrivado(esprivado);
+			//Se ingresa el video
+			icon.editarVideo(videoNew);
+			request.setAttribute("mensaje", "Se ha modificado correctamente el video " + nombre);
+		}else {
+			request.setAttribute("mensaje", "Error al modificar el video " + nombre);
+
+		}
+		icon.finCasoUso();
 		rd = request.getRequestDispatcher("index.jsp");
         rd.forward(request, response);
 		//doGet(request, response);

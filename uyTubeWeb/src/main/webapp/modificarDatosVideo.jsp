@@ -107,6 +107,9 @@
 				class="form-control col-xs-8 col-sm-8 col-md-8" id="nombre"
 				aria-describedby="emailHelp" placeholder="<%=nombre%>" value="<%=nombre%>">
 			</div>
+				<input type="hidden" name="nombreViejo"
+				class="form-control col-xs-8 col-sm-8 col-md-8" id="nombreViejo"
+				aria-describedby="emailHelp" placeholder="<%=nombre%>" value="<%=nombre%>">
 			<div class="form-group row">
 				 <h3 class="col-xs-4 col-sm-4">Duracion</h3>
 				 <input type="text" name="duracion"

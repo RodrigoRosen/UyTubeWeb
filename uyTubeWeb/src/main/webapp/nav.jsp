@@ -143,13 +143,13 @@
 						;
 					%>
 					<a class="dropdown-item" href="#">Dejar de Seguir</a> <a
-						class="dropdown-item" href="#">Consultar Usuario</a> <a
+						class="dropdown-item" href="ConsultaUsuario.jsp">Consultar Usuario</a> <a
 						class="dropdown-item" href="#">Modificar Usuario</a>
 				</div></li>
 		</ul>
 
 		<!-- SEARCH & ENTRAR & SALIR -->
-		<form class="form-inline my-2 my-lg-0">
+		<form action="Buscar" class="form-inline my-2 my-lg-0" >
 			<input class="form-control mr-sm-2" type="search"
 				placeholder="Buscar" aria-label="Buscar" id="buscar" name="buscar">
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"

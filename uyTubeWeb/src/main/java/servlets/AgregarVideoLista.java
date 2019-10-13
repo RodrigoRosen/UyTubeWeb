@@ -57,8 +57,9 @@ public class AgregarVideoLista extends HttpServlet {
 			DtLista lst = icon.seleccionarLista(nombreLista);
 			icon.agregarVideo(nombreVideo, lst);
 			icon.finCasoUso();
-		}
-		response.sendRedirect(request.getContextPath() + "/");	
+			response.sendRedirect(request.getContextPath() + "/" + "ConsultaLista?IDLISTA="+lst.getId());
+		}		
+		
 	}
 
 }

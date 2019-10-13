@@ -40,31 +40,8 @@
 	<%
 		String login = (String) session.getAttribute("login");
 		String username = (String) session.getAttribute("nickname");
-		if (username != null && username.length() > 0) {
-	%>
-	<div class="alert alert-primary alert-dismissible fade show"
-		role="alert">
-		Te logueaste exitosamente!
-		<button type="button" class="close" data-dismiss="alert"
-			aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-	<%
-		} else if (login != null && login.length() > 0) {
-	%>
-	<div class="alert alert-primary alert-dismissible fade show"
-		role="alert">
-		Hubo un problema en el inicio de sesión, verifica los datos
-		ingresados.
-		<button type="button" class="close" data-dismiss="alert"
-			aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-	<%
-		}
-	%>
+		
+	%>	
 	<%
 		DtLista datosLista = (DtLista) request.getAttribute("datosLista");
 	%>
@@ -209,13 +186,17 @@
 						<div class="container">
 							<ul class="list-group px-md-5">
 								<%
+									String img = null;
 									for (DtVideo vid : videos) {
+										img = "https://i.ytimg.com/vi/" + vid.getUrl() +"/default.jpg";
 								%>
 								<%
 									if (vid.getPrivado() && duenio != null && duenio.equals("Propietario")) {
 								%>
-								<li
-									class="list-group-item d-flex justify-content-between align-items-center"><%=vid.getNombre()%>
+								<li	class="list-group-item d-flex justify-content-between align-items-center">
+								<img class="hover"src="<%=img%>">	
+								
+								<%=vid.getNombre()%>
 									<button type="button" class="btn btn-danger"
 										onclick="quitarVideo('<%=vid.getNombre()%>')">
 										<i class="fas fa-minus-circle"></i>
@@ -224,7 +205,10 @@
 									} else if (!vid.getPrivado()) {
 								%>
 								<li
-									class="list-group-item d-flex justify-content-between align-items-center"><%=vid.getNombre()%>
+									class="list-group-item d-flex justify-content-between align-items-center">
+									<img class="hover"src="<%=img%>">	
+									<%=vid.getNombre()%>
+									
 									<%
 										if (duenio != null && duenio.equals("Propietario")) {
 									%>

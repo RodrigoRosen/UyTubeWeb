@@ -63,17 +63,6 @@
 					document.getElementById("valorar").style.display = "none";	
 				}
 			}
-		</script>
-		<script>
-			function modificar(bool){
-				if(bool){
-					document.getElementById("botones").style.display = "none";
-					document.getElementById("valorar").style.display = "inline";
-				} else {
-					document.getElementById("botones").style.display = "inline";
-					document.getElementById("valorar").style.display = "none";	
-				}
-			}
 		</script>			
 			
 		<title>uyTube | Consultar Video</title>
@@ -85,82 +74,98 @@
 		<jsp:include page="nav.jsp" />
 	</div>
 		<!-- Resto de la pag -->
-		<h1 class="container" style="align:center">Consultar Video</h1>
+		<h1 style="text-align:center !important">Consultar Video</h1>
 		<!--datosVideo -->
-		<form action="ConsultarVideo" method="post">				
+		<form action="ModificarDatosVideo" method="get">				
 			<div class="container">
 				<div class="form-group row">
-				
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important" >
+						<iframe class="col-xs-12" width="560" height="315" src="https://www.youtube.com/embed/<%=v.getUrl()%>" frameborder="0" allowfullscreen></iframe>
+					</div>
 				</div>	
-			</div>
-			<div class="container">
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Nombre:</label>
-					<input type="text" name="nombre" class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre" aria-describedby="emailHelp" placeholder="<%=v.getNombre()%>" disabled>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Nombre:</label>
+						<input type="text" name="nombre" class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre" aria-describedby="emailHelp" placeholder="<%=v.getNombre()%>" disabled style="max-width:445px !important; min-width:445px !important">
+					</div>
 				</div>
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Descripcion:</label>
-					 <input type="text" name="descripcion" class="form-control col-xs-12 col-sm-8 col-md-8" id="descripcion" aria-describedby="emailHelp" placeholder="<%=v.getDescripcion()%>" disabled>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Descripcion:</label>
+						<textarea class="form-control col-xs-12 col-sm-8 col-md-8" name="descripcion" disabled style="max-width:445px !important; min-width:445px !important" placeholder="<%=v.getDescripcion()%>"></textarea>
+					</div>
 				</div>
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Publicado:</label>
-					<input type="text" name="fecha" class="form-control col-xs-12 col-sm-8 col-md-8" id="fecha" aria-describedby="emailHelp" placeholder="<%=fecha%>" disabled>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Publicado:</label>
+						<input type="text" name="fecha" class="form-control col-xs-12 col-sm-8 col-md-8" id="fecha" aria-describedby="emailHelp" placeholder="<%=fecha%>" disabled style="max-width:445px !important; min-width:445px !important">
+					</div>
 				</div>
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Duracion:</label>
-					 <input type="text" name="duracion" class="form-control col-xs-12 col-sm-8 col-md-8" id="duracion" aria-describedby="emailHelp" placeholder="<%=duracion%>" disabled>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Duracion:</label>
+						<input type="text" name="duracion" class="form-control col-xs-12 col-sm-8 col-md-8" id="duracion" aria-describedby="emailHelp" placeholder="<%=duracion%>" disabled style="max-width:445px !important; min-width:445px !important">
+					</div>
 				</div>
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">URL:</label>
-					 <input type="text" name="url" class="form-control col-xs-12 col-sm-8 col-md-8" id="url" aria-describedby="emailHelp" placeholder="<%=v.getUrl()%>" disabled>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">URL:</label>
+						<input type="text" name="url" class="form-control col-xs-12 col-sm-8 col-md-8" id="url" aria-describedby="emailHelp" placeholder="<%=v.getUrl()%>" disabled style="max-width:445px !important; min-width:445px !important">
+					</div>
 				</div>
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Categoria:</label>
-					<input type="text" name="categoria" class="form-control col-xs-12 col-sm-8 col-md-8" id="categoria" aria-describedby="emailHelp" placeholder="<%=v.getCategoria()%>" disabled>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Categoria:</label>
+						<input type="text" name="categoria" class="form-control col-xs-12 col-sm-8 col-md-8" id="categoria" aria-describedby="emailHelp" placeholder="<%=v.getCategoria()%>" disabled style="max-width:445px !important; min-width:445px !important">
+					</div>
 				</div>
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Es privado?</label>
-					<select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="privado"  disabled>
-						<option value="Si" <%if(v.getPrivado()){%> selected <%}%>>Si</option>
-						<option value="No" <%if(!v.getPrivado()){%> selected <%}%>>No</option>
-					</select>			
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Es privado?</label>
+						<select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="privado"  disabled style="max-width:445px !important; min-width:445px !important">
+							<option value="Si" <%if(v.getPrivado()){%> selected <%}%>>Si</option>
+							<option value="No" <%if(!v.getPrivado()){%> selected <%}%>>No</option>
+						</select>	
+					</div>		
 				</div>
 				<div class="form-group row">
-					<label style="width:115px;padding-right:10px; padding-top:9px">Likes:</label>
-				    <input type="text" name="likes" class="form-control col-xs-12 col-sm-8 col-md-8" id="likes" ria-describedby="emailHelp" placeholder="<%=likes%>" disabled>	
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<label style="width:115px;padding-right:10px; padding-top:9px">Likes:</label>
+					    <input type="text" name="likes" class="form-control col-xs-12 col-sm-8 col-md-8" id="likes" ria-describedby="emailHelp" placeholder="<%=likes%>" disabled style="max-width:445px !important; min-width:445px !important">	
+					</div>
 				</div>	
 				<%if((propio)&&(!v.getPrivado())){%>
 					<div class="form-group row">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Le Gusta:</label>
-						<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8" id="like">
-							<option  disabled="disabled" selected="selected">--Usuarios--</option>
-							<%for(String s: v.getValoracionesPositivas()){%>
-								<option value="<%=s%>"> <%=s%> </option>
-							<%}%>												
-						</select>		
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+							<label style="width:115px;padding-right:10px; padding-top:9px">Le Gusta:</label>
+							<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8" id="like" style="max-width:445px !important; min-width:445px !important">
+								<option  disabled="disabled" selected="selected">--Usuarios--</option>
+								<%for(String s: v.getValoracionesPositivas()){%>
+									<option value="<%=s%>"> <%=s%> </option>
+								<%}%>												
+							</select>
+						</div>		
 					</div>
 					<div class="form-group row">
-						<label style="width:115px;padding-right:10px; padding-top:9px">No le Gusta:</label>
-						<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8" id="dislike">
-							<option  disabled="disabled" selected="selected">--Usuarios--</option>
-							<%for(String s: v.getValoracionesNegativas()){%>
-								<option value="<%=s%>"><%=s%></option>
-							<%}%>												
-						</select>		
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+							<label style="width:115px;padding-right:10px; padding-top:9px">No le Gusta:</label>
+							<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8" id="dislike" style="max-width:445px !important; min-width:445px !important">
+								<option  disabled="disabled" selected="selected">--Usuarios--</option>
+								<%for(String s: v.getValoracionesNegativas()){%>
+									<option value="<%=s%>"><%=s%></option>
+								<%}%>												
+							</select>
+						</div>		
 					</div>
 				<%}%>					
 				<%if((login != null)&&(v != null)){%>
 					<!-- Botones otros CU -->
-					<%System.out.println("botones ########################################################################################################## botones"); %>	
-					<div class="container">
-						<div class="form-group row" id="botones" name="botones">	
-							<%if((login != null)&&(propio)){%>
-								<button type="button" id="btnEditar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="modificar(true)">Editar</button>								
-							<%}%>
+					<div class="form-group row" id="botones" name="botones">	
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
 							<%if((login != null)&&(!v.getPrivado())){%>
-								<button type="button" id="btnValorar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)">Valorar</button>							
+								<button type="button" id="btnValorar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)" style="max-width:560px !important; min-width:560px !important">Valorar</button>							
 							<%}%>
-						</div>					
+						</div>	
 					</div>
 				<%}%>
 			</div>
@@ -168,28 +173,36 @@
 		<%if((login != null)&&(!v.getPrivado())){%>
 			<!--valorarVideo -->
 			<form action="ValorarVideo" method="post">		
-				<div class="container">
-					<div class="form-group row" id="valorar" name="valorar" style="display:none">				
-						<div style="display:none;"><input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>"></div>
-						<select name="likex" class="form-control col-xs-12 col-sm-8 col-md-8" id="likex">
-							<%if(g == 0){%><option  disabled="disabled" selected="selected">--Seleccionar Opcion--</option><%}%>
-							<option value="1" <%if(g > 0){%>selected="selected"<%}%>>Me Gusta</option>
-							<option value="-1" <%if(g < 0){%>selected="selected"<%}%>>No Me Gusta</option>														
-						</select>
-						</br>
-						<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(false)">Cancelar</button>
-						<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4">Aceptar</button>	
+				<div class="container" id="valorar" name="valorar" style="display:none">
+					<div class="form-group row">					
+						<div style="display:none"><input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>"></div>
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+							<select name="likex" class="form-control col-xs-12 col-sm-8 col-md-8" id="likex"  style="max-width:445px !important; min-width:560px !important">
+								<%if(g == 0){%><option  disabled="disabled" selected="selected">--Seleccionar Opcion--</option><%}%>
+								<option value="1" <%if(g > 0){%>selected="selected"<%}%>>Me Gusta</option>
+								<option value="-1" <%if(g < 0){%>selected="selected"<%}%>>No Me Gusta</option>														
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">					
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+							<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(false)" style="max-width:49% !important; min-width:49% !important; margin-right:1% !important">Cancelar</button>
+							<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" style="max-width:49% !important; min-width:49% !important; margin-left:1% !important">Aceptar</button>	
+						</div>
 					</div>	
 				</div>
 			</form>			
 		<%}%>			
 		<%if((login != null)&&(v != null)){%>
 			<!-- comentarVideo -->	
-			<form action="comentarVideo" method="post">		
-				<div class="container">	
-					<%for(DtComentario c: v.getCom()){%>
-						<div style="padding-left:<%=c.getNivel()*20%>px;" class="form-group row"><p><%=c.getNick()+": "+c.getTexto()%></p></div>
-					<%}%>
+			<form action="ComentarVideo" method="get">		
+				<div class="container" style="width:560px !important">	
+						<%for(DtComentario c: v.getCom()){%>
+							<div style="padding-left:<%=c.getNivel()*20%>px;" class="form-group row"><p><%=c.getNick()+": "+c.getTexto()%></p><a href="ComentarVideo?v=<%=v.getId()+"&id="+c.getId()%>" style="margin-left:30px">Responder</a></div>
+						<%}%>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<button type="submit" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" name="v" value="<%=v.getId()%>" style="max-width:560px !important; min-width:560px !important;padding:6px 0 !important">Comentar</button>
+					</div>
 				</div>
 			</form>
 		<%}%>

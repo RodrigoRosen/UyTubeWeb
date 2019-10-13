@@ -53,14 +53,8 @@
 									String idLista = entry.getKey().split(";")[0];
 											String nombreLista = entry.getKey().split(";")[1];
 								%>
-								<td><%=nombreLista%></td>
-								<td>
-									<form action="ConsultaLista" method="GET">
-										<button type="button" class="btn" onclick="consultaLista(<%=idLista%>)">
-											<i class="fa fa-search"></i>
-										</button>
-									</form>
-								</td>
+								<td><a href="ConsultaLista?IDLISTA=<%=idLista%>"><%=nombreLista%></a></td>
+							
 							</tr>
 							<%
 								}

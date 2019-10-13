@@ -67,179 +67,178 @@
 		}
 	%>
 	<h2>${mensaje}</h2>
-	<div class="container-fluid text-center">
-		<div class="row content">
-			<div class="col-xs-6 col-sm-4 col-lg-2 sidenav" id="sideBar">
-				<ul class="list-unstyled components">
-					<li><a href="#homeSubmenu" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Videos</a>
-						<ul class="collapse list-unstyled" id="homeSubmenu">
-							<form action="AltaVideo" method="get">
-								<!--<li><a href="altaVideo.jsp">Añadir Video</a></li>-->
-								<button type="submit" value="Submit" class="btn-link">Alta Video</button>
-							</form>
-							<%if (username != null && username.length() > 0){ %>
-							<form action="ModificarDatosVideo" method="get">
-								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
-							</form>
-							<%}; %>
-							<li><a href="consultarVideo.jsp">Consultar Video</a></li>
-							<li><a href="#">Comentar un Video</a></li>
-							<li><a href="#">Valorar Video</a></li>
-						</ul></li>
-					<li><a href="#pageSubmenu" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Listas de
-							reproduccion</a>
-						<ul class="collapse list-unstyled" id="pageSubmenu">
-							<form action="AltaLista" method="get">								
-								<li><a href="AltaLista">Crear Lista de Reproduccion
-										Particular</a></li>
-							</form>
-							<li><a href="#">Modificar Lista de Reproduccion</a></li>
-							<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
-							<li><a href="#">Quitar Video de Lista de Reproduccion</a></li>
-							<li><a href="#">Consulta de Lista de Reproduccion</a></li>
-						</ul></li>
-					<li><a href="#categoria" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Categorias</a>
-						<ul class="collapse list-unstyled" id="categoria">
-							<li><a href="altaCategoria.jsp">Crear Categoria</a></li>
-							<form action="ListarCategorias" method="get">
-								<button type="submit" value="Submit" class="btn-link">Listar
-									Categorias</button>
-							</form>
-						</ul></li>
-					<li><a href="#usuario" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Usuarios</a>
-						<ul class="collapse list-unstyled" id="usuario">
-							<li><a href="seguirUsuario.jsp">Seguir Usuario</a></li>
-							<li><a href="#">Dejar de Seguir</a></li>
-							<li><a href="#">Consultar Usuario</a></li>
-							<li><a href="#">Modificar Usuario</a></li>
-						</ul></li>
-				</ul>
-			</div>
+	<div class="container-fluid">
+		<div class="col-xs-8">
+					<br />
+		
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+					<a href="#videos" class="nav-link active" role="tab" data-toggle="tab">Videos</a>
+				</li>
+				<li class="nav-item">
+					<a href="#listas" class="nav-link" role="tab" data-toggle="tab">Listas</a>
+				</li>			
+				<li class="nav-item">
+					<a href="#canales" class="nav-link" role="tab" data-toggle="tab">Canales</a>
+				</li>			
+			</ul>
 			
-			
-			
-			
-			<div class="md-form mt-0 ">
-			<h2>Videos</h2>
+			<div class="tab-content col-xs-12 col-md-8">
+<!-- 			TAB VIDEOS -->
+				<div role="tabpanel" class="tab-pane active" id="videos" name="videos">
 				<%
-				if(request.getAttribute("videos") != null){
-					ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
-					String url;
-					String img;
-					String nombrevid;
-					String descripcionvid;
-					Integer id;
-					for(DtVideo dtvideo : videos){
-						url = "https://www.youtube.com/embed/"+dtvideo.getUrl();
-						img = "https://i.ytimg.com/vi/" + dtvideo.getUrl() +"/default.jpg";
-						nombrevid = dtvideo.getNombre();
-						descripcionvid = dtvideo.getDescripcion();
-						System.out.println(img +" = "+ url);
-						id =dtvideo.getId();
-					%>
-					<div class="row">
-						<div class=" container col-xs-12 col-sm-4">
-							<a href="ConsultarVideo?id=<%=id%>">
-								<img class="hover"src="<%=img%>">	
-							</a>
-						</div>
-						<div class="container col-xs-12 col-sm-8">
-							<h3><%=nombrevid%></h3>
-							<h4><%=descripcionvid%></h4>
-						</div>
-					</div>
-				<%}
-				}else{
-				%>	
-					<h3>Sin Resultado...</h3>
-					
-				<%}; %>
+					if(request.getAttribute("videos") != null){%>
+					<table class="table table-dark table-hover  table-responsive col-xs-8">
+					  <thead>
+					    <tr>
+					      <th scope="col">#</th>
+					      <th scope="col">Video</th>
+					      <th scope="col">Nombre/Descripcion</th>
+					      <th scope="col">Fecha de agregado</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+						<%
+							ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
+							String url;
+							String img;
+							String nombrevid;
+							String descripcionvid;
+							Integer id;
+							String agregado;
+							Integer num = 0;
+							for(DtVideo dtvideo : videos){
+								url = "https://www.youtube.com/embed/"+dtvideo.getUrl();
+								img = "https://i.ytimg.com/vi/" + dtvideo.getUrl() +"/default.jpg";
+								nombrevid = dtvideo.getNombre();
+								descripcionvid = dtvideo.getDescripcion();
+								System.out.println(img +" = "+ url);
+								id =dtvideo.getId();
+								agregado = dtvideo.getFechaPub().toString();
+								num+=1;
+						%>
+					    <tr>
+					      <th scope="row"><%=num %></th>
+					      <td><a href="ConsultarVideo?id=<%=id%>">
+										<img class="hover"src="<%=img%>">	
+									</a></td>
+					      <td><%=nombrevid%> - <%=descripcionvid%></td>
+					      <td><%=agregado %></td>
+					      
+					    </tr>
+					    	<%}%>
+					  </tbody>
+					</table>
+					<%}else{
+					%>	
+						<h3>Nada por aca...</h3>
+						
+					<%}; %>				
 				
-				<h2>Listas</h2>
-				<%
-				if(request.getAttribute("listas") != null){
-					ArrayList<DtLista> listas = (ArrayList<DtLista>) request.getAttribute("listas");
-					String nombrelist;
-					String categorialist;
-					Integer id;
-					for(DtLista dtlista : listas){
-						nombrelist = dtlista.getNombre();
-						categorialist = dtlista.getCategoria();
-						id = dtlista.getId();
-					%>
-					<div class="row">
-						<div class=" container col-xs-12 col-sm-4">
-							<a href="ConsultaLista?IDLISTA=<%=id%>">
-								<h3><%=nombrelist%></h3>
-							</a>
-						</div>
-						<div class="container col-xs-12 col-sm-8">
-							<h4><%=categorialist%></h4>
-						</div>
-					</div>
-				<%}
-				}else{
-				%>	
-					<h3>Sin Resultado...</h3>
-					
-				<%}; %>
-				
-				
-				
-				<h2>Canales</h2>
-					<div class="row">
-						<div class=" container col-xs-12 col-sm-4">
-<%-- 							<a href="ConsultaLista?IDLISTA=<%=id%>"> --%>
-								<h3>Nombre</h3>
-<!-- 							</a> -->
-						</div>
-						<div class="container col-xs-12 col-sm-8">
-							<h4>Propietario</h4>
-						</div>
-					</div>
-				<%
-				if(request.getAttribute("canales") != null){
-					ArrayList<DtCanal> canales = (ArrayList<DtCanal>) request.getAttribute("canales");
-					String nomCanal;
-					String descCanal;
-					String propietario;
-					for(DtCanal dtcanal : canales){
-						nomCanal = dtcanal.getNombre();
-						descCanal = dtcanal.getDescripcion();
-						propietario = dtcanal.getNick();
-					%>
-					<div class="row">
-						<div class=" container col-xs-12 col-sm-4">
-<%-- 							<a href="ConsultaLista?IDLISTA=<%=id%>"> --%>
-								<h3><%=nomCanal%></h3>
-<!-- 							</a> -->
-						</div>
-						<div class="container col-xs-12 col-sm-8">
-							<h4><%=propietario%></h4>
-						</div>
-					</div>
-				<%}
-				}else{
-				%>	
-					<h3>Sin Resultado...</h3>
-					
-				<%}; %>			
-				
-			</div>	
-			
-				<div class="col-sm-2 sidenav col-sm-offset-6">
-					<jsp:include page="listadoCategorias.jsp" />
 				</div>
+				
+<!-- 				TAB DE LISTAS	 -->
 			
-		</div>
-	</div>
+				<div role="tabpanel" class="tab-pane" id="listas" name="listas">
+				
+				<%
+					if(request.getAttribute("listas") != null){%>
+						<table class="table table-dark table-hover table-responsive">
+						  <thead>
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Lista</th>
+						      <th scope="col">Categoria</th>
+						    </tr>
+						  </thead>
+						  <tbody>	
+						<%  
+						ArrayList<DtLista> listas = (ArrayList<DtLista>) request.getAttribute("listas");
+						String nombrelist;
+						String categorialist;
+						Integer id;
+						Integer num = 0;
+						for(DtLista dtlista : listas){
+							nombrelist = dtlista.getNombre();
+							categorialist = dtlista.getCategoria();
+							id = dtlista.getId();
+							num+=1;
+						%>
+						<tr>
+							<th scope="col"><%=num %></th>
+							<td><a href="ConsultaLista?IDLISTA=<%=id%>">
+										<%=nombrelist%>
+									</a></td>
+							<td><%=categorialist%></td>
+						</tr>
+					<%}%>
+				  </tbody>
+					</table>	
+					<%}else{
+					%>	
+						<h3>Nada por aca...</h3>
+						
+					<%}; %>
+				
+				</div>
+				<div role="tabpanel" class="tab-pane" id="canales" name="canales">
+<!-- 				TAB CANALES -->
+				<%
+					if(request.getAttribute("canales") != null){%>
+						<table class="table table-dark table-hover table-responsive ">
+						  <thead>
+						    <tr>
+						      <th scope="col">#</th>
+						      <th scope="col">Canal</th>
+						      <th scope="col">Propietario</th>
+						    </tr>
+						  </thead>
+						   <tbody>
+						<%
+						ArrayList<DtCanal> canales = (ArrayList<DtCanal>) request.getAttribute("canales");
+						String nomCanal;
+						String descCanal;
+						String propietario;
+						Integer num = 0;
+						for(DtCanal dtcanal : canales){
+							nomCanal = dtcanal.getNombre();
+							descCanal = dtcanal.getDescripcion();
+							propietario = dtcanal.getNick();
+							num+=1;
+						%>
+						<tr>
+							<th scope="col"><%=num %></th>
+							<td><%=nomCanal%></td>
+							<td><%=propietario%></td>
+						</tr>
+						
+					<%}%>
+					</tbody>
+					</table>	
+					<%}else{
+					%>	
+						<h3>Nada por aca...</h3>
+						
+					<%}; %>		
+				
+				
+				</div>
+		
+			</div>
+
+		</div>	
+			<div class="col-sm-2">
+				<jsp:include page="listadoCategorias.jsp" />
+			</div>		
+	</div>			
+
+
+
+
 	
 
 	<script src="js/app.js" charset="utf-8"></script>
+	<script src="js/tab.js" charset="utf-8"></script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

@@ -49,7 +49,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">		
 		<script src="libs/jquery-3.4.1.min.js" charset="utf-8"></script>
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>			
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="css/consultarVideos.css">
 		<script src="js/bootstrap-datepicker.js" charset="utf-8"></script>
 		<link rel="stylesheet" href="css/bootstrap-datepicker.css">	
 		
@@ -63,14 +65,21 @@
 					document.getElementById("valorar").style.display = "none";	
 				}
 			}
-		</script>			
+		</script>
+		<script>
+			function comentar(id){
+				document.getElementById("id").value= id.toString();
+				$('#id').val(id);
+				document.getElementById("id").placeholder= id.toString();
+			}
+		</script>
 			
 		<title>uyTube | Consultar Video</title>
 	
 	</head>	
 	<body>		
 		<!-- Barra Principal -->
-		<div class="container" id="navBarPrincipal">
+		<div class="container-fluid" id="navBarPrincipal">
 		<jsp:include page="nav.jsp" />
 	</div>
 		<!-- Resto de la pag -->
@@ -195,17 +204,61 @@
 		<%}%>			
 		<%if((login != null)&&(v != null)){%>
 			<!-- comentarVideo -->	
-			<form action="ComentarVideo" method="get">		
-				<div class="container" style="width:560px !important">	
-						<%for(DtComentario c: v.getCom()){%>
-							<div style="padding-left:<%=c.getNivel()*20%>px;" class="form-group row"><p><%=c.getNick()+": "+c.getTexto()%></p><a href="ComentarVideo?v=<%=v.getId()+"&id="+c.getId()%>" style="margin-left:30px">Responder</a></div>
-						<%}%>
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<button type="submit" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" name="v" value="<%=v.getId()%>" style="max-width:560px !important; min-width:560px !important;padding:6px 0 !important">Comentar</button>
+			<div class="chatContainer">
+			    <div class="chatTitleContainer">Comments</div>
+				<div class="chatHistoryContainer">
+			        <ul class="formComments">
+						<li class="commentLi commentstep-1" data-commentid="4">
+							<%for(DtComentario c: v.getCom()){%>
+								<table class="form-comments-table" style="margin-left:<%=c.getNivel()*40%>px;">
+									<tr>
+										<td><div class="comment-timestamp"><%=c.getFecha()%></div></td>
+										<td><div class="comment-user"><%=c.getNick()%></div></td>
+										<td><div id="comment-4" data-commentid="4" class="comment comment-step1"><%=c.getTexto()%></div></td>
+			                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#comentarVideo" onclick="comentar(<%=c.getId()%>)">
+			                                		<i class="fas fa-reply"></i> Responder
+			                                	</button>
+										</td>
+									</tr>
+								</table>
+							<%}%>
+						</li>
+			        </ul>
+				</div>			    
+			    <div class="input-group input-group-sm chatMessageControls">
+			        <span class="input-group-btn">
+			            <button id="sendMessageButton" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#comentarVideo" onclick="comentar(0)">
+			            	<i class="far fa-comment-dots"></i> Comentar
+			            </button>
+			        </span>
+			    </div>
+			</div>
+		<%}%>	
+		<!--Comentar Video-->
+			<div class="modal fade" id="comentarVideo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Comentar video</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<form id="Comentar Video" action="ComentarVideo" method="post">
+							<div class="modal-body mx-auto">								
+								<input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>" hidden>
+								<input type="text" name="id" id="id" placeholder="-1" hidden>
+								<div class="form-group row ">
+									<textarea name="comentario" id="comentario" class="form-control form-control-sm validate"></textarea>
+									<button id="submitAdd" type="submit" class="btn btn-info">Comentar</button>									
+								</div>
+								<div class="text-center mt-2"></div>
+							</div>
+							<div class="modal-footer-center"></div>
+						</form>
 					</div>
 				</div>
-			</form>
-		<%}%>
+			</div>
 		
 		<script src="js/app.js" charset="utf-8"></script>	
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -83,11 +83,14 @@ public class ComentarVideo extends HttpServlet {
 						icon.seleccionarVideo(dtv.getNombre());
 						icon.seleccionarUsuario(user);
 						DtComentario dtc = new DtComentario();
-						String aux2 = request.getParameter("id");
-						Integer id =  Integer.valueOf(aux2);						
-						if(id != null) {
-							dtc.setId(id.intValue());
-							icon.seleccionarComentario(dtc);
+						String aux2 = request.getParameter("id");					
+						if(aux2 != null) {
+							System.out.println("######################################################################### "+aux2);
+							Integer id =  Integer.valueOf(aux2);
+							if(id.intValue() != 0) {
+								dtc.setId(id.intValue());
+								icon.seleccionarComentario(dtc);
+							}
 						}else {
 							System.out.println("######################################################################### null id");
 						}

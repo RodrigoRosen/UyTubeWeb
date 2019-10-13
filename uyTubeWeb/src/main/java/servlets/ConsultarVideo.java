@@ -45,7 +45,7 @@ public class ConsultarVideo extends HttpServlet {
 						}
 						if(v.getPrivado() && !propio) {
 							request.setAttribute("mensaje", "ERROR al consultar el video.");
-							request.getRequestDispatcher("index.jsp").forward(request, response);							
+							request.getRequestDispatcher("Index").forward(request, response);							
 						}
 						icon.finCasoUso();
 						if(!v.getPrivado()){
@@ -67,17 +67,14 @@ public class ConsultarVideo extends HttpServlet {
 						request.getRequestDispatcher("consultarVideo.jsp").forward(request, response);
 					}else if(v.getPrivado()) {
 						request.setAttribute("mensaje", "ERROR al consultar el video.");
-						request.getRequestDispatcher("index.jsp").forward(request, response);
+						request.getRequestDispatcher("Index").forward(request, response);
 					}else {
 						request.getRequestDispatcher("consultarVideo.jsp").forward(request, response);
 					}
 				}
 				request.setAttribute("mensaje", "ERROR al consultar el video.");
-				request.getRequestDispatcher("index.jsp").forward(request, response);			
-			}catch(Exception e) {
-				request.setAttribute("mensaje", "ERROR al consultar el video.");
-				request.getRequestDispatcher("index.jsp").forward(request, response);
-			}
+				request.getRequestDispatcher("Index").forward(request, response);			
+			}catch(Exception e) {}
 		}
 		
 		

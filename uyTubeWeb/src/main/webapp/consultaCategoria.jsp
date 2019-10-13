@@ -29,52 +29,6 @@
 	</div>
 	<div class="container-fluid text-center">
 		<div class="row content">
-
-			<div class="col-xs-6 col-sm-4 col-lg-2 sidenav" id="sideBar">
-				<ul class="list-unstyled components">
-					<li><a href="#homeSubmenu" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Videos</a>
-						<ul class="collapse list-unstyled" id="homeSubmenu">
-							<li><a href="altaVideo.jsp">Añadir Video</a></li>
-							<form action="ModificarDatosVideo" method="get">
-								<li><a href="ModificarDatosVideo">Modificar Video</a></li>
-							</form>
-							<li><a href="#">Consultar Video</a></li>
-							<li><a href="#">Comentar un Video</a></li>
-							<li><a href="#">Valorar Video</a></li>
-						</ul></li>
-					<li><a href="#pageSubmenu" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Listas de
-							reproduccion</a>
-						<ul class="collapse list-unstyled" id="pageSubmenu">
-							<form action="AltaLista" method="get">
-								<li><a href="altaLista.jsp">Crear Lista de Reproduccion
-										Particular</a></li>
-							</form>
-							<li><a href="#">Modificar Lista de Reproduccion</a></li>
-							<li><a href="#">Agregar Video a Lista de Reproduccion</a></li>
-							<li><a href="#">Quitar Video de Lista de Reproduccion</a></li>
-							<li><a href="#">Consulta de Lista de Reproduccion</a></li>
-						</ul></li>
-					<li><a href="#categoria" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Categorias</a>
-						<ul class="collapse list-unstyled" id="categoria">
-							<li><a href="altaCategoria.jsp">Crear Categoria</a></li>
-							<form action="ListarCategorias" method="get">
-								<button type="submit" value="Submit" class="btn-link">Listar
-									Categorias</button>
-							</form>
-						</ul></li>
-					<li><a href="#usuario" data-toggle="collapse"
-						aria-expanded="false" class="dropdown-toggle">Usuarios</a>
-						<ul class="collapse list-unstyled" id="usuario">
-							<li><a href="seguirUsuario.jsp">Seguir Usuario</a></li>
-							<li><a href="#">Dejar de Seguir</a></li>
-							<li><a href="#">Consultar Usuario</a></li>
-							<li><a href="#">Modificar Usuario</a></li>
-						</ul></li>
-				</ul>
-			</div>
 			<!-- Logica del consulta lista -->
 
 			<div class="col-xs-12 col-xs-offset-12 row mx-auto">

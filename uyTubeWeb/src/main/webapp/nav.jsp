@@ -33,7 +33,8 @@
 						} else {
 					%>
 					<a class="dropdown-item disabled" href="#" tabindex="-1"
-						aria-disabled="true">Alta Video</a>
+						aria-disabled="true" data-placement="left"
+						title="Debes estar logueado">Alta Video</a>
 					<%
 						}
 						;
@@ -50,7 +51,8 @@
 						} else {
 					%>
 					<a class="dropdown-item disabled" href="#" tabindex="-1"
-						aria-disabled="true">Modificar Video</a>
+						aria-disabled="true" data-placement="left"
+						title="Debes estar logueado">Modificar Video</a>
 					<%
 						}
 						;
@@ -76,7 +78,8 @@
 						} else {
 					%>
 					<a class="dropdown-item disabled" href="#" tabindex="-1"
-						aria-disabled="true">Crear Lista</a>
+						aria-disabled="true" data-placement="left"
+						title="Debes estar logueado">Crear Lista</a>
 					<%
 						}
 						;
@@ -92,7 +95,8 @@
 						} else {
 					%>
 					<a class="dropdown-item disabled" href="#" tabindex="-1"
-						aria-disabled="true">Modificar Lista</a>
+						aria-disabled="true" data-placement="left"
+						title="Debes estar logueado">Modificar Lista</a>
 					<%
 						}
 						;
@@ -123,8 +127,22 @@
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Usuarios </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<%
+						if (username != null && username.length() > 0) {
+					%>
 					<a class="dropdown-item" href="seguirUsuario.jsp">Seguir
-						Usuario</a> <a class="dropdown-item" href="#">Dejar de Seguir</a> <a
+						Usuario</a>
+					<%
+						} else {
+					%>
+					<a class="dropdown-item disabled" href="#" tabindex="-1"
+						aria-disabled="true" data-toggle="tooltip" data-placement="left"
+						title="Debes estar logueado">Seguir Usuario</a>
+					<%
+						}
+						;
+					%>
+					<a class="dropdown-item" href="#">Dejar de Seguir</a> <a
 						class="dropdown-item" href="#">Consultar Usuario</a> <a
 						class="dropdown-item" href="#">Modificar Usuario</a>
 				</div></li>

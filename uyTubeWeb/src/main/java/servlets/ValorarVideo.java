@@ -41,7 +41,7 @@ public class ValorarVideo extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd;
+		RequestDispatcher rd = null;
 		Fabrica fabrica = Fabrica.getInstancia();
 		IControlador icon = fabrica.getIControlador();
 		HttpSession session = request.getSession();
@@ -59,14 +59,19 @@ public class ValorarVideo extends HttpServlet {
 			boolean r = icon.valorarVideoPublico(id,user, valor);
 			if(r) {
 				request.setAttribute("mensaje", "Se ha valorado correctamente el video ");
+				//request.setParameter("id", id);
+				//rd = request.getRequestDispatcher("/ConsultarVideo?id="+id);
+				response.sendRedirect(request.getContextPath() + "/" + "ConsultarVideo?id="+id);
 			}else {
-				request.setAttribute("mensaje", "Error al valorar el video ");;			
+				request.setAttribute("mensaje", "Error al valorar el video ");
+				rd = request.getRequestDispatcher("index.jsp");
+		        rd.forward(request, response);	
 			}
 		}else {
-			request.setAttribute("mensaje", "Error al valorar el video ");		
+			request.setAttribute("mensaje", "Error al valorar el video ");
+			rd = request.getRequestDispatcher("index.jsp");
+	        rd.forward(request, response);	
 		}
-		rd = request.getRequestDispatcher("consultarVideo.jsp");
-        rd.forward(request, response);
 		//doGet(request, response);
 	}
 

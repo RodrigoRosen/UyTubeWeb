@@ -36,18 +36,8 @@
 	<body>
 		<!-- Barra Principal -->
 		<div class="container" id="navBarPrincipal">
-			<nav class="navbar navbar-expand-lg navbar-light bg-light"><a href="index.jsp"> <img
-				src="imagenes/UyTube.png" class="img-fluid" height="50px"
-				width="150px"></a>
-			<div class="md-form mt-0" style="margin-left: 40px">
-				<input class="form-control col-xs-12 col-sm-8 col-md-8 " type="text" placeholder="Search"
-					aria-label="Search" id="searchBarPrincipalId" style="width: 450px">
-			</div>
-			<div class="md-form mt-0" style="margin-left: 360px">
-				<button type="button" class="btn btn-primary">Login</button>
-			</div>
-			</nav>
-		</div>
+		<jsp:include page="nav.jsp" />
+	</div>
 		<!-- Resto de la pag -->
 		<h1 class="container">Seguir Usuario</h1>
 		<form action="SeguirUsuario" method="post">

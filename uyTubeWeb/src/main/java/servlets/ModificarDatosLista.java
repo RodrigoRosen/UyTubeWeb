@@ -84,7 +84,7 @@ public class ModificarDatosLista extends HttpServlet {
 		DtLista oldLista = icon.seleccionarLista(nombre);
 		DtLista newLista = new DtLista();
 		newLista.setNombre(newNombre);
-		newLista.setPrivado(newPrivado);
+		newLista.setPrivado(!newPrivado);
 		newLista.setCategoria(newCategory);
 
 		// Se modifica la lista

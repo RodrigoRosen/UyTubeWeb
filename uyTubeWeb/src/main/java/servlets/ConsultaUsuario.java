@@ -20,8 +20,11 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 import datatypes.DtCanal;
 import datatypes.DtUsuario;
+import datatypes.DtVideo;
+import datatypes.DtLista;
 import interfaces.Fabrica;
 import interfaces.IControlador;
+import logica.Video;
 
 @WebServlet("/ConsultaUsuario")
 public class ConsultaUsuario  extends HttpServlet {
@@ -41,7 +44,8 @@ public class ConsultaUsuario  extends HttpServlet {
 		
 		//traigo todos los usuarios
 		ArrayList<String> usuarios = icon.listarUsuarios();
-    
+		if (!usuarios.isEmpty()) request.setAttribute("usuarios", usuarios);
+		
 		//traigo la sesion para traer el usuario, para comparar si el seleccionado, es el consultado
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("logNick");
@@ -56,19 +60,33 @@ public class ConsultaUsuario  extends HttpServlet {
 			}
 			if (!datos.isEmpty()) request.setAttribute("usuario", datos);
 			
-      // De dÃ³nde saco si es private??
-      // recordar que tiene que mostrar seguidos y seguidores (nombre y cantidad)
-      // tiene que poder modificar los datos si la consulta es sobre el usuario logeado
-      // tiene que poder acceder a listas y a videos del usuario
-      // consulta de video y consulta lista de reproducciÃ³n
- 
-			Map<String, DtUsuario> seguidores = Usuario.getSeguidores();
-			Map<String, DtUsuario> seguidos = Usuario.getSeguidos();
-			int num_seguidores=seguidores.size(), num_seguidors=seguidos.size();
 			
+			Map<String, DtUsuario> seguidor = Usuario.getSeguidores();			
+			ArrayList<String> seguidores = new ArrayList();
+			for (DtUsuario Usr : seguidor.values()) {
+				seguidores.add(Usr.getNickname());
+			}	
 			
+			Map<String, DtUsuario> seguid = Usuario.getSeguidos();
+			ArrayList<String> seguidos = new ArrayList();
+			for (DtUsuario Usr : seguid.values()) {
+				seguidos.add(Usr.getNickname());
+			}
 			
-      //Map<String, String> videos = icon.;
+			int num_seguidores=seguidores.size(), num_seguidos=seguidos.size();
+			
+			Map<Integer, DtVideo> Video = Canal.getListaVideos();
+			ArrayList<String> Videos = new ArrayList();
+			for (DtVideo vdo : Video.values()) {
+				Videos.add(vdo.getNombre());
+			}
+			
+			Map<Integer, DtLista> Lista = Canal.getListasReproduccion();
+			ArrayList<String> Listas = new ArrayList();
+			for (DtLista lst : Lista.values()) {
+				Videos.add(lst.getNombre());
+			}
+			
 			
 			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");
 			view.forward(request, response);
@@ -100,18 +118,16 @@ public class ConsultaUsuario  extends HttpServlet {
 		if(request.getParameter("privado") == "Si")
 			privado = true;
 		DtCanal canal = new DtCanal(nombreCanal, descripcion, Usuario.getNickname(), privado);
-		icon.modificarUsuarioCanal(Usuario, Canal);
-		//Boolean ok = icon.modificarUsuarioCanal(Usuario., canal);nickname, email, password, nombre, apellido, fechaNac, img, canal);
-    //revisar si asi se llama la funciÃ³n
-    
+		DtUsuario usuario = new DtUsuario(Usuario.getNickname());
+		
 		RequestDispatcher rd;
 		String resp = "index.jsp";
 		try{
-			icon.modificarUsuarioCanal(Usuario, Canal);
+			icon.modificarUsuarioCanal(usuario, canal);
 			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " ha sido modificado correctamente");
 		} catch (ParseException e) {
-			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " o el email " + Usuario.getEmail() + " ya existe!. Intentelo nuevamente");
-			resp = "altaUsuario.jsp";
+			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " no se ha podido modificar. Intentelo nuevamente");
+			resp = "ConsultaUsuario.jsp";
 		}
 
 		rd = request.getRequestDispatcher(resp);

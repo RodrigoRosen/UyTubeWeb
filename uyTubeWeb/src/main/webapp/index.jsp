@@ -31,7 +31,7 @@
 
 <body>
 	<!-- Barra Principal -->
-	<div class="container" id="navBarPrincipal">
+	<div class="container-fluid" id="navBarPrincipal">
 		<jsp:include page="nav.jsp" />
 		<!-- HASTA ACA VA LA NAVEGACION-->
 	</div>

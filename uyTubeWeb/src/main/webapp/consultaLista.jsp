@@ -32,7 +32,7 @@
 <title>Datos de Lista</title>
 </head>
 <body>
-	<div class="container" id="navBarPrincipal">
+	<div class="container-fluid" id="navBarPrincipal">
 		<jsp:include page="nav.jsp" />
 	</div>
 

@@ -1,3 +1,8 @@
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<form action="Index" method="get">
 		<input class="navbar-brand" type="image" src="imagenes/UyTube.png"
@@ -11,7 +16,7 @@
 	</button>
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
+		<ul class="navbar-nav mr-5">
 
 			<!-- MENU VIDEO -->
 			<li class="nav-item dropdown"><a
@@ -108,7 +113,7 @@
 				aria-expanded="false"> Categorias </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="altaCategoria.jsp">Crear
-						Categoria</a>					
+						Categoria</a>
 				</div></li>
 
 			<!-- MENU USUARIO -->
@@ -139,11 +144,20 @@
 		</ul>
 
 		<!-- SEARCH & ENTRAR & SALIR -->
-		<form action="Buscar" class="form-inline my-2 my-lg-0" >
-			<input class="form-control mr-sm-2" type="search"
-				placeholder="Buscar" aria-label="Buscar" id="buscar" name="buscar">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-				id="buscar">Buscar</button>
+		<form action="Buscar" class="form-inline navbar-nav mr-auto my-lg-2 d-flex align-items-center">
+			<div class="input-group">
+				<input type="search" class="form-control" style="width:25em" placeholder="Buscar"
+					aria-label="Buscar" aria-describedby="basic-addon1" id="buscar">
+				<div class="input-group-prepend">
+					<button class="btn btn-outline-secondary" type="submit" id="buscar">
+						<i class="fas fa-search"></i>
+					</button>
+				</div>
+			</div>
+			<!-- 			<input class="form-control mr-sm-2" type="search" -->
+			<!-- 				placeholder="Buscar" aria-label="Buscar" id="buscar" name="buscar"> -->
+			<!-- 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit" -->
+			<!-- 				id="buscar">Buscar</button> -->
 		</form>
 		<%
 			if (login == null || login.equals("Usuario y/o contraseña inválida, por favor intente de nuevo.")) {

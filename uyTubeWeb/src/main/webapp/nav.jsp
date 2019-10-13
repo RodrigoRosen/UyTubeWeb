@@ -138,8 +138,12 @@
 						;
 					%>
 					<a class="dropdown-item" href="#">Dejar de Seguir</a> <a
-						class="dropdown-item" href="#">Consultar Usuario</a> <a
-						class="dropdown-item" href="#">Modificar Usuario</a>
+						class="dropdown-item" href="#">Consultar Usuario</a> 
+						
+						<form action="ModificarUsuario" method="get">
+						<li><button class="dropdown-item" type="submit"
+								value="Submit" class="btn-link">Modificar Usuario</button></li>
+					</form>
 				</div></li>
 		</ul>
 

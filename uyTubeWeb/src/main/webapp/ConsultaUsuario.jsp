@@ -139,11 +139,14 @@
 					aria-describedby="emailHelp" placeholder="<%=nickname%>"
 					value="<%=nickname%>">
 			</div>
+
+			<% if (sesion==nickname) {  %>
 			<div class="form-group row">
 				<input type="text" name="email"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="email"
 					aria-describedby="emailHelp" placeholder="<%=email%>">
 			</div>
+<% } %>
 			<div class="form-group row">
 				<output type="text" name="nombre"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre"
@@ -155,6 +158,7 @@
 					aria-describedby="emailHelp" placeholder="<%=apellido%>">
 			</div>
 
+		        <% if (sesion==nickname) {  %>
 			<div class="form-group row">
 				<input type="password" name="contrasena"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="contrasena"
@@ -168,7 +172,7 @@
 					placeholder="Confirmar contrasena">
 			</div>
 
-
+<% } %>
 			<div class="form-group row">
 				<div class="input-group date sg-fecha">
 					<input type="text"

@@ -38,8 +38,8 @@
 
 	<!-- Resto de la pag -->
 	<%
-	String login = (String) session.getAttribute("login");
-	String username = (String) session.getAttribute("nickname");
+		String login = (String) session.getAttribute("login");
+		String username = (String) session.getAttribute("nickname");
 		if (username != null && username.length() > 0) {
 	%>
 	<div class="alert alert-primary alert-dismissible fade show"
@@ -66,12 +66,11 @@
 		}
 	%>
 	<%
-				DtLista datosLista = (DtLista) request.getAttribute("datosLista");
-			%>
-	<h2>${mensaje}</h2>
+		DtLista datosLista = (DtLista) request.getAttribute("datosLista");
+	%>
 	<div class="container">
-		<div class="row">			
-			
+		<div class="row">
+
 
 			<div class="modal fade" id="agregarVideo" tabindex="-1" role="dialog"
 				aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -146,7 +145,7 @@
 			</div>
 
 
-			<form class="col-sm-9">
+			<form class="col-sm-9 col-md-6 mx-auto">
 				<div class="container">
 
 					<div class="form-group row">
@@ -189,16 +188,20 @@
 						String duenio = (String) request.getAttribute("Propietario");
 					%>
 					<div class="form-group row  ">
-						<%
-							if (duenio != null && duenio.equals("Propietario")) {
-						%>
+
 						<div class="form-group">
+							<%
+								if (duenio != null && duenio.equals("Propietario")) {
+							%>
 							<button type="button" class="btn btn-primary" data-toggle="modal"
-								data-target="#agregarVideo">Agregar video a lista<i class="fas fa-plus-circle px-md-2"></i></button>
+								data-target="#agregarVideo">
+								Agregar video a lista<i class="fas fa-plus-circle px-md-2"></i>
+							</button>
+							<%
+								}
+							%>
 						</div>
-						<%
-							}
-						%>
+
 						<%
 							ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
 							if (videos != null && videos.size() != 0) {
@@ -244,34 +247,33 @@
 					%>
 				</div>
 			</form>
-			<form id="Quitar Video Lista" action="QuitarVideoLista" method="post">
-				<input type="text" name="VideoDeleteName" class="form-control-group"
-					id="VideoDeleteName" hidden> <input type="text"
-					name="listaSelected" hidden value="<%=datosLista.getNombre()%>">
-			</form>
+
 			<div class="sidenav col-sm-3">
 				<jsp:include page="listadoCategorias.jsp" />
 			</div>
 		</div>
-		
+
 	</div>
+	<form id="Quitar Video Lista" action="QuitarVideoLista" method="post">
+		<input type="text" name="VideoDeleteName" class="form-control-group"
+			id="VideoDeleteName" hidden> <input type="text"
+			name="listaSelected" hidden value="<%=datosLista.getNombre()%>">
+	</form>
 	<script type="text/javascript">
-		$("#vidPrivado").change(function(){
+		$("#vidPrivado").change(function() {
 			var vid = document.getElementById("vidPrivado").value;
-			if (vid != "Elegir...")	 {
-				$("#vidPublico").prop('disabled',true);
-			}
-			else {
-				$("#vidPublico").prop('disabled',false);
+			if (vid != "Elegir...") {
+				$("#vidPublico").prop('disabled', true);
+			} else {
+				$("#vidPublico").prop('disabled', false);
 			}
 		});
-		$("#vidPublico").change(function(){
+		$("#vidPublico").change(function() {
 			var vid = document.getElementById("vidPublico").value;
-			if (vid != "Elegir..."){
-				$("#vidPrivado").prop('disabled',true);
-			}
-			else {
-				$("#vidPrivado").prop('disabled',false);
+			if (vid != "Elegir...") {
+				$("#vidPrivado").prop('disabled', true);
+			} else {
+				$("#vidPrivado").prop('disabled', false);
 			}
 		});
 		function agregarVideo() {

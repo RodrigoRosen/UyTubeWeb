@@ -62,7 +62,6 @@
 							%>
 						</tbody>
 					</table>
-					<input id="IDLISTA" name="IDLISTA" hidden>
 				</form>
 
 				<h2>Videos</h2>
@@ -82,7 +81,7 @@
 								String idVideo = entry.getKey().split(";")[0];
 										String nombreVideo = entry.getKey().split(";")[1];
 							%>
-							<td><a href="ConsultaVideo?id=<%=idVideo%>"><%=nombreVideo%></a></td>
+							<td><a href="ConsultarVideo?id=<%=idVideo%>"><%=nombreVideo%></a></td>
 						</tr>
 						<%
 							}

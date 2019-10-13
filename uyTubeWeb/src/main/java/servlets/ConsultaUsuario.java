@@ -76,17 +76,8 @@ public class ConsultaUsuario  extends HttpServlet {
 			int num_seguidores=seguidores.size(), num_seguidos=seguidos.size();
 			
 			Map<Integer, DtVideo> Video = Canal.getListaVideos();
-			ArrayList<String> Videos = new ArrayList();
-			for (DtVideo vdo : Video.values()) {
-				Videos.add(vdo.getNombre());
-			}
 			
 			Map<Integer, DtLista> Lista = Canal.getListasReproduccion();
-			ArrayList<String> Listas = new ArrayList();
-			for (DtLista lst : Lista.values()) {
-				Videos.add(lst.getNombre());
-			}
-			
 			
 			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");
 			view.forward(request, response);

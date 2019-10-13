@@ -57,8 +57,6 @@
 						}
 						;
 					%>
-					<a class="dropdown-item" href="consultarVideo.jsp">Consultar
-						Video</a> <a class="dropdown-item" href="#">Modificar Video</a>
 				</div></li>
 
 			<!-- MENU LISTA -->
@@ -101,10 +99,6 @@
 						}
 						;
 					%>
-
-					<a class="dropdown-item" href="#">Agregar Video a Lista</a> <a
-						class="dropdown-item" href="#">Quitar Video de Lista</a> <a
-						class="dropdown-item" href="#">Consultar Lista</a>
 				</div></li>
 
 			<!-- MENU CATEGORIA -->
@@ -114,11 +108,7 @@
 				aria-expanded="false"> Categorias </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item" href="altaCategoria.jsp">Crear
-						Categoria</a>
-					<form action="ListarCategorias" method="get">
-						<li><button class="dropdown-item" type="submit"
-								value="Submit" class="btn-link">Listar Categorias</button></li>
-					</form>
+						Categoria</a>					
 				</div></li>
 
 			<!-- MENU USUARIO -->

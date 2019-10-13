@@ -71,17 +71,13 @@
 	<form action="ModificarUsuario" method="post" name="ModificarUsuario"
 		id="ModificarUsuario">
 		<div class="container">
+			<h1 class="col-xs-4 col-sm-4">Perfil</h1>
 			<div class="form-group row">
-				<h1 class="col-xs-4 col-sm-4">Perfil De</h1>
-				<input type="text" name="nickname"
-					class="form-control col-xs-8 col-sm-8 col-md-8" id="nickname"
-					aria-describedby="emailHelp" placeholder="<%=nickname%>"
-					value="<%=nickname%>" readonly>
 				<h6 class="col-xs-4 col-sm-4">Nickname</h6>
 				<input type="text" name="newNickname"
 					class="form-control col-xs-8 col-sm-8 col-md-8" id="newNickname"
 					aria-describedby="emailHelp" placeholder="<%=newNickname%>"
-					value="<%=newNickname%>">
+					value="<%=newNickname%>" readonly>
 			</div>
 
 			<div class="form-group row">
@@ -89,7 +85,7 @@
 				<input type="text" name="email"
 					class="form-control col-xs-8 col-sm-8 col-md-8" id="email"
 					aria-describedby="emailHelp" placeholder="<%=email%>"
-					value="<%=email%>">
+					value="<%=email%>" readonly>
 			</div>
 
 			<div class="form-group row">
@@ -113,7 +109,7 @@
 				<input type="password" name="password"
 					class="form-control col-xs-8 col-sm-8 col-md-8" id="password"
 					aria-describedby="emailHelp" placeholder="<%=password%>"
-					value="<%=password%>">
+					value="<%=password%>" onchange="passWarning()">
 			</div>
 
 			<div class="form-group row">
@@ -121,14 +117,15 @@
 				<input type="password" name="confpassword"
 					class="form-control col-xs-8 col-sm-8 col-md-8" id="confpassword"
 					aria-describedby="emailHelp" placeholder="<%=confpassword%>"
-					value="<%=confpassword%>">
+					value="<%=confpassword%>" onchange="passWarning()">
 			</div>
 
 			<div class="form-group row">
 				<h6 class="col-xs-4 col-sm-4">Fecha</h6>
 				<div class="input-group date sg-fecha">
-					<input type="text" class="form-control col-xs-8 col-sm-8 col-md-8 "
-						id="fecha" placeholder="<%=fecha%>" value="<%=fecha%>"><span
+					<input type="text" name="fecha"
+						class="form-control col-xs-8 col-sm-8 col-md-8 " id="fecha"
+						placeholder=<%=fecha%> value=<%=fecha%> required><span
 						class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 				</div>
 			</div>
@@ -136,14 +133,12 @@
 			<div class="form-group row">
 				<h6 class="col-xs-4 col-sm-4">Imagen</h6>
 				<input id="img" name="img" type="file" class="file"
-					data-browse-on-zone-click="true"> <img src="#"
-					class="rounded float-left" alt="..." value="<%=img%>">
-				<!-- INGRESAR LA IMG -->
+					data-browse-on-zone-click="true" value="<%=img%>">
 			</div>
 
 			<div class="form-group row">
 				<h6 class="col-xs-4 col-sm-4">Nombre Canal</h6>
-				<input type="text" name="canal"
+				<input type="text" name="nom_canal"
 					class="form-control col-xs-8 col-sm-8 col-md-8" id="canal"
 					aria-describedby="emailHelp" placeholder="<%=nom_canal%>"
 					value="<%=nom_canal%>">
@@ -158,13 +153,16 @@
 			</div>
 
 			<div class="form-group row">
-				<h6 class="col-xs-4 col-sm-4">Privado</h6>
-				<input type="text" name="privado"
-					class="form-control col-xs-8 col-sm-8 col-md-8" id="privado"
-					aria-describedby="emailHelp" placeholder="<%=privado%>"
-					value="<%=privado%>">
+				<h6 class="col-xs-2 col-sm-2">Privado</h6>
+				<select class="custom-select col-xs-4 col-sm-4 col-md-4"
+					id="newPrivado" name="privado">
+					<option selected>Privado?</option>
+					<option value="si">si</option>
+					<option value="no">no</option>
+				</select>
 			</div>
 
+			<div id="passAlert" class="alert alert-danger" style="display: none" role="alert">Las contraseñas deben coincidir!</div>
 			<div class="form-group row">
 				<button type="submit" id="btnAceptar"
 					class="btn btn-primary col-xs-12 col-sm-12 col-md-12">Modificar</button>
@@ -172,6 +170,28 @@
 		</div>
 	</form>
 
+	<script>
+		function passWarning() {
+			var pass = document.getElementById("password").value;
+			var pass2 = document.getElementById("confpassword").value;
+			var alert = document.getElementById("passAlert");
+			var x = document.getElementById("btnAceptar");
+			var changed = false;
+			if (pass != pass2) {
+				x.classList.remove('btn-primary');
+				x.classList.add('disabled');
+				x.classList.add('btn-secondary');
+				x.setAttribute("disabled", "true");
+				alert.removeAttribute("style")
+			} else {
+				x.classList.add('btn-primary');
+				x.classList.remove('disabled');
+				x.classList.remove('btn-secondary');
+				x.removeAttribute("disabled");
+				alert.setAttribute("style", 'display: none');
+			}
+		}
+	</script>
 
 	<script src="js/app.js" charset="utf-8"></script>
 

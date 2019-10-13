@@ -43,15 +43,15 @@ public class ConsultaUsuario  extends HttpServlet {
 		IControlador icon = fabrica.getIControlador();
 		
 		//traigo todos los usuarios
-		ArrayList<String> usuarios = icon.listarUsuarios();
-		if (!usuarios.isEmpty()) request.setAttribute("usuarios", usuarios);
+		//ArrayList<String> usuarios = icon.listarUsuarios();
+		//if (!usuarios.isEmpty()) request.setAttribute("usuarios", usuarios);
 		
 		//traigo la sesion para traer el usuario, para comparar si el seleccionado, es el consultado
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("logNick");
 		
-		//uso la funciÃ³n del controlador que devuelve el mapa de datos del uruario seleccionado
-		 Map<DtUsuario, DtCanal> datos = icon.listarDatosUsuario(user);
+		String user2 = respuesta.getParameter("nickname");
+		 Map<DtUsuario, DtCanal> datos = icon.listarDatosUsuario(user2);
 		 Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
 			while (it.hasNext()) {
 				Entry<DtUsuario, DtCanal> entry = it.next();

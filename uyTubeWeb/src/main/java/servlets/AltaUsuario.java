@@ -48,7 +48,7 @@ public class AltaUsuario extends HttpServlet {
         }
 		
 		String img = request.getParameter("img");
-		String nombreCanal = request.getParameter("nombreCanal");
+		String nombreCanal = request.getParameter("canal");
 		String descripcion = request.getParameter("descripcion");
 		String password = request.getParameter("contrasena");
 		Boolean privado = false;
@@ -56,6 +56,10 @@ public class AltaUsuario extends HttpServlet {
 		if(request.getParameter("privado") == "Si")
 			privado = true;
 		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado);
+		System.out.println(canal.getNombre());
+		System.out.println(canal.getDescripcion());
+		System.out.println(canal.getNick());
+
 		Boolean ok = icon.ingresarUsuario(nickname, email, password, nombre, apellido, fechaNac, img, canal);
 		RequestDispatcher rd;
 		String resp = "index.jsp";

@@ -151,7 +151,7 @@
 		<form action="Buscar" class="form-inline navbar-nav mr-auto my-lg-2 d-flex align-items-center">
 			<div class="input-group">
 				<input type="search" class="form-control" style="width:25em" placeholder="Buscar"
-					aria-label="Buscar" aria-describedby="basic-addon1" id="buscar">
+					aria-label="Buscar" aria-describedby="basic-addon1" id="buscar" name="buscar">
 				<div class="input-group-prepend">
 					<button class="btn btn-outline-secondary" type="submit" id="buscar">
 						<i class="fas fa-search"></i>

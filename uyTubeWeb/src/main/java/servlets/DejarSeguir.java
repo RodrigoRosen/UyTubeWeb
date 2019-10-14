@@ -13,11 +13,11 @@ import datatypes.DtUsuario;
 import interfaces.Fabrica;
 import interfaces.IControlador;
 
-@WebServlet("/SeguirUsuario")
-public class SeguirUsuario extends HttpServlet {
+@WebServlet("/DejarSeguir")
+public class DejarSeguir extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SeguirUsuario() {
+    public DejarSeguir() {
         super();
     }
 
@@ -38,23 +38,23 @@ public class SeguirUsuario extends HttpServlet {
 				DtUsuario usr2 = icon.seleccionarUsuario(seguido);
 				if(usr1 != null && usr2 != null) {
 					DtUsuario aux = usr1.getSeguidos().get(seguido);
-					if(aux == null) {
-						icon.seguirUsuario();
+					if(aux != null) {
+						icon.dejarSeguir();
 						icon.finCasoUso();
-						request.setAttribute("mensaje", "Siguendo a "+seguido+" con exito!!!");
+						request.setAttribute("mensaje", "Dejaste de seguir a "+seguido+" con exito!!!");
 						response.sendRedirect(request.getContextPath()+"/"+"ConsultarUsuario?nickname="+seguido);
 					}else {
 						icon.finCasoUso();
-						request.setAttribute("mensaje", "Ya seguias al usuario: "+seguido);
+						request.setAttribute("mensaje", "No seguias al usuario: "+seguido);
 						response.sendRedirect(request.getContextPath()+"/"+"Index");
 					}				
 				}else {
 					icon.finCasoUso();
-					request.setAttribute("mensaje", "No se pudo seguir a "+seguido);
+					request.setAttribute("mensaje", "No se pudo dejar de seguir a "+seguido);
 					response.sendRedirect(request.getContextPath()+"/"+"Index");
 				}				
 			}else {
-				request.setAttribute("mensaje", "ERROR siguiendo a usuario");
+				request.setAttribute("mensaje", "ERROR dejando de seguir a usuario");
 				response.sendRedirect(request.getContextPath()+"/"+"Index");
 			}	
 		}else {

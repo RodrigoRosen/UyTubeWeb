@@ -138,20 +138,35 @@
 						;
 					%>
 					<a class="dropdown-item" href="#">Dejar de Seguir</a> <a
-						class="dropdown-item" href="#">Consultar Usuario</a> 
-						
-						<form action="ModificarUsuario" method="get">
+						class="dropdown-item" href="#">Consultar Usuario</a>
+
+					<%
+						if (username != null && username.length() > 0) {
+					%>
+					<form action="ModificarUsuario" method="get">
 						<li><button class="dropdown-item" type="submit"
 								value="Submit" class="btn-link">Modificar Usuario</button></li>
 					</form>
+					<%
+						} else {
+					%>
+					<a class="dropdown-item disabled" href="#" tabindex="-1"
+						aria-disabled="true" data-toggle="tooltip" data-placement="left"
+						title="Debes estar logueado">Modificar Usuario</a>
+					<%
+						}
+						;
+					%>
 				</div></li>
 		</ul>
 
 		<!-- SEARCH & ENTRAR & SALIR -->
-		<form action="Buscar" class="form-inline navbar-nav mr-auto my-lg-2 d-flex align-items-center">
+		<form action="Buscar"
+			class="form-inline navbar-nav mr-auto my-lg-2 d-flex align-items-center">
 			<div class="input-group">
-				<input type="search" class="form-control" style="width:25em" placeholder="Buscar"
-					aria-label="Buscar" aria-describedby="basic-addon1" id="buscar" name="buscar">
+				<input type="search" class="form-control" style="width: 25em"
+					placeholder="Buscar" aria-label="Buscar"
+					aria-describedby="basic-addon1" id="buscar" name="buscar">
 				<div class="input-group-prepend">
 					<button class="btn btn-outline-secondary" type="submit" id="buscar">
 						<i class="fas fa-search"></i>

@@ -76,11 +76,11 @@ public class ModificarUsuario extends HttpServlet {
 		ArrayList<String> listCategory = icon.listarCategorias();
 		request.setAttribute("listCategory", listCategory);
 
-		String nickname = request.getParameter("nickname");
+		String nickname = request.getParameter("newNickname");
 		String email = request.getParameter("email");
 		String nombre = request.getParameter("nombre");
 		String apellido = request.getParameter("apellido");
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		String fecha = request.getParameter("fecha");
 		Date fechaNac = new Date();
 		try {
@@ -89,11 +89,10 @@ public class ModificarUsuario extends HttpServlet {
 			System.out.println(e);
 		}
 		String img = request.getParameter("img");
-		String nombreCanal = request.getParameter("nombreCanal");
+		String nombreCanal = request.getParameter("nom_canal");
 		String descripcion = request.getParameter("descripcion");
-		String password = request.getParameter("contrasena");
+		String password = request.getParameter("password");
 		Boolean privado = false;
-		System.out.println(request.getParameter("privado"));
 		if (request.getParameter("privado") == "Si")
 			privado = true;
 		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado);

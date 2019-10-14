@@ -42,7 +42,7 @@ public class SeguirUsuario extends HttpServlet {
 						icon.seguirUsuario();
 						icon.finCasoUso();
 						request.setAttribute("mensaje", "Siguendo a "+seguido+" con exito!!!");
-						response.sendRedirect(request.getContextPath()+"/"+"ConsultarUsuario?nickname="+seguido);
+						response.sendRedirect(request.getContextPath()+"/"+"ConsultaUsuario?nickname="+seguido);
 					}else {
 						icon.finCasoUso();
 						request.setAttribute("mensaje", "Ya seguias al usuario: "+seguido);

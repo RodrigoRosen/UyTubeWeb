@@ -43,240 +43,268 @@
 
 		DtUsuario usr = (DtUsuario) request.getAttribute("Usuario");
 		DtCanal cnl = (DtCanal) request.getAttribute("Canal");
+		
+		ArrayList<String> seguidores = (ArrayList<String>) request.getAttribute("seguidores");
+		ArrayList<String> seguidos = (ArrayList<String>) request.getAttribute("seguidos");
 	%>
 
 	<h1 class="container">Perfil</h1>
 	<%
-		if (user != null && usr != null && usr.getNickname() == user) {
+		if (user != null && usr != null && usr.getNickname().equals(user)) {
 	%>
 	<div class="container">
 		<button>Editar</button>
 	</div>
 	<%
-		}
+		} else if (usr != null && user != null && !usr.getNickname().equals(user)) {
 	%>
-	<form>
+	<div class="container">
+		<% boolean soySeguidor = false;
+		   int i = 0;
+		   for (String seg : seguidores){
+			   if (seg.equals(user)) soySeguidor = true;
+		   }
+		   if (soySeguidor) {%>
+		   <form action="DejarSeguir" method="post">
+		     <input type="text" name="user" value="<%=usr.getNickname()%>" hidden>
+			 <button type="submit">Dejar de seguir</button>
+			 </form> 
+		   <%} else { %>
+		   <form action="SeguirUsuario" method="post">
+		     <input type="text" name="user" value="<%=usr.getNickname()%>" hidden>
+		   	 <button>Seguir</button>			   
+		   </form>
+		  <%}%>
+	</div>
+	<%}%>
+	
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-9">
+				<form>
 
-		<div class="container">
-			<div class="container">
-				<div class="form-group row">
-					<h3>
-						Imagen de Usuario
-						</h2>
-				</div>
-			</div>
-
-			<div class="form-grup row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Nickname</span>
-					</div>
-					<input type="text" value="<%=usr.getNickname()%>" readonly
-						aria-label="First name" class="form-control">
-				</div>
-			</div>
-			<div class="form-grup row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Email</span>
-					</div>
-					<input type="text" value="<%=usr.getEmail()%>" readonly
-						aria-label="First name" class="form-control">
-				</div>
-			</div>
-			<div class="form-grup row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Nombre</span>
-					</div>
-					<input type="text" value="<%=usr.getNombre()%>" readonly
-						aria-label="First name" class="form-control">
-				</div>
-			</div>
-			<div class="form-grup row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Apellido</span>
-					</div>
-					<input type="text" value="<%=usr.getApellido()%>" readonly
-						aria-label="First name" class="form-control">
-				</div>
-			</div>
-			<div class="form-grup row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Fecha de nacimiento</span>
-					</div>
-					<input type="text" value="<%=usr.getFechaNac()%>" readonly
-						aria-label="First name" class="form-control">
-				</div>
-			</div>
-
-			<div class="form-grup row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Nombre del canal</span>
-					</div>
-					<input type="text"
-						value="<%=cnl.getNombre() == null ? "" : cnl.getNombre()%>"
-						readonly aria-label="First name" class="form-control">
-				</div>
-			</div>
-
-			<div class="form-grup row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Descripcion</span>
-					</div>
-					<textarea readonly aria-label="First name" class="form-control">
-					<%=cnl.getDescripcion()%>
-					</textarea>
-				</div>
-			</div>
-			<div class="form-grup row col-7 mb-3">
-				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input"
-						checked="<%=cnl.isPrivado()%>" disabled id="customCheck1"> <label
-						class="custom-control-label" disabled for="customCheck1">Privado?</label>
-				</div>
-			</div>
-			<%
-				int num_seguidores = (int) request.getAttribute("num_seguidores");
-				int num_seguidos = (int) request.getAttribute("num_seguidos");
-
-				ArrayList<String> seguidores = (ArrayList<String>) request.getAttribute("seguidores");
-				ArrayList<String> seguidos = (ArrayList<String>) request.getAttribute("seguidos");
-			%>
-			<div class="form-grup row mb-3">
-				<div class="input-group row col-2">
-					<div class="input-group mb-3">
-						<div class="input-group-prepend">
-							<button class="btn btn-outline-secondary dropdown-toggle"
-								type="button" data-toggle="dropdown" aria-haspopup="true"
-								aria-expanded="false">Seguidores</button>
-							<div class="dropdown-menu">
-								<%
-									if (seguidores != null) {
-										for (String seguidor : seguidores) {
-								%>
-								<a class="dropdown-item"
-									href="ConsultaUsuario?nickname=<%=seguidor%>"><%=seguidor%></a>
-								<%
-									}
-								%>
-								<%
-									}
-								%>
+					<div class="container">
+						<div class="container">
+							<div class="form-group row">
+								<h3>
+									Imagen de Usuario
+									</h2>
 							</div>
 						</div>
-						<input readonly aria-label="First name" class="form-control"
-							value="<%=num_seguidores%>">
-					</div>
 
-				</div>
-
-				<div class="input-group row col-2">
-					<div class="input-group-prepend mb-3">
-						<button class="btn btn-outline-secondary dropdown-toggle"
-							type="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false">Seguidos</button>
-						<div class="dropdown-menu">
-							<%
-								if (seguidos != null) {
-									for (String seguido : seguidos) {
-							%>
-							<a class="dropdown-item"
-								href="ConsultaUsuario?nickname=<%=seguido%>"><%=seguido%></a>
-							<%
-								}
-							%>
-							<%
-								}
-							%>
+						<div class="form-grup row col-7 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Nickname</span>
+								</div>
+								<input type="text" value="<%=usr.getNickname()%>" readonly
+									aria-label="First name" class="form-control">
+							</div>
 						</div>
+						<div class="form-grup row col-7 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Email</span>
+								</div>
+								<input type="text" value="<%=usr.getEmail()%>" readonly
+									aria-label="First name" class="form-control">
+							</div>
+						</div>
+						<div class="form-grup row col-7 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Nombre</span>
+								</div>
+								<input type="text" value="<%=usr.getNombre()%>" readonly
+									aria-label="First name" class="form-control">
+							</div>
+						</div>
+						<div class="form-grup row col-7 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Apellido</span>
+								</div>
+								<input type="text" value="<%=usr.getApellido()%>" readonly
+									aria-label="First name" class="form-control">
+							</div>
+						</div>
+						<div class="form-grup row col-7 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Fecha de nacimiento</span>
+								</div>
+								<input type="text" value="<%=usr.getFechaNac()%>" readonly
+									aria-label="First name" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-grup row col-7 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Nombre del canal</span>
+								</div>
+								<input type="text"
+									value="<%=cnl.getNombre() == null ? "" : cnl.getNombre()%>"
+									readonly aria-label="First name" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-grup row col-7 mb-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Descripcion</span>
+								</div>
+								<textarea readonly aria-label="First name" class="form-control">
+					<%=cnl.getDescripcion()%>
+					</textarea>
+							</div>
+						</div>
+						<div class="form-grup row col-7 mb-3">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" class="custom-control-input"
+									checked="<%=cnl.isPrivado()%>" disabled id="customCheck1">
+								<label class="custom-control-label" disabled for="customCheck1">Privado?</label>
+							</div>
+						</div>
+						<%
+							int num_seguidores = (int) request.getAttribute("num_seguidores");
+							int num_seguidos = (int) request.getAttribute("num_seguidos");							
+						%>
+						<div class="form-grup row mb-3">
+							<div class="input-group row col-2">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend">
+										<button class="btn btn-outline-secondary dropdown-toggle"
+											type="button" data-toggle="dropdown" aria-haspopup="true"
+											aria-expanded="false">Seguidores</button>
+										<div class="dropdown-menu">
+											<%
+												if (seguidores != null) {
+													for (String seguidor : seguidores) {
+											%>
+											<a class="dropdown-item"
+												href="ConsultaUsuario?nickname=<%=seguidor%>"><%=seguidor%></a>
+											<%
+												}
+											%>
+											<%
+												}
+											%>
+										</div>
+									</div>
+									<input readonly aria-label="First name" class="form-control"
+										value="<%=num_seguidores%>">
+								</div>
+
+							</div>
+
+							<div class="input-group row col-2">
+								<div class="input-group-prepend mb-3">
+									<button class="btn btn-outline-secondary dropdown-toggle"
+										type="button" data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="false">Seguidos</button>
+									<div class="dropdown-menu">
+										<%
+											if (seguidos != null) {
+												for (String seguido : seguidos) {
+										%>
+										<a class="dropdown-item"
+											href="ConsultaUsuario?nickname=<%=seguido%>"><%=seguido%></a>
+										<%
+											}
+										%>
+										<%
+											}
+										%>
+									</div>
+								</div>
+								<input readonly aria-label="First name"
+									class="form-control mb-3" value="<%=num_seguidos%>">
+							</div>
+						</div>
+
+						<ul class="nav nav-tabs">
+							<li class="nav-item"><a href="#videos"
+								class="nav-link active" role="tab" data-toggle="tab">Videos</a></li>
+							<li class="nav-item"><a href="#listas" class="nav-link"
+								role="tab" data-toggle="tab">Listas</a></li>
+						</ul>
+
+
+						<div class="tab-content col-7">
+
+							<div role="tabpanel" class="tab-pane active" id="videos"
+								name="videos">
+								<%
+									Map<Integer, DtVideo> videos = (Map<Integer, DtVideo>) request.getAttribute("videos");
+								%>
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">Videos</th>
+										</tr>
+									</thead>
+
+									<%
+										if (videos != null) {
+									%>
+									<%
+										for (DtVideo dtvid : videos.values()) {
+									%>
+									<tr>
+										<td><%=dtvid.getNombre()%></td>
+									</tr>
+
+
+									<%
+										}
+										}
+									%>
+
+								</table>
+
+							</div>
+
+							<div role="tabpanel" class="tab-pane" id="listas" name="listas">
+								<table class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th scope="col">Lista</th>
+										</tr>
+									</thead>
+									<tbody>
+										<%
+											Map<Integer, DtLista> listas = (Map<Integer, DtLista>) request.getAttribute("listas");
+										%>
+										<%
+											if (listas != null) {
+												for (DtLista dtlis : listas.values()) {
+										%>
+										<tr>
+											<td><a href="ConsultaLista?IDLISTA=<%=dtlis.getId()%>">
+													<%=dtlis.getNombre()%>
+											</a></td>
+										</tr>
+										<%
+											}
+											}
+										%>
+									</tbody>
+
+								</table>
+							</div>
+						</div>
+
 					</div>
-					<input readonly aria-label="First name" class="form-control mb-3"
-						value="<%=num_seguidos%>">
-				</div>
+
+				</form>
 			</div>
-
-			<ul class="nav nav-tabs">
-				<li class="nav-item"><a href="#videos" class="nav-link active"
-					role="tab" data-toggle="tab">Videos</a></li>
-				<li class="nav-item"><a href="#listas" class="nav-link"
-					role="tab" data-toggle="tab">Listas</a></li>
-			</ul>
-
-
-			<div class="tab-content col-7">
-
-				<div role="tabpanel" class="tab-pane active" id="videos"
-					name="videos">
-					<%
-						Map<Integer, DtVideo> videos = (Map<Integer, DtVideo>) request.getAttribute("videos");
-					%>
-					<table class="table table-striped table-bordered">
-						<thead>
-							<tr>
-								<th scope="col">Videos</th>
-							</tr>
-						</thead>
-
-						<%
-							if (videos != null) {
-						%>
-						<%
-							for (DtVideo dtvid : videos.values()) {
-						%>
-						<tr>
-							<td><%=dtvid.getNombre()%></td>
-						</tr>
-
-
-						<%
-							}
-							}
-						%>
-
-					</table>
-
-				</div>
-
-				<div role="tabpanel" class="tab-pane" id="listas" name="listas">
-					<table class="table table-striped table-bordered">
-						<thead>
-							<tr>
-								<th scope="col">Lista</th>
-							</tr>
-						</thead>
-						<tbody>
-							<%
-								Map<Integer, DtLista> listas = (Map<Integer, DtLista>) request.getAttribute("listas");
-							%>
-							<%
-								if (listas != null) {
-									for (DtLista dtlis : listas.values()) {
-							%>
-							<tr>
-								<td><a href="ConsultaLista?IDLISTA=<%=dtlis.getId()%>">
-										<%=dtlis.getNombre()%>
-								</a></td>
-							</tr>
-							<%
-								}
-								}
-							%>
-						</tbody>
-
-					</table>
-				</div>
+			
+			<div class="col-md-auto">
+				<jsp:include page="listadoCategorias.jsp" />
 			</div>
-
 		</div>
-
-	</form>
-
-
+	</div>
 
 	<script src="js/app.js" charset="utf-8"></script>
 

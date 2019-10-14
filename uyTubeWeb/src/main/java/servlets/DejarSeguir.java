@@ -42,7 +42,7 @@ public class DejarSeguir extends HttpServlet {
 						icon.dejarSeguir();
 						icon.finCasoUso();
 						request.setAttribute("mensaje", "Dejaste de seguir a "+seguido+" con exito!!!");
-						response.sendRedirect(request.getContextPath()+"/"+"ConsultarUsuario?nickname="+seguido);
+						response.sendRedirect(request.getContextPath()+"/"+"ConsultaUsuario?nickname="+seguido);
 					}else {
 						icon.finCasoUso();
 						request.setAttribute("mensaje", "No seguias al usuario: "+seguido);

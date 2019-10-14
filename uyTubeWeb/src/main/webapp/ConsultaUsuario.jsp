@@ -46,7 +46,17 @@
 	%>
 
 	<h1 class="container">Perfil</h1>
+	<%
+		if (user != null && usr != null && usr.getNickname() == user) {
+	%>
+	<div class="container">
+		<button>Editar</button>
+	</div>
+	<%
+		}
+	%>
 	<form>
+
 		<div class="container">
 			<div class="container">
 				<div class="form-group row">
@@ -107,8 +117,9 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">Nombre del canal</span>
 					</div>
-					<input type="text" value="<%=cnl.getNombre()%>" readonly
-						aria-label="First name" class="form-control">
+					<input type="text"
+						value="<%=cnl.getNombre() == null ? "" : cnl.getNombre()%>"
+						readonly aria-label="First name" class="form-control">
 				</div>
 			</div>
 
@@ -122,25 +133,17 @@
 					</textarea>
 				</div>
 			</div>
-
-			<div class="form-group row col-7 mb-3">
-				<div class="input-group">
-					<div class="input-group-prepend">
-						<div class="input-group-text">
-							<input type="checkbox"
-								style="width: 35px; height: 20px; margin-left: 20px; margin-top: 7px"
-								name="privada" onclick="return false" id="chkPrivada"
-								value="<%=cnl.isPrivado()%>">
-						</div>
-					</div>
-					<input type="text" value="Privado?" readonly class="form-control"
-						aria-label="Text input with checkbox">
+			<div class="form-grup row col-7 mb-3">
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input"
+						checked="<%=cnl.isPrivado()%>" disabled id="customCheck1"> <label
+						class="custom-control-label" disabled for="customCheck1">Privado?</label>
 				</div>
 			</div>
 			<%
 				int num_seguidores = (int) request.getAttribute("num_seguidores");
 				int num_seguidos = (int) request.getAttribute("num_seguidos");
-				
+
 				ArrayList<String> seguidores = (ArrayList<String>) request.getAttribute("seguidores");
 				ArrayList<String> seguidos = (ArrayList<String>) request.getAttribute("seguidos");
 			%>
@@ -152,11 +155,18 @@
 								type="button" data-toggle="dropdown" aria-haspopup="true"
 								aria-expanded="false">Seguidores</button>
 							<div class="dropdown-menu">
-							<% if (seguidores != null){ 
-								for (String seguidor : seguidores) {%>
-									<a class="dropdown-item" href="ConsultaUsuario?nickname=<%=seguidor%>"><%=seguidor%></a>
-								<%}%>	
-							<%}%>							
+								<%
+									if (seguidores != null) {
+										for (String seguidor : seguidores) {
+								%>
+								<a class="dropdown-item"
+									href="ConsultaUsuario?nickname=<%=seguidor%>"><%=seguidor%></a>
+								<%
+									}
+								%>
+								<%
+									}
+								%>
 							</div>
 						</div>
 						<input readonly aria-label="First name" class="form-control"
@@ -171,11 +181,18 @@
 							type="button" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false">Seguidos</button>
 						<div class="dropdown-menu">
-							<% if (seguidos != null){ 
-								for (String seguido : seguidos) {%>
-									<a class="dropdown-item" href="ConsultaUsuario?nickname=<%=seguido%>"><%=seguido%></a>
-								<%}%>	
-							<%}%>	
+							<%
+								if (seguidos != null) {
+									for (String seguido : seguidos) {
+							%>
+							<a class="dropdown-item"
+								href="ConsultaUsuario?nickname=<%=seguido%>"><%=seguido%></a>
+							<%
+								}
+							%>
+							<%
+								}
+							%>
 						</div>
 					</div>
 					<input readonly aria-label="First name" class="form-control mb-3"
@@ -254,8 +271,11 @@
 					</table>
 				</div>
 			</div>
+
 		</div>
+
 	</form>
+
 
 
 	<script src="js/app.js" charset="utf-8"></script>

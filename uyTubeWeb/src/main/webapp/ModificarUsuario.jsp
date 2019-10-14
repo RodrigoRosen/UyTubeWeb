@@ -162,7 +162,7 @@
 				</select>
 			</div>
 
-			<div id="passAlert" class="alert alert-danger" style="display: none" role="alert">Las contraseñas deben coincidir!</div>
+			<div id="passAlert" class="alert alert-danger" style="display: none" role="alert">Las contraseñas deben coincidir o ser de al menos 6 caracteres!</div>
 			<div class="form-group row">
 				<button type="submit" id="btnAceptar"
 					class="btn btn-primary col-xs-12 col-sm-12 col-md-12">Modificar</button>
@@ -177,7 +177,7 @@
 			var alert = document.getElementById("passAlert");
 			var x = document.getElementById("btnAceptar");
 			var changed = false;
-			if (pass != pass2) {
+			if (pass != pass2 || pass.length >= 6) {
 				x.classList.remove('btn-primary');
 				x.classList.add('disabled');
 				x.classList.add('btn-secondary');

@@ -61,13 +61,13 @@
 			<div class="form-group row">
 				<input type="password" name="contrasena"
 					class="form-control col-xs-12 col-sm-8 col-md-8" id="contrasena"
-					 placeholder="Contrasena" required>
+					 placeholder="Contrasena" required onchange="passWarning()">
 			</div>
 
 			<div class="form-group row">
 				<input type="password" name="confcontrasena"
 					class="form-control col-xs-12 col-sm-8 col-md-8"
-					id="confcontrasena" placeholder="Confirmar contrasena" required>
+					id="confcontrasena" placeholder="Confirmar contrasena" required onchange="passWarning()">
 			</div>
 
 
@@ -121,6 +121,7 @@
 					data-browse-on-zone-click="true">
 			</div>
 
+			<div id="passAlert" class="alert alert-danger" style="display: none" role="alert">Las contraseñas deben coincidir o ser de al menos 6 caracteres!</div>
 			<div class="form-group row">
 				<button type="submit" id="btnAceptar"
 					class="btn btn-primary col-xs-12 col-sm-4 col-md-4" value="submit">Aceptar</button>
@@ -131,6 +132,31 @@
 
 		</div>
 	</form>
+	
+	<script>
+		function passWarning() {
+			var pass = document.getElementById("contrasena").value;
+			var pass2 = document.getElementById("confcontrasena").value;
+			var alert = document.getElementById("passAlert");
+			var x = document.getElementById("btnAceptar");
+			var changed = false;
+			if (pass != pass2 || pass.length < 6) {
+				x.classList.remove('btn-primary');
+				x.classList.add('disabled');
+				x.classList.add('btn-secondary');
+				x.setAttribute("disabled", "true");
+				alert.removeAttribute("style")
+			} else {
+				x.classList.add('btn-primary');
+				x.classList.remove('disabled');
+				x.classList.remove('btn-secondary');
+				x.removeAttribute("disabled");
+				alert.setAttribute("style", 'display: none');
+			}
+		}
+	</script>
+	
+	
 	<script src="js/confCont.js" charset="utf-8"></script>
 	<script src="js/app.js" charset="utf-8"></script>
 	

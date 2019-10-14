@@ -24,7 +24,7 @@
 <title>Consulta de categoria</title>
 </head>
 <body>
-	<div class="container" id="navBarPrincipal">
+	<div class="container-fluid" id="navBarPrincipal">
 		<jsp:include page="nav.jsp" />
 	</div>
 	<div class="container-fluid text-center">

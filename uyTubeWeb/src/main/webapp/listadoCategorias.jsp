@@ -12,7 +12,7 @@
 <body>	
 	<% ArrayList<String> categorias = (ArrayList<String>) session.getAttribute("categorias"); %>
 	
-	<div class="container">
+	<div class="container-fluid mh-100">
 		<h3 class="d-block p-2 bg-dark text-white text-center">Categorias</h3>
 		<ul class="list-group">
 			<% if (categorias != null) {

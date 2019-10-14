@@ -48,24 +48,29 @@ public class ConsultaUsuario  extends HttpServlet {
 		
 		//traigo la sesion para traer el usuario, para comparar si el seleccionado, es el consultado
 		HttpSession session = request.getSession();
-		String user = (String) session.getAttribute("logNick");
+		//String user = (String) session.getAttribute("logNick");
 		
-		String user2 = respuesta.getParameter("nickname");
+		String user2 = request.getParameter("nickname");
 		 Map<DtUsuario, DtCanal> datos = icon.listarDatosUsuario(user2);
 		 Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
-			while (it.hasNext()) {
+		while (it.hasNext()) {
 				Entry<DtUsuario, DtCanal> entry = it.next();
 				Usuario = entry.getKey();
 				Canal = entry.getValue();
 			}
-			if (!datos.isEmpty()) request.setAttribute("usuario", datos);
+			if (!datos.isEmpty()) {
+				request.setAttribute("Usuario", Usuario);
+				request.setAttribute("Canal", Canal);
+			}
 			
 			
 			Map<String, DtUsuario> seguidor = Usuario.getSeguidores();			
 			ArrayList<String> seguidores = new ArrayList();
 			for (DtUsuario Usr : seguidor.values()) {
 				seguidores.add(Usr.getNickname());
-			}	
+			}
+
+			request.setAttribute("seguidores", seguidores);
 			
 			Map<String, DtUsuario> seguid = Usuario.getSeguidos();
 			ArrayList<String> seguidos = new ArrayList();
@@ -73,56 +78,67 @@ public class ConsultaUsuario  extends HttpServlet {
 				seguidos.add(Usr.getNickname());
 			}
 			
-			int num_seguidores=seguidores.size(), num_seguidos=seguidos.size();
+			request.setAttribute("seguidos", seguidos);
+		
+			int num_seguidores = seguidores.size(); 
+			int num_seguidos = seguidos.size();
+
+			request.setAttribute("num_seguidos", num_seguidos);
+			request.setAttribute("num_seguidores", num_seguidores);
 			
-			Map<Integer, DtVideo> Video = Canal.getListaVideos();
+			Map<Integer, DtVideo> videos = Canal.getListaVideos();
+//			
+			Map<Integer, DtLista> listas = Canal.getListasReproduccion();
 			
-			Map<Integer, DtLista> Lista = Canal.getListasReproduccion();
+			if (videos != null) request.setAttribute("videos", videos);
+			if (listas != null) request.setAttribute("listas", listas);
+			
+			
 			
 			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");
 			view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
-		
-		//en caso de que sea el logeado el que estÃ¡ consultando, se necesita poder modificar los datos del usuario
-		//No puede cambiar nickname ni correo
-    String nombre = request.getParameter("nombre");
-		String apellido = request.getParameter("apellido");
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
-		String fecha = request.getParameter("fechaNacimiento");
-		Date fechaNac = new Date();
-		try {
-			fechaNac = formatter.parse(fecha);
-		} catch (java.text.ParseException e) {
-			System.out.println(e);
-        }
-		
-		String img = request.getParameter("img");
-		String nombreCanal = request.getParameter("nombreCanal");
-		String descripcion = request.getParameter("descripcion");
-		String password = request.getParameter("contrasena");
-		Boolean privado = false;
-		System.out.println(request.getParameter("privado"));
-		if(request.getParameter("privado") == "Si")
-			privado = true;
-		DtCanal canal = new DtCanal(nombreCanal, descripcion, Usuario.getNickname(), privado);
-		DtUsuario usuario = new DtUsuario(Usuario.getNickname());
-		
-		RequestDispatcher rd;
-		String resp = "index.jsp";
-		try{
-			icon.modificarUsuarioCanal(usuario, canal);
-			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " ha sido modificado correctamente");
-		} catch (ParseException e) {
-			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " no se ha podido modificar. Intentelo nuevamente");
-			resp = "ConsultaUsuario.jsp";
-		}
-
-		rd = request.getRequestDispatcher(resp);
-		rd.forward(request, response);
+//		Fabrica fabrica = Fabrica.getInstancia();
+//		IControlador icon = fabrica.getIControlador();
+//		
+//		//en caso de que sea el logeado el que estÃ¡ consultando, se necesita poder modificar los datos del usuario
+//		//No puede cambiar nickname ni correo
+//    String nombre = request.getParameter("nombre");
+//		String apellido = request.getParameter("apellido");
+//		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+//		String fecha = request.getParameter("fechaNacimiento");
+//		Date fechaNac = new Date();
+//		try {
+//			fechaNac = formatter.parse(fecha);
+//		} catch (java.text.ParseException e) {
+//			System.out.println(e);
+//        }
+//		
+//		String img = request.getParameter("img");
+//		String nombreCanal = request.getParameter("nombreCanal");
+//		String descripcion = request.getParameter("descripcion");
+//		String password = request.getParameter("contrasena");
+//		Boolean privado = false;
+//		System.out.println(request.getParameter("privado"));
+//		if(request.getParameter("privado") == "Si")
+//			privado = true;
+//		DtCanal canal = new DtCanal(nombreCanal, descripcion, Usuario.getNickname(), privado);
+//		DtUsuario usuario = new DtUsuario(Usuario.getNickname());
+//		
+//		RequestDispatcher rd;
+//		String resp = "index.jsp";
+//		try{
+//			icon.modificarUsuarioCanal(usuario, canal);
+//			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " ha sido modificado correctamente");
+//		} catch (ParseException e) {
+//			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " no se ha podido modificar. Intentelo nuevamente");
+//			resp = "ConsultaUsuario.jsp";
+//		}
+//
+//		rd = request.getRequestDispatcher(resp);
+//		rd.forward(request, response);
 			
 	}
 	

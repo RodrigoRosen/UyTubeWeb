@@ -187,8 +187,9 @@
 		<%
 			} else {
 		%>
-		<div class="md-form mt-0" style="margin-left: 10px">
-			<form action="LogOut" method="post">
+		<div class="btn-group">			
+			<a href="ConsultaUsuario?nickname=<%=username%>">Mi perfil</a>
+			<form action="LogOut" method="post" style="margin-left:10px">
 				<button type="submit" id="btnModalLogOut" class="btn btn-primary">Salir</button>
 			</form>
 		</div>

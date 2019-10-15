@@ -67,7 +67,6 @@ public class AltaVideo extends HttpServlet {
 		if (icon.ingresarVideo(nombre, dur, url, descripcion, fecha)) {
 			icon.finCasoUso();
 			request.setAttribute("mensaje", "El video se subio correctamente");
-			resp = "index.jsp";
 		}
 		else {
 			request.setAttribute("mensaje", "Existe un video con el nombre ingresado.");
@@ -75,9 +74,7 @@ public class AltaVideo extends HttpServlet {
 			doGet(request, response);
 		}
 		
-		RequestDispatcher rd;
-		rd = request.getRequestDispatcher("/index.jsp");
-        rd.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/");
 	}
 
 }

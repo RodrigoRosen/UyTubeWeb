@@ -32,14 +32,14 @@
 					%>
 					<form action="AltaVideo" method="get">
 						<li><button class="dropdown-item" type="submit"
-								value="Submit" class="btn-link">Alta Video</button></li>
+								value="Submit" class="btn-link">Subir Video</button></li>
 					</form>
 					<%
 						} else {
 					%>
 					<a class="dropdown-item disabled" href="#" tabindex="-1"
 						aria-disabled="true" data-placement="left"
-						title="Debes estar logueado">Alta Video</a>
+						title="Debes estar logueado">Subir Video</a>
 					<%
 						}
 						;
@@ -116,48 +116,7 @@
 						Categoria</a>
 				</div></li>
 
-			<!-- MENU USUARIO -->
-			<li class="nav-item dropdown"><a
-				class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-				role="button" data-toggle="dropdown" aria-haspopup="true"
-				aria-expanded="false"> Usuarios </a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<%
-						if (username != null && username.length() > 0) {
-					%>
-					<a class="dropdown-item" href="seguirUsuario.jsp">Seguir
-						Usuario</a>
-					<%
-						} else {
-					%>
-					<a class="dropdown-item disabled" href="#" tabindex="-1"
-						aria-disabled="true" data-toggle="tooltip" data-placement="left"
-						title="Debes estar logueado">Seguir Usuario</a>
-					<%
-						}
-						;
-					%>
-					<a class="dropdown-item" href="#">Dejar de Seguir</a> <a
-						class="dropdown-item" href="#">Consultar Usuario</a>
-
-					<%
-						if (username != null && username.length() > 0) {
-					%>
-					<form action="ModificarUsuario" method="get">
-						<li><button class="dropdown-item" type="submit"
-								value="Submit" class="btn-link">Modificar Usuario</button></li>
-					</form>
-					<%
-						} else {
-					%>
-					<a class="dropdown-item disabled" href="#" tabindex="-1"
-						aria-disabled="true" data-toggle="tooltip" data-placement="left"
-						title="Debes estar logueado">Modificar Usuario</a>
-					<%
-						}
-						;
-					%>
-				</div></li>
+			
 		</ul>
 
 		<!-- SEARCH & ENTRAR & SALIR -->

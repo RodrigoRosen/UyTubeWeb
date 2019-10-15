@@ -90,10 +90,7 @@ public class ModificarDatosLista extends HttpServlet {
 		// Se modifica la lista
 		icon.listarListasParticulares(usuario);
 		icon.modificarListaParticular(oldLista, newLista);
-		RequestDispatcher rd;
-		request.setAttribute("mensaje", "Se ha modificado correctamente la lista " + nombre);
-		rd = request.getRequestDispatcher("index.jsp");
-		rd.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/" + "ConsultaLista?IDLISTA="+oldLista.getId());
 	}
 
 }

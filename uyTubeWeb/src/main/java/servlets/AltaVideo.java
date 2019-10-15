@@ -53,27 +53,17 @@ public class AltaVideo extends HttpServlet {
 		String url = request.getParameter("url");
 		String descripcion = request.getParameter("descripcion");
 		Date fecha = new Date();
-		//request.getParameter("fechaVideo");
 
 		//Seleccion de Usuario y Categoria
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		System.out.print(user);
 		icon.seleccionarUsuario(user);
-		System.out.print("Llega Hasta Aca");
 		if (categoria != null) {
 			icon.seleccionarCategoria(categoria);
 		}
 		
 		//Se ingresa el video
 		String resp = "altaVideo.jsp";
-		System.out.print("Llega Hasta Aca");
-		System.out.print(nombre);
-		System.out.print(dur);
-		System.out.print(url);
-		System.out.print(descripcion);
-		System.out.print(fecha);
-		
 		if (icon.ingresarVideo(nombre, dur, url, descripcion, fecha)) {
 			icon.finCasoUso();
 			request.setAttribute("mensaje", "El video se subio correctamente");

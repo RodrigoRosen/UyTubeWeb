@@ -163,3 +163,50 @@
     margin-top: 8px;
     display: none;    
 }
+
+.kontrol{
+	width:560px !important;
+	max-width:560px !important;
+	min-width:560px !important;
+}
+.label{
+	width:115px !important;
+	padding-right:10px !important; 
+	padding-top:9px !important;
+}
+.input{
+	max-width:445px !important;
+	min-width:445px !important;
+}
+.button{
+	max-width:49% !important;
+	min-width:49% !important;
+}
+#btnEsc{
+	margin-right:1% !important;
+}
+#btnLike{
+	margin-left:1% !important;
+}
+#divVV{
+	display:none !important;
+}
+h1{
+	text-align:center !important;
+}
+textarea{
+	resize:none !important;
+}
+#comentario{
+    margin: 0 10px 10px 10px !important;
+}
+#submitAdd {
+	margin:auto !important;
+}
+#exampleModalLabel{
+	margin-left:34% !important;
+} 
+.close{
+	margin-left:0 !important;
+}
+

@@ -83,71 +83,71 @@
 		<jsp:include page="nav.jsp" />
 	</div>
 		<!-- Resto de la pag -->
-		<h1 style="text-align:center !important">Consultar Video</h1>
+		<h1>Consultar Video</h1>
 		<!--datosVideo -->
 		<form action="ModificarDatosVideo" method="get">				
 			<div class="container">
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important" >
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
 						<iframe class="col-xs-12" width="560" height="315" src="https://www.youtube.com/embed/<%=v.getUrl()%>" frameborder="0" allowfullscreen></iframe>
 					</div>
 				</div>	
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Nombre:</label>
-						<input type="text" name="nombre" class="form-control col-xs-12 col-sm-8 col-md-8" id="nombre" aria-describedby="emailHelp" placeholder="<%=v.getNombre()%>" disabled style="max-width:445px !important; min-width:445px !important">
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">Nombre:</label>
+						<input type="text" name="nombre" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="nombre" aria-describedby="emailHelp" placeholder="<%=v.getNombre()%>" disabled>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Descripcion:</label>
-						<textarea class="form-control col-xs-12 col-sm-8 col-md-8" name="descripcion" disabled style="max-width:445px !important; min-width:445px !important" placeholder="<%=v.getDescripcion()%>"></textarea>
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">Descripcion:</label>
+						<textarea class="form-control col-xs-12 col-sm-8 col-md-8 input" name="descripcion" disabled placeholder="<%=v.getDescripcion()%>"></textarea>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Publicado:</label>
-						<input type="text" name="fecha" class="form-control col-xs-12 col-sm-8 col-md-8" id="fecha" aria-describedby="emailHelp" placeholder="<%=fecha%>" disabled style="max-width:445px !important; min-width:445px !important">
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">Publicado:</label>
+						<input type="text" name="fecha" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="fecha" aria-describedby="emailHelp" placeholder="<%=fecha%>" disabled>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Duracion:</label>
-						<input type="text" name="duracion" class="form-control col-xs-12 col-sm-8 col-md-8" id="duracion" aria-describedby="emailHelp" placeholder="<%=duracion%>" disabled style="max-width:445px !important; min-width:445px !important">
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">Duracion:</label>
+						<input type="text" name="duracion" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="duracion" aria-describedby="emailHelp" placeholder="<%=duracion%>" disabled>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">URL:</label>
-						<input type="text" name="url" class="form-control col-xs-12 col-sm-8 col-md-8" id="url" aria-describedby="emailHelp" placeholder="<%=v.getUrl()%>" disabled style="max-width:445px !important; min-width:445px !important">
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">URL:</label>
+						<input type="text" name="url" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="url" aria-describedby="emailHelp" placeholder="<%=v.getUrl()%>" disabled>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Categoria:</label>
-						<input type="text" name="categoria" class="form-control col-xs-12 col-sm-8 col-md-8" id="categoria" aria-describedby="emailHelp" placeholder="<%=v.getCategoria()%>" disabled style="max-width:445px !important; min-width:445px !important">
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">Categoria:</label>
+						<input type="text" name="categoria" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="categoria" aria-describedby="emailHelp" placeholder="<%=v.getCategoria()%>" disabled>
 					</div>
 				</div>
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Es privado?</label>
-						<select class="custom-select col-xs-12 col-sm-8 col-md-8" id="privado" name="privado"  disabled style="max-width:445px !important; min-width:445px !important">
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">Es privado?</label>
+						<select class="custom-select col-xs-12 col-sm-8 col-md-8  input" id="privado" name="privado"  disabled>
 							<option value="Si" <%if(v.getPrivado()){%> selected <%}%>>Si</option>
 							<option value="No" <%if(!v.getPrivado()){%> selected <%}%>>No</option>
 						</select>	
 					</div>		
 				</div>
 				<div class="form-group row">
-					<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-						<label style="width:115px;padding-right:10px; padding-top:9px">Likes:</label>
-					    <input type="text" name="likes" class="form-control col-xs-12 col-sm-8 col-md-8" id="likes" ria-describedby="emailHelp" placeholder="<%=likes%>" disabled style="max-width:445px !important; min-width:445px !important">	
+					<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+						<label class="label">Likes:</label>
+					    <input type="text" name="likes" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="likes" ria-describedby="emailHelp" placeholder="<%=likes%>" disabled>	
 					</div>
 				</div>	
 				<%if((propio)&&(!v.getPrivado())){%>
 					<div class="form-group row">
-						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-							<label style="width:115px;padding-right:10px; padding-top:9px">Le Gusta:</label>
-							<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8" id="like" style="max-width:445px !important; min-width:445px !important">
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+							<label class="label">Le Gusta:</label>
+							<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="like">
 								<option  disabled="disabled" selected="selected">--Usuarios--</option>
 								<%for(String s: v.getValoracionesPositivas()){%>
 									<option value="<%=s%>"> <%=s%> </option>
@@ -156,9 +156,9 @@
 						</div>		
 					</div>
 					<div class="form-group row">
-						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-							<label style="width:115px;padding-right:10px; padding-top:9px">No le Gusta:</label>
-							<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8" id="dislike" style="max-width:445px !important; min-width:445px !important">
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+							<label class="label">No le Gusta:</label>
+							<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="dislike">
 								<option  disabled="disabled" selected="selected">--Usuarios--</option>
 								<%for(String s: v.getValoracionesNegativas()){%>
 									<option value="<%=s%>"><%=s%></option>
@@ -170,9 +170,9 @@
 				<%if((login != null)&&(v != null)){%>
 					<!-- Botones otros CU -->
 					<div class="form-group row" id="botones" name="botones">	
-						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
 							<%if((login != null)&&(!v.getPrivado())){%>
-								<button type="button" id="btnValorar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(true)" style="max-width:560px !important; min-width:560px !important">Valorar</button>							
+								<button type="button" id="btnValorar" class="btn btn-primary col-xs-12 col-sm-4 col-md-4 kontrol" onclick="editar(true)">Valorar</button>							
 							<%}%>
 						</div>	
 					</div>
@@ -184,9 +184,9 @@
 			<form action="ValorarVideo" method="post">		
 				<div class="container" id="valorar" name="valorar" style="display:none">
 					<div class="form-group row">					
-						<div style="display:none"><input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>"></div>
-						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-							<select name="likex" class="form-control col-xs-12 col-sm-8 col-md-8" id="likex"  style="max-width:445px !important; min-width:560px !important">
+						<div id="divVV"><input type="text" name="aux" id="aux" placeholder="<%=v.getId()%>" value="<%=v.getId()%>"></div>
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+							<select name="likex" class="form-control col-xs-12 col-sm-8 col-md-8 kontrol" id="likex">
 								<%if(g == 0){%><option  disabled="disabled" selected="selected">--Seleccionar Opcion--</option><%}%>
 								<option value="1" <%if(g > 0){%>selected="selected"<%}%>>Me Gusta</option>
 								<option value="-1" <%if(g < 0){%>selected="selected"<%}%>>No Me Gusta</option>														
@@ -194,15 +194,15 @@
 						</div>
 					</div>
 					<div class="form-group row">					
-						<div class="col-xs-12 col-xs-offset-12 row mx-auto" style="width:560px !important">
-							<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" onclick="editar(false)" style="max-width:49% !important; min-width:49% !important; margin-right:1% !important">Cancelar</button>
-							<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4" style="max-width:49% !important; min-width:49% !important; margin-left:1% !important">Aceptar</button>	
+						<div class="col-xs-12 col-xs-offset-12 row mx-auto kontrol">
+							<button type="button" id="btnEsc" class="btn btn-primary col-xs-12 col-sm-4 col-md-4 button" onclick="editar(false)">Cancelar</button>
+							<button type="submit" id="btnLike" class="btn btn-primary col-xs-12 col-sm-4 col-md-4 button">Aceptar</button>	
 						</div>
 					</div>	
 				</div>
 			</form>			
 		<%}%>			
-		<%if((login != null)&&(v != null)){%>
+		<%if((v != null)&&(!v.getPrivado())){%>
 			<!-- comentarVideo -->	
 			<div class="chatContainer">
 			    <div class="chatTitleContainer">Comments</div>
@@ -215,23 +215,28 @@
 										<td><div class="comment-timestamp"><%=c.getFecha()%></div></td>
 										<td><div class="comment-user"><%=c.getNick()%></div></td>
 										<td><div id="comment-4" data-commentid="4" class="comment comment-step1"><%=c.getTexto()%></div></td>
-			                            <td><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#comentarVideo" onclick="comentar(<%=c.getId()%>)">
-			                                		<i class="fas fa-reply"></i> Responder
+										<%if(login != null) {%>
+				                            <td>
+				                            	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#comentarVideo" onclick="comentar(<%=c.getId()%>)">
+				                                		<i class="fas fa-reply"></i> Responder
 			                                	</button>
-										</td>
+											</td>
+										<%}%>
 									</tr>
 								</table>
 							<%}%>
 						</li>
 			        </ul>
-				</div>			    
-			    <div class="input-group input-group-sm chatMessageControls">
-			        <span class="input-group-btn">
-			            <button id="sendMessageButton" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#comentarVideo" onclick="comentar(0)">
-			            	<i class="far fa-comment-dots"></i> Comentar
-			            </button>
-			        </span>
-			    </div>
+				</div>
+				<%if(login != null) {%>			    
+				    <div class="input-group input-group-sm chatMessageControls">
+				        <span class="input-group-btn">
+				            <button id="sendMessageButton" class="btn btn-primary" type="button"  data-toggle="modal" data-target="#comentarVideo" onclick="comentar(0)">
+				            	<i class="far fa-comment-dots"></i> Comentar
+				            </button>
+				        </span>
+				    </div>
+			    <%}%>
 			</div>
 		<%}%>	
 		<!--Comentar Video-->

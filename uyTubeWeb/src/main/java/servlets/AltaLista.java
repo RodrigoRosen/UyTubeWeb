@@ -79,9 +79,7 @@ public class AltaLista extends HttpServlet {
 			request.setAttribute("error", "Hubo un error.");
 			doGet(request, response);
 		}
-		RequestDispatcher rd;		
-		rd = request.getRequestDispatcher(resp);
-		rd.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/");
 		
 	}
 

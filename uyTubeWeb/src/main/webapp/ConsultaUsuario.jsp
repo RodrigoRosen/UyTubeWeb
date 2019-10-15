@@ -53,7 +53,9 @@
 		if (user != null && usr != null && usr.getNickname().equals(user)) {
 	%>
 	<div class="container">
-		<button>Editar</button>
+		<form action="ModificarUsuario" method="get">
+			<button type="submit">Editar</button>
+		</form>
 	</div>
 	<%
 		} else if (usr != null && user != null && !usr.getNickname().equals(user)) {
@@ -72,7 +74,7 @@
 		   <%} else { %>
 		   <form action="SeguirUsuario" method="post">
 		     <input type="text" name="user" value="<%=usr.getNickname()%>" hidden>
-		   	 <button>Seguir</button>			   
+		   	 <button type="submit">Seguir</button>			   
 		   </form>
 		  <%}%>
 	</div>
@@ -252,7 +254,7 @@
 										for (DtVideo dtvid : videos.values()) {
 									%>
 									<tr>
-										<td><%=dtvid.getNombre()%></td>
+										<td><a href="ConsultarVideo?id=<%=dtvid.getId()%>"><%=dtvid.getNombre()%></a></td>
 									</tr>
 
 

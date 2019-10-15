@@ -63,15 +63,17 @@ public class AltaUsuario extends HttpServlet {
 		Boolean ok = icon.ingresarUsuario(nickname, email, password, nombre, apellido, fechaNac, img, canal);
 		RequestDispatcher rd;
 		String resp = "index.jsp";
-		if(ok)
+		if(ok) {
 			request.setAttribute("mensaje", "El usuario " + nickname + " ha sido ingresado correctamente");
-		else {
+			response.sendRedirect(request.getContextPath() + "/");
+		}else {
 			request.setAttribute("mensaje", "El usuario " + nickname + " o el email " + email + " ya existe!. Intentelo nuevamente");
+			rd = request.getRequestDispatcher(resp);
+			rd.forward(request, response);
 			resp = "altaUsuario.jsp";
 		}
 
-		rd = request.getRequestDispatcher(resp);
-		rd.forward(request, response);
+		
 	}
 
 }

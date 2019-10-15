@@ -105,8 +105,7 @@ public class ModificarDatosVideo extends HttpServlet {
 
 		}
 		icon.finCasoUso();
-		rd = request.getRequestDispatcher("index.jsp");
-        rd.forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/" + "ConsultarVideo?id="+videoNew.getId());
 	}
 
 }

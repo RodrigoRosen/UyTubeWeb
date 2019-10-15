@@ -40,8 +40,7 @@
 	<%
 		String login = (String) session.getAttribute("login");
 		String username = (String) session.getAttribute("nickname");
-		
-	%>	
+	%>
 	<%
 		DtLista datosLista = (DtLista) request.getAttribute("datosLista");
 	%>
@@ -125,24 +124,32 @@
 			<form class="col-sm-9 col-md-6 mx-auto">
 				<div class="container">
 
-					<div class="form-group row">
-						<div class="form-group row">
+					<div class="form-grup row col-7 mb-3">
+						<div class="input-group">
 							<div class="input-group-prepend">
-								<span class="input-group-text" id="basic-addon1">Nombre
-									de lista</span>
+								<span class="input-group-text">Nombre de lista</span>
 							</div>
-							<input type="text" name="nombreLista" class="form-control-group"
-								id="txtNombreLista" readonly value="<%=datosLista.getNombre()%>">
+							<input type="text" value="<%=datosLista.getNombre()%>" readonly
+								aria-label="First name" class="form-control">
 						</div>
 					</div>
-					<div class="form-group row">
-						<div class="input-group-prepend">
-							<span class="input-group-text" id="basic-addon2">Privada?</span>
+
+					<div class="form-grup row col-7 mb-3">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">Tipo de lista</span>
+							</div>
+							<input type="text"
+								value="<%=datosLista.isDefecto() ? "Defecto" : "Particular"%>"
+								readonly aria-label="First name" class="form-control">
 						</div>
-						<input type="checkbox"
-							style="width: 35px; height: 20px; margin-left: 20px; margin-top: 7px"
-							name="privada" onclick="return false" id="chkPrivada"
-							value="<%=datosLista.isPrivado()%>">
+					</div>
+					<div class="form-grup row col-7 mb-3">
+						<div class="custom-control custom-checkbox">
+							<input type="checkbox" class="custom-control-input"
+								checked="<%=datosLista.isPrivado()%>" disabled id="customCheck1">
+							<label class="custom-control-label" disabled for="customCheck1">Privado?</label>
+						</div>
 					</div>
 					<%
 						if (datosLista.getCategoria() != null) {
@@ -187,38 +194,36 @@
 							<ul class="list-group px-md-5">
 								<%
 									String img = null;
-									for (DtVideo vid : videos) {
-										img = "https://i.ytimg.com/vi/" + vid.getUrl() +"/default.jpg";
+										for (DtVideo vid : videos) {
+											img = "https://i.ytimg.com/vi/" + vid.getUrl() + "/default.jpg";
 								%>
 								<%
 									if (vid.getPrivado() && duenio != null && duenio.equals("Propietario")) {
 								%>
-								<li	class="list-group-item d-flex justify-content-between align-items-center">
-								<img class="hover"src="<%=img%>">	
-								
-								<%=vid.getNombre()%>
+								<li
+									class="list-group-item d-flex justify-content-between align-items-center">
+									<img class="hover" src="<%=img%>"> <%=vid.getNombre()%>
 									<button type="button" class="btn btn-danger"
 										onclick="quitarVideo('<%=vid.getNombre()%>')">
 										<i class="fas fa-minus-circle"></i>
-									</button></li>
+									</button>
+								</li>
 								<%
 									} else if (!vid.getPrivado()) {
 								%>
 								<li
 									class="list-group-item d-flex justify-content-between align-items-center">
-									<img class="hover"src="<%=img%>">	
-									<%=vid.getNombre()%>
-									
-									<%
-										if (duenio != null && duenio.equals("Propietario")) {
-									%>
+									<img class="hover" src="<%=img%>"> <%=vid.getNombre()%> <%
+ 	if (duenio != null && duenio.equals("Propietario")) {
+ %>
 									<button type="button" class="btn btn-danger"
 										onclick="quitarVideo('<%=vid.getNombre()%>')">
 										<%
 											}
 										%>
 										<i class="fas fa-minus-circle"></i>
-									</button></li>
+									</button>
+								</li>
 								<%
 									}
 										}

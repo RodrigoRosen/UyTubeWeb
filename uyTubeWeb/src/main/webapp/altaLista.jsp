@@ -60,7 +60,7 @@
 						lista</span>
 				</div>
 				<input type="text" name="nombreLista"
-					class="form-control col-xs-8 col-sm-2 col-md-4" id="txtNombreLista">
+					class="form-control col-xs-8 col-sm-2 col-md-4" id="txtNombreLista" required="true">
 			</div>
 			<div class="form-group row">
 				<div class="input-group-prepend">

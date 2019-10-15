@@ -48,7 +48,7 @@
 									for (Entry<String, String> entry : listas.entrySet()) {
 							%>
 							<tr>
-								<td><%=entry.getValue()%></td>
+								<td><a href="ConsultaUsuario?nickname=<%=entry.getValue()%>"><%=entry.getValue()%></a></td>
 								<%
 									String idLista = entry.getKey().split(";")[0];
 											String nombreLista = entry.getKey().split(";")[1];
@@ -76,7 +76,7 @@
 								for (Entry<String, String> entry : videos.entrySet()) {
 						%>
 						<tr>
-							<td><%=entry.getValue()%></td>
+							<td><a href="ConsultaUsuario?nickname=<%=entry.getValue()%>"><%=entry.getValue()%></a></td>
 							<%
 								String idVideo = entry.getKey().split(";")[0];
 										String nombreVideo = entry.getKey().split(";")[1];

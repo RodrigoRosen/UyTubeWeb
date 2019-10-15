@@ -252,7 +252,7 @@
 										for (DtVideo dtvid : videos.values()) {
 									%>
 									<tr>
-										<td><%=dtvid.getNombre()%></td>
+										<td><a href="ConsultarVideo?id=<%=dtvid.getId()%>"><%=dtvid.getNombre()%></a></td>
 									</tr>
 
 

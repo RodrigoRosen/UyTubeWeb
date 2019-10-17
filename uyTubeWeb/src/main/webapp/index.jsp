@@ -66,15 +66,19 @@
 	%>
 	<h2>${mensaje}</h2>
 	<div class="container-fluid text-center">
-		<div class="row content">
-			<div class="col-xs-12 col-xs-offset-12 row mx-auto">
-				<iframe class="col-xs-12" width="560" height="315"
-					src="https://www.youtube.com/embed/eywqpprrXX8" frameborder="0"
-					allowfullscreen></iframe>
+		<div class="content col-xs-8">
+			<div class="col-xs-8 col-xs-offset-8 mx-auto">
+				<div class="row col-xs-8">
+					<iframe class="col-xs-12" width="560" height="315"
+						src="https://www.youtube.com/embed/eywqpprrXX8" frameborder="0"
+						allowfullscreen style="margin-left:40px"></iframe>
+					<div class="col-sm-4 sidenav col-sm-offset-6" style="margin-left:290px">
+					<jsp:include page="listadoCategorias.jsp" />
+				</div>
+				
 			</div>
-			<div class="col-sm-2 sidenav col-sm-offset-6">
-				<jsp:include page="listadoCategorias.jsp" />
 			</div>
+			
 		</div>
 	</div>
 

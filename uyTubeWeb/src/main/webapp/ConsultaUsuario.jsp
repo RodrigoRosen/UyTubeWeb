@@ -43,7 +43,7 @@
 
 		DtUsuario usr = (DtUsuario) request.getAttribute("Usuario");
 		DtCanal cnl = (DtCanal) request.getAttribute("Canal");
-		
+		String imagen = usr.getImg();
 		ArrayList<String> seguidores = (ArrayList<String>) request.getAttribute("seguidores");
 		ArrayList<String> seguidos = (ArrayList<String>) request.getAttribute("seguidos");
 	%>
@@ -90,6 +90,8 @@
 							<div class="form-group row">
 								<h3>
 									Imagen de Usuario
+									<img alt="" src="<%=imagen%>" class="">
+									<a href="fileUpload.jsp"><h3>Subir Imagen</h3></a>
 									</h2>
 							</div>
 						</div>

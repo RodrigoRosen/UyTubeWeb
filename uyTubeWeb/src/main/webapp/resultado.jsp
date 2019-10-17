@@ -69,7 +69,7 @@
 	<h2>${mensaje}</h2>
 	<div class="container-fluid">
 		<div class="col-xs-8">
-					<br />
+<!-- 					<br /> -->
 		
 			<ul class="nav nav-tabs">
 				<li class="nav-item">
@@ -227,9 +227,9 @@
 			</div>
 
 		</div>	
-			<div class="col-sm-2">
-				<jsp:include page="listadoCategorias.jsp" />
-			</div>		
+		<div class="col-sm-2">
+			<jsp:include page="listadoCategorias.jsp" />
+		</div>		
 	</div>			
 
 
@@ -238,7 +238,6 @@
 	
 
 	<script src="js/app.js" charset="utf-8"></script>
-	<script src="js/tab.js" charset="utf-8"></script>
 
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

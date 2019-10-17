@@ -154,7 +154,7 @@
 					<%
 						if (datosLista.getCategoria() != null) {
 					%>
-					<div class="form-group row">
+					<div class="form-group row" style="margin-left:16px">
 						<div class="form-group row">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon3">Categoria</span>
@@ -202,7 +202,7 @@
 								%>
 								<li
 									class="list-group-item d-flex justify-content-between align-items-center">
-									<img class="hover" src="<%=img%>"> <%=vid.getNombre()%>
+									<img class="hover" src="<%=img%>"> <a href="ConsultarVideo?id=<%=vid.getId()%>"><%=vid.getNombre()%></a>
 									<button type="button" class="btn btn-danger"
 										onclick="quitarVideo('<%=vid.getNombre()%>')">
 										<i class="fas fa-minus-circle"></i>
@@ -213,7 +213,8 @@
 								%>
 								<li
 									class="list-group-item d-flex justify-content-between align-items-center">
-									<img class="hover" src="<%=img%>"> <%=vid.getNombre()%> <%
+									<img class="hover" src="<%=img%>"><a href="ConsultarVideo?id=<%=vid.getId()%>"> <%=vid.getNombre()%></a> 
+									<%
  	if (duenio != null && duenio.equals("Propietario")) {
  %>
 									<button type="button" class="btn btn-danger"

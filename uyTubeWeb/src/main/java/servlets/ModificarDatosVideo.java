@@ -11,14 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-
-import org.hibernate.Session;
-
-import datatypes.DtUsuario;
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtUsuario;
+import WS.DtVideo;
 
 /**
  * Servlet implementation class ModificarDatosVideo
@@ -39,13 +38,19 @@ public class ModificarDatosVideo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		icon.seleccionarUsuario(user);/*Aca se debe usar el usuario logeado*/
-		ArrayList<String> videos = icon.listarVideos();
-		if (!videos.isEmpty()) request.setAttribute("videos", videos);
+		ws.seleccionarUsuario(user);/*Aca se debe usar el usuario logeado*/
+		String[] videos = ws.listarVideos();
+		if (videos != null & videos.length > 0) request.setAttribute("videos", videos);
 		RequestDispatcher view = request.getRequestDispatcher("modificarDatosVideo.jsp");
 		view.forward(request, response);
 	}
@@ -55,10 +60,16 @@ public class ModificarDatosVideo extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		ArrayList<String> listCategory = icon.listarCategorias();
+		String[] listCategory = ws.listarCategorias();
 		request.setAttribute("listCategory", listCategory);
 		
 		String category = request.getParameter("categoria");
@@ -80,12 +91,12 @@ public class ModificarDatosVideo extends HttpServlet {
 		System.out.println(user);
 
 		//Seleccion de Usuario y Categoria
-		icon.seleccionarUsuario(user);
-		icon.seleccionarCategoria(category);
+		ws.seleccionarUsuario(user);
+		ws.seleccionarCategoria(category);
 		if (category != null) {
-			icon.seleccionarCategoria(category);
+			ws.seleccionarCategoria(category);
 		}
-		DtVideo videoNew = icon.seleccionarVideo(nomViejo);
+		DtVideo videoNew = ws.seleccionarVideo(nomViejo);
 		RequestDispatcher rd;
 		if(videoNew != null) {
 			System.out.println(videoNew.getNombre());
@@ -94,17 +105,18 @@ public class ModificarDatosVideo extends HttpServlet {
 			videoNew.setDuracion(dur);
 			videoNew.setUrl(url);
 			videoNew.setDescripcion(descripcion);
+			//CAMBIAR A CALENDAR?
 			videoNew.setFechaPub(fecha);
 			videoNew.setCategoria(category);
 			videoNew.setPrivado(esprivado);
 			//Se ingresa el video
-			icon.editarVideo(videoNew);
+			ws.editarVideo(videoNew);
 			request.setAttribute("mensaje", "Se ha modificado correctamente el video " + nombre);
 		}else {
 			request.setAttribute("mensaje", "Error al modificar el video " + nombre);
 
 		}
-		icon.finCasoUso();
+		ws.finCasoUso();
 		response.sendRedirect(request.getContextPath() + "/" + "ConsultarVideo?id="+videoNew.getId());
 	}
 

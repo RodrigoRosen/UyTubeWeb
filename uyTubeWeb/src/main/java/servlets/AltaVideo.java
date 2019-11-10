@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 @WebServlet("/AltaVideo")
 public class AltaVideo extends HttpServlet {
@@ -28,10 +30,16 @@ public class AltaVideo extends HttpServlet {
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("nickname");
 		if (username != null) {
-			Fabrica fabrica = Fabrica.getInstancia();
-			IControlador icon = fabrica.getIControlador();
-			ArrayList<String> categorias = icon.listarCategorias();
-			if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
+			WebServicesService wsLocator = new WebServicesServiceLocator();
+			WebServices ws = null;
+			try {
+				ws = wsLocator.getWebServicesPort();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			String[] categorias = ws.listarCategorias();
+			if (categorias.length > 0) request.setAttribute("categorias", categorias);
 			RequestDispatcher rd;
 			request.setAttribute("loaded", true);
 			rd = request.getRequestDispatcher("/altaVideo.jsp");
@@ -43,8 +51,14 @@ public class AltaVideo extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		String categoria = (String) request.getParameter("categoria");
 		String nombre = request.getParameter("nombre");
@@ -57,15 +71,16 @@ public class AltaVideo extends HttpServlet {
 		//Seleccion de Usuario y Categoria
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		icon.seleccionarUsuario(user);
+		ws.seleccionarUsuario(user);
 		if (categoria != null) {
-			icon.seleccionarCategoria(categoria);
+			ws.seleccionarCategoria(categoria);
 		}
 		
 		//Se ingresa el video
 		String resp = "altaVideo.jsp";
-		if (icon.ingresarVideo(nombre, dur, url, descripcion, fecha)) {
-			icon.finCasoUso();
+		//HAY QUE CAMBIAR A CALENDAR
+		if (ws.ingresarVideo(nombre, dur, url, descripcion, fecha)) {
+			ws.finCasoUso();
 			request.setAttribute("mensaje", "El video se subio correctamente");
 		}
 		else {

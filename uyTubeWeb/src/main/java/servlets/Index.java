@@ -12,9 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 /**
  * Servlet implementation class Index
@@ -37,15 +39,22 @@ public class Index extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 				HttpSession session = request.getSession();
-				Fabrica fabrica = Fabrica.getInstancia();
-				IControlador icon = fabrica.getIControlador();
-				ArrayList<String> categorias = icon.listarCategorias();
-				Map<String, String> canales = icon.listarCanalesPublicos();
-				HashMap<Integer, String> videos = icon.listarVideosPublicos();
-				HashMap<Integer, String> listas = icon.listarListasPublicas();
+				WebServicesService wsLocator = new WebServicesServiceLocator();
+				WebServices ws = null;
+				try {
+					ws = wsLocator.getWebServicesPort();
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String[] categorias = ws.listarCategorias();
+				//CORREGIR
+				Map<String, String> canales = ws.listarCanalesPublicos();
+				HashMap<Integer, String> videos = ws.listarVideosPublicos();
+				HashMap<Integer, String> listas = ws.listarListasPublicas();
 				if (videos != null && !videos.isEmpty()) session.setAttribute("videosPublicos", videos);
 				if (listas != null && !listas.isEmpty()) session.setAttribute("listasPublicas", listas);
-				if (categorias != null && !categorias.isEmpty()) session.setAttribute("categorias", categorias);
+				if (categorias != null && categorias.length > 0) session.setAttribute("categorias", categorias);
 				RequestDispatcher view = request.getRequestDispatcher("index.jsp");		
 				view.forward(request, response);		
 	}

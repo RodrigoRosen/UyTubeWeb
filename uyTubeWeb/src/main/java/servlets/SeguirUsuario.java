@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtUsuario;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtUsuario;
 
 @WebServlet("/SeguirUsuario")
 public class SeguirUsuario extends HttpServlet {
@@ -32,24 +34,31 @@ public class SeguirUsuario extends HttpServlet {
 			String seguido = request.getParameter("user");
 			if(seguido != null) {
 				String seguidor = (String) se.getAttribute("nickname");
-				IControlador icon = Fabrica.getIControlador();
-				icon.finCasoUso();
-				DtUsuario usr1 = icon.seleccionarUsuario(seguidor);
-				DtUsuario usr2 = icon.seleccionarUsuario(seguido);
+				WebServicesService wsLocator = new WebServicesServiceLocator();
+				WebServices ws = null;
+				try {
+					ws = wsLocator.getWebServicesPort();
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				ws.finCasoUso();
+				DtUsuario usr1 = ws.seleccionarUsuario(seguidor);
+				DtUsuario usr2 = ws.seleccionarUsuario(seguido);
 				if(usr1 != null && usr2 != null) {
 					DtUsuario aux = usr1.getSeguidos().get(seguido);
 					if(aux == null) {
-						icon.seguirUsuario();
-						icon.finCasoUso();
+						ws.seguirUsuario();
+						ws.finCasoUso();
 						request.setAttribute("mensaje", "Siguendo a "+seguido+" con exito!!!");
 						response.sendRedirect(request.getContextPath()+"/"+"ConsultaUsuario?nickname="+seguido);
 					}else {
-						icon.finCasoUso();
+						ws.finCasoUso();
 						request.setAttribute("mensaje", "Ya seguias al usuario: "+seguido);
 						response.sendRedirect(request.getContextPath()+"/"+"Index");
 					}				
 				}else {
-					icon.finCasoUso();
+					ws.finCasoUso();
 					request.setAttribute("mensaje", "No se pudo seguir a "+seguido);
 					response.sendRedirect(request.getContextPath()+"/"+"Index");
 				}				

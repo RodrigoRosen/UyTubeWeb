@@ -9,9 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+
 
 /**
  * Servlet implementation class Login
@@ -46,10 +49,16 @@ public class Login extends HttpServlet {
 
         String usu = request.getParameter("nickLogin");
         String pwd = request.getParameter("passLogin");
-        Fabrica fabrica = Fabrica.getInstancia();        
-        IControlador icon = fabrica.getIControlador();
+        WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
         
-        if (icon.login(usu, pwd)) {
+        if (ws.login(usu, pwd)) {
         	session.setAttribute("nickname", usu);
         	session.setAttribute("login", "Iniciaste sesión con éxito!");
         }

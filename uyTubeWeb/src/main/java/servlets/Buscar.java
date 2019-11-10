@@ -9,12 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCanal;
-import datatypes.DtLista;
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.DtCanal;
+import WS.DtLista;
+import WS.DtVideo;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 /**
  * Servlet implementation class Buscar
@@ -35,17 +37,23 @@ public class Buscar extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		String dato = request.getParameter("buscar");
-		ArrayList <DtVideo> videos = icon.buscarVideosPublicos(dato);
-		if (!videos.isEmpty()) request.setAttribute("videos", videos);
+		DtVideo[] videos = ws.buscarVideosPublicos(dato);
+		if (videos.length > 0) request.setAttribute("videos", videos);
 		
-		ArrayList <DtCanal> canales = icon.buscarCanalesPublicos(dato);
-		if(!canales.isEmpty()) request.setAttribute("canales", canales);
+		DtCanal[] canales = ws.buscarCanalesPublicos(dato);
+		if(canales.length > 0) request.setAttribute("canales", canales);
 		
-		ArrayList <DtLista> listas = icon.buscarListasPublicas(dato);
-		if(!listas.isEmpty()) request.setAttribute("listas", listas);
+		DtLista[] listas = ws.buscarListasPublicas(dato);
+		if(listas.length > 0) request.setAttribute("listas", listas);
 		
 		RequestDispatcher view = request.getRequestDispatcher("resultado.jsp");
 		view.forward(request, response);

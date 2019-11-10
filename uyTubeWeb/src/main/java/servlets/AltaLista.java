@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtUsuario;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.DtUsuario;
+import WS.DtUsuarioSeguidoresEntry;
+import WS.DtUsuarioSeguidosEntry;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 /**
  * Servlet implementation class AltaLista
@@ -35,14 +40,19 @@ public class AltaLista extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("nickname");
 		if (username != null) {
-			Fabrica fabrica = Fabrica.getInstancia();
-			IControlador icon = fabrica.getIControlador();
-			ArrayList<String> categorias = icon.listarCategorias();
-			if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
+			String[] categorias = ws.listarCategorias();
+			if (categorias.length > 0) request.setAttribute("categorias", categorias);
 			RequestDispatcher rd;
 			request.setAttribute("loaded", true);
 			rd = request.getRequestDispatcher("/altaLista.jsp");
@@ -57,9 +67,15 @@ public class AltaLista extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();		
-		icon.ingresarTipoLista(false);
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		ws.ingresarTipoLista(false);
 		String nombreLista = (String) request.getParameter("nombreLista");
 		String Privada = (String) request.getParameter("privada");
 		String categoria = (String) request.getParameter("categoria");
@@ -67,11 +83,11 @@ public class AltaLista extends HttpServlet {
 		if (Privada != null && Privada.equals("on")) privada = true;		
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("nickname");		
-		DtUsuario user = icon.seleccionarUsuario(username);		
+		DtUsuario user = ws.seleccionarUsuario(username);		
 		String resp = "altaLista.jsp";
-		if (icon.crearLista(user, nombreLista, privada, categoria)) {
+		if (ws.crearLista(user, nombreLista, privada, categoria)) {
 			request.setAttribute("mensaje", "La lista se creó correctamente");
-			icon.finCasoUso();
+			ws.finCasoUso();
 			resp = "index.jsp";
 		}
 		else {

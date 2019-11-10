@@ -18,11 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCanal;
-import datatypes.DtUsuario;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtCanal;
+import WS.DtUsuario;
 
 @WebServlet("/FileUpload")
 @MultipartConfig
@@ -31,8 +33,14 @@ public class FileUpload extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     // ...
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
 	    Part filePart = request.getPart("Foto"); // Retrieves <input type="file" name="file">
 	    String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
@@ -41,7 +49,8 @@ public class FileUpload extends HttpServlet {
 	    String direccion = ("/home/seba/eclipse/imagenes/"+fileName);
 	    HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		Map<DtUsuario, DtCanal> dtos = icon.listarDatosUsuario(user);
+		//Error de conversion
+		Map<DtUsuario, DtCanal> dtos = ws.listarDatosUsuario(user);
 		Iterator<Entry<DtUsuario, DtCanal>> it = dtos.entrySet().iterator();
 		DtUsuario dtu = null;
 		DtCanal dtc = null;
@@ -51,7 +60,7 @@ public class FileUpload extends HttpServlet {
 			dtc = entry.getValue();
 		}
 		dtu.setImg(direccion);
-		icon.modificarUsuarioCanal(dtu, dtc);
+		ws.modificarUsuarioCanal(dtu, dtc);
 		
 	    FileOutputStream os = new FileOutputStream(f);
 	    int datos = fileContent.read();
@@ -61,7 +70,7 @@ public class FileUpload extends HttpServlet {
 	    }
 	    os.close();
 	    fileContent.close();
-	    icon.finCasoUso();
+	    ws.finCasoUso();
 	    RequestDispatcher rd;
 		rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);

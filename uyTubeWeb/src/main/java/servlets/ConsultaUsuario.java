@@ -15,16 +15,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
-import datatypes.DtCanal;
-import datatypes.DtUsuario;
-import datatypes.DtVideo;
-import datatypes.DtLista;
-import interfaces.Fabrica;
-import interfaces.IControlador;
-import logica.Video;
+import WS.DtCanal;
+import WS.DtUsuario;
+import WS.DtVideo;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtLista;
 
 @WebServlet("/ConsultaUsuario")
 public class ConsultaUsuario  extends HttpServlet {
@@ -39,8 +40,14 @@ public class ConsultaUsuario  extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Utilizo fabrica y controlador relativos al proyecto anterior (.jar)
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		//traigo todos los usuarios
 		//ArrayList<String> usuarios = icon.listarUsuarios();
@@ -51,7 +58,8 @@ public class ConsultaUsuario  extends HttpServlet {
 		//String user = (String) session.getAttribute("logNick");
 		
 		String user2 = request.getParameter("nickname");
-		 Map<DtUsuario, DtCanal> datos = icon.listarDatosUsuario(user2);
+		
+		 Map<DtUsuario, DtCanal> datos = ws.listarDatosUsuario(user2);
 		 Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
 		while (it.hasNext()) {
 				Entry<DtUsuario, DtCanal> entry = it.next();
@@ -99,47 +107,7 @@ public class ConsultaUsuario  extends HttpServlet {
 			view.forward(request, response);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		Fabrica fabrica = Fabrica.getInstancia();
-//		IControlador icon = fabrica.getIControlador();
-//		
-//		//en caso de que sea el logeado el que estÃ¡ consultando, se necesita poder modificar los datos del usuario
-//		//No puede cambiar nickname ni correo
-//    String nombre = request.getParameter("nombre");
-//		String apellido = request.getParameter("apellido");
-//		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
-//		String fecha = request.getParameter("fechaNacimiento");
-//		Date fechaNac = new Date();
-//		try {
-//			fechaNac = formatter.parse(fecha);
-//		} catch (java.text.ParseException e) {
-//			System.out.println(e);
-//        }
-//		
-//		String img = request.getParameter("img");
-//		String nombreCanal = request.getParameter("nombreCanal");
-//		String descripcion = request.getParameter("descripcion");
-//		String password = request.getParameter("contrasena");
-//		Boolean privado = false;
-//		System.out.println(request.getParameter("privado"));
-//		if(request.getParameter("privado") == "Si")
-//			privado = true;
-//		DtCanal canal = new DtCanal(nombreCanal, descripcion, Usuario.getNickname(), privado);
-//		DtUsuario usuario = new DtUsuario(Usuario.getNickname());
-//		
-//		RequestDispatcher rd;
-//		String resp = "index.jsp";
-//		try{
-//			icon.modificarUsuarioCanal(usuario, canal);
-//			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " ha sido modificado correctamente");
-//		} catch (ParseException e) {
-//			request.setAttribute("mensaje", "El usuario " + Usuario.getNickname() + " no se ha podido modificar. Intentelo nuevamente");
-//			resp = "ConsultaUsuario.jsp";
-//		}
-//
-//		rd = request.getRequestDispatcher(resp);
-//		rd.forward(request, response);
-			
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {			
 	}
 	
 }

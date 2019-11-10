@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtLista;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.DtLista;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 /**
  * Servlet implementation class AgregarVideoLista
@@ -40,8 +42,14 @@ public class AgregarVideoLista extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("nickname");
 		String idVideo = (String) request.getParameter("IDVIDEO");
@@ -50,13 +58,14 @@ public class AgregarVideoLista extends HttpServlet {
 		nombreVideo = textVideo;		
 		String nombreLista = (String) request.getParameter("nombreLista");
 		if (username != null) {
-			String duenioVideo = icon.findDuenioVideo(Integer.parseInt(idVideo));			
-			icon.seleccionarUsuario(duenioVideo);
-			icon.seleccionarVideo(nombreVideo);
-			icon.seleccionarUsuario(username);
-			DtLista lst = icon.seleccionarLista(nombreLista);
-			icon.agregarVideo(nombreVideo, lst);
-			icon.finCasoUso();
+			String duenioVideo = ws.findDuenioVideo(Integer.parseInt(idVideo));	
+			ws.seleccionarUsuario(duenioVideo);
+			ws.seleccionarUsuario(duenioVideo);
+			ws.seleccionarVideo(nombreVideo);
+			ws.seleccionarUsuario(username);
+			DtLista lst = ws.seleccionarLista(nombreLista);
+			ws.agregarVideo(nombreVideo, lst);
+			ws.finCasoUso();
 			response.sendRedirect(request.getContextPath() + "/" + "ConsultaLista?IDLISTA="+lst.getId());
 		}		
 		

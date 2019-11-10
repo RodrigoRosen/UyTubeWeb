@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtVideo;
 
 /**
  * Servlet implementation class DatosVideo
@@ -35,19 +37,25 @@ public class DatosVideo extends HttpServlet {
 	 */ 
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		icon.seleccionarUsuario(user);
-		ArrayList<String> videos = icon.listarVideos();
-		if (!videos.isEmpty()) request.setAttribute("videos", videos);
+		ws.seleccionarUsuario(user);
+		String[] videos = ws.listarVideos();
+		if (videos != null & videos.length > 0) request.setAttribute("videos", videos);
 		String nomVid = (String) request.getParameter("vidsel");
-		DtVideo dtv = icon.seleccionarVideo(nomVid);
+		DtVideo dtv = ws.seleccionarVideo(nomVid);
 		if(dtv != null) request.setAttribute("dtv", dtv);
-		ArrayList<String> categorias = icon.listarCategorias();
-		if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
-		icon.finCasoUso();
+		String[] categorias = ws.listarCategorias();
+		if (categorias != null && categorias.length > 0) request.setAttribute("categorias", categorias);
+		ws.finCasoUso();
 		RequestDispatcher rd = request.getRequestDispatcher("modificarDatosVideo.jsp");
 		rd.forward(request, response);
 	}

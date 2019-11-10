@@ -9,11 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtUsuario;
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtUsuario;
+import WS.DtVideo;
 
 @WebServlet("/ConsultarVideo")
 public class ConsultarVideo extends HttpServlet {
@@ -24,13 +26,20 @@ public class ConsultarVideo extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		IControlador icon = Fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String aux = request.getParameter("id");
 		DtVideo v = null;
 		if(aux != null) {
 			try {
 				Integer i = Integer.valueOf(aux);
-				v = icon.findVideo(i.intValue());
+				v = ws.findVideo(i.intValue());
 				if(v != null) {
 					request.setAttribute("video", v);
 					HttpSession se = request.getSession();
@@ -39,15 +48,15 @@ public class ConsultarVideo extends HttpServlet {
 						int gustar = 0;
 						boolean propio=false;
 						String user = (String) se.getAttribute("nickname");	
-						icon.seleccionarUsuario(user);
-						if(icon.seleccionarVideo(v.getNombre()) != null){
+						ws.seleccionarUsuario(user);
+						if(ws.seleccionarVideo(v.getNombre()) != null){
 							propio = true;
 						}
 						if(v.getPrivado() && !propio) {
 							request.setAttribute("mensaje", "ERROR al consultar el video.");
 							request.getRequestDispatcher("Index").forward(request, response);							
 						}
-						icon.finCasoUso();
+						ws.finCasoUso();
 						if(!v.getPrivado()){
 							for(String s: v.getValoracionesPositivas()){
 								if(s.equals(user)){
@@ -86,11 +95,18 @@ public class ConsultarVideo extends HttpServlet {
 		if(aux == null)
 			aux = request.getParameter("privados");
 		if(aux != null) {
-			IControlador icon = Fabrica.getIControlador();
+			WebServicesService wsLocator = new WebServicesServiceLocator();
+			WebServices ws = null;
+			try {
+				ws = wsLocator.getWebServicesPort();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			DtVideo v = null;
 			try {
 				Integer i = Integer.valueOf(aux);
-				v = icon.findVideo(i);
+				v = ws.findVideo(i);
 				request.setAttribute("video", v);
 				if(v != null) {	
 					HttpSession se = request.getSession();
@@ -99,11 +115,11 @@ public class ConsultarVideo extends HttpServlet {
 						int gustar = 0;
 						boolean propio=false;
 						String user = (String) se.getAttribute("nickname");	
-						icon.seleccionarUsuario(user);
-						if(icon.seleccionarVideo(v.getNombre()) != null){
+						ws.seleccionarUsuario(user);
+						if(ws.seleccionarVideo(v.getNombre()) != null){
 							propio = true;
 						}
-						icon.finCasoUso();
+						ws.finCasoUso();
 						if(!v.getPrivado()){
 							for(String s: v.getValoracionesPositivas()){
 								if(s.equals(user)){

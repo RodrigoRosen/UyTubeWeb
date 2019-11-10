@@ -11,12 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import antlr.Parser;
-import datatypes.DtLista;
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+
+import WS.DtLista;
+import WS.DtVideo;
 
 /**
  * Servlet implementation class ConsultaLista
@@ -38,29 +40,36 @@ public class ConsultaLista extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		String idString = (String) request.getParameter("IDLISTA");		
 		int id = Integer.parseInt(idString);
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("nickname");		
 		if (idString != null && id != 0) {
-		DtLista datosLista = icon.findLista(id);
+		DtLista datosLista = ws.findLista(id);
 		String duenio = null;		
 		if (datosLista != null) {
 			if (username != null) {
-				duenio = icon.findDuenioLista(id);
+				duenio = ws.findDuenioLista(id);
 				if (duenio.equals(username)) {
 					request.setAttribute("Propietario", "Propietario");
-					HashMap<Integer,String> videosPrivados = icon.listarVideosPrivados(username);
-					if (videosPrivados != null) request.setAttribute("videosPrivados", videosPrivados);		
+					//FALTA REALIZAR LA CONVERSION
+					//HashMap<Integer,String> videosPrivados = ws.listarVideosPrivados(username);
+					//if (videosPrivados != null) request.setAttribute("videosPrivados", videosPrivados);		
 				}
 			}
 			else {
 				request.setAttribute("esDuenio", false);
 			}
 			request.setAttribute("datosLista", datosLista);
-			ArrayList<DtVideo> videos = icon.videosEnListaPublica(datosLista);
+			DtVideo[] videos = ws.videosEnListaPublica(datosLista);
 			if (videos != null) request.setAttribute("videos", videos);
 			request.setAttribute("error", false);
 		}

@@ -10,8 +10,8 @@
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
 <%@ page import="interfaces.Fabrica"%> 
 <%@ page import="interfaces.IControlador"%>
-<%@ page import="datatypes.DtVideo"%>
-<%@ page import="datatypes.DtComentario"%>
+<%@ page import="WS.DtVideo"%>
+<%@ page import="WS.DtComentario"%>
 <% 
 	HttpSession se = request.getSession();
 	String login = (String) session.getAttribute("login");

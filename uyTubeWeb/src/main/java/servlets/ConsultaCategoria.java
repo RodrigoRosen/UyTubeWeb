@@ -10,10 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtLista;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 /**
  * Servlet implementation class consultaCategoria
@@ -34,16 +35,23 @@ public class ConsultaCategoria extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
-		ArrayList<String> categorias = icon.listarCategorias();
-		if (!categorias.isEmpty()) request.setAttribute("categorias", categorias);
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		String[] categorias = ws.listarCategorias();
+		if (categorias.length > 0) request.setAttribute("categorias", categorias);
 		String categoria = request.getParameter("categoriaSeleccionada");
 		if (categoria != null) {
-			Map<String, String> videos = icon.videosXCatPublicos(categoria);
-			Map<String, String> listas = icon.listasXCatPublicas(categoria);
-			request.setAttribute("videos", videos);
-			request.setAttribute("listas", listas);
+			//Falta realizar la conversion
+			//Map<String, String> videos = ws.videosXCatPublicos(categoria);
+			//Map<String, String> listas = ws.listasXCatPublicas(categoria);
+//			request.setAttribute("videos", videos);
+//			request.setAttribute("listas", listas);
 		}
 		RequestDispatcher view = request.getRequestDispatcher("consultaCategoria.jsp");
 		view.forward(request, response);

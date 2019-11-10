@@ -11,14 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-
-import org.hibernate.Session;
-
-import datatypes.DtUsuario;
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import javax.xml.rpc.ServiceException;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtUsuario;
+import WS.DtVideo;
 
 @WebServlet("/ValorarVideo")
 public class ValorarVideo extends HttpServlet {
@@ -42,8 +40,14 @@ public class ValorarVideo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RequestDispatcher rd = null;
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");//se obtiene el usuario que valora
 		String a = request.getParameter("aux");
@@ -56,7 +60,8 @@ public class ValorarVideo extends HttpServlet {
 				valor = true;
 			else
 				valor = false;		
-			boolean r = icon.valorarVideoPublico(id,user, valor);
+			//VER POR QUE TIENE UN ARGUMENTO MENOS
+			boolean r = ws.valorarVideoPublico(id,user, valor);
 			if(r) {
 				request.setAttribute("mensaje", "Se ha valorado correctamente el video ");
 				//request.setParameter("id", id);

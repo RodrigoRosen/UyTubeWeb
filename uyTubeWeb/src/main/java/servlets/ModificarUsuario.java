@@ -16,11 +16,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtCanal;
-import datatypes.DtUsuario;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtCanal;
+import WS.DtUsuario;
 
 @WebServlet("/ModificarUsuario")
 public class ModificarUsuario extends HttpServlet {
@@ -45,13 +47,19 @@ public class ModificarUsuario extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
 
-		Map<DtUsuario, DtCanal> datos = icon.listarDatosUsuario(user);
+		Map<DtUsuario, DtCanal> datos = ws.listarDatosUsuario(user);
 		Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
 		DtUsuario dtu = null;
 		DtCanal dtc = null;
@@ -70,8 +78,14 @@ public class ModificarUsuario extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		ArrayList<String> listCategory = icon.listarCategorias();
 		request.setAttribute("listCategory", listCategory);
@@ -102,13 +116,13 @@ public class ModificarUsuario extends HttpServlet {
 		String user = (String) session.getAttribute("nickname");
 
 		// Seleccion de Usuario y Modificacion
-		icon.seleccionarUsuario(user);
-		icon.modificarUsuarioCanal(usuario, canal);
+		ws.seleccionarUsuario(user);
+		ws.modificarUsuarioCanal(usuario, canal);
 
 		RequestDispatcher rd;
 		request.setAttribute("mensaje",
 				"Se ha modificado correctamente el usuario " + nickname + " y su canal " + nombre);
-		icon.finCasoUso();
+		ws.finCasoUso();
 		rd = request.getRequestDispatcher("index.jsp");
 		rd.forward(request, response);
 	}

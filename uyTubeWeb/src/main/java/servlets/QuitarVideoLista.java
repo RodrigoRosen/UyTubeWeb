@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtLista;
-import datatypes.DtUsuario;
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.DtLista;
+import WS.DtUsuario;
+import WS.DtVideo;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 /**
  * Servlet implementation class QuitarVideoLista
@@ -39,8 +41,14 @@ public class QuitarVideoLista extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 		HttpSession session = request.getSession();
 		String username = (String) session.getAttribute("nickname");
 		String textVideo = (String) request.getParameter("VideoDeleteName");
@@ -48,14 +56,14 @@ public class QuitarVideoLista extends HttpServlet {
 		nombreVideo = textVideo;		
 		String nombreLista = (String) request.getParameter("listaSelected");
 		if (username != null && nombreLista != null) {	
-			icon.seleccionarUsuario(username);
+			ws.seleccionarUsuario(username);
 			DtUsuario user = new DtUsuario(username);
-			icon.listarListasParticulares(user);
+			ws.listarListasParticulares(user);
 			DtLista lst = new DtLista(0,nombreLista,false,false,null);
-			icon.videosEnLista(lst);
+			ws.videosEnLista(lst);
 			DtVideo vid = new DtVideo(0,nombreVideo,false,null,null,0,null,null,null);
-			icon.quitarVideo(vid);
-			icon.finCasoUso();
+			ws.quitarVideo(vid);
+			ws.finCasoUso();
 		}
 		response.sendRedirect(request.getContextPath() + "/");	
 	}

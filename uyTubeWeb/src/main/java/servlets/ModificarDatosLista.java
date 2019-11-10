@@ -14,14 +14,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import org.hibernate.Session;
 
-import datatypes.DtLista;
-import datatypes.DtUsuario;
-import datatypes.DtVideo;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
+import WS.DtLista;
+import WS.DtUsuario;
+import WS.DtVideo;
 
 /**
  * Servlet implementation class ModificarLista
@@ -44,12 +45,18 @@ public class ModificarDatosLista extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
-		DtUsuario dtuser = icon.seleccionarUsuario(user);/* Aca se debe usar el usuario logeado */
-		List<DtLista> listed = icon.listarListasParticulares(dtuser);
+		DtUsuario dtuser = ws.seleccionarUsuario(user);/* Aca se debe usar el usuario logeado */
+		DtLista[] listed = ws.listarListasParticulares(dtuser);
 		ArrayList<String> listas = new ArrayList<String>();
 		for (DtLista l : listed) {
 			listas.add(l.getNombre());
@@ -66,12 +73,18 @@ public class ModificarDatosLista extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Fabrica fabrica = Fabrica.getInstancia();
-		IControlador icon = fabrica.getIControlador();
+		WebServicesService wsLocator = new WebServicesServiceLocator();
+		WebServices ws = null;
+		try {
+			ws = wsLocator.getWebServicesPort();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		HttpSession session = request.getSession();
 
 		String user = (String) session.getAttribute("nickname");
-		DtUsuario usuario = icon.seleccionarUsuario(user);
+		DtUsuario usuario = ws.seleccionarUsuario(user);
 
 		// Nuevos Valores
 		String nombre = request.getParameter("nombre");
@@ -81,15 +94,15 @@ public class ModificarDatosLista extends HttpServlet {
 			newPrivado = true;
 		}
 		String newCategory = request.getParameter("newCategoria");
-		DtLista oldLista = icon.seleccionarLista(nombre);
+		DtLista oldLista = ws.seleccionarLista(nombre);
 		DtLista newLista = new DtLista();
 		newLista.setNombre(newNombre);
 		newLista.setPrivado(!newPrivado);
 		newLista.setCategoria(newCategory);
 
 		// Se modifica la lista
-		icon.listarListasParticulares(usuario);
-		icon.modificarListaParticular(oldLista, newLista);
+		ws.listarListasParticulares(usuario);
+		ws.modificarListaParticular(oldLista, newLista);
 		response.sendRedirect(request.getContextPath() + "/" + "ConsultaLista?IDLISTA="+oldLista.getId());
 	}
 

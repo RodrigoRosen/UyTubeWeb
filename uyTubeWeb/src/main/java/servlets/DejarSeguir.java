@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.rpc.ServiceException;
 
-import datatypes.DtUsuario;
-import interfaces.Fabrica;
-import interfaces.IControlador;
+import WS.DtUsuario;
+import WS.WebServices;
+import WS.WebServicesService;
+import WS.WebServicesServiceLocator;
 
 @WebServlet("/DejarSeguir")
 public class DejarSeguir extends HttpServlet {
@@ -32,24 +34,32 @@ public class DejarSeguir extends HttpServlet {
 			String seguido = request.getParameter("user");
 			if(seguido != null) {
 				String seguidor = (String) se.getAttribute("nickname");
-				IControlador icon = Fabrica.getIControlador();
-				icon.finCasoUso();
-				DtUsuario usr1 = icon.seleccionarUsuario(seguidor);
-				DtUsuario usr2 = icon.seleccionarUsuario(seguido);
+				WebServicesService wsLocator = new WebServicesServiceLocator();
+				WebServices ws = null;
+				try {
+					ws = wsLocator.getWebServicesPort();
+				} catch (ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				ws.finCasoUso();
+				DtUsuario usr1 = ws.seleccionarUsuario(seguidor);
+				DtUsuario usr2 = ws.seleccionarUsuario(seguido);
 				if(usr1 != null && usr2 != null) {
+					//Ver como corregir esto
 					DtUsuario aux = usr1.getSeguidos().get(seguido);
 					if(aux != null) {
-						icon.dejarSeguir();
-						icon.finCasoUso();
+						ws.dejarSeguir();
+						ws.finCasoUso();
 						request.setAttribute("mensaje", "Dejaste de seguir a "+seguido+" con exito!!!");
 						response.sendRedirect(request.getContextPath()+"/"+"ConsultaUsuario?nickname="+seguido);
 					}else {
-						icon.finCasoUso();
+						ws.finCasoUso();
 						request.setAttribute("mensaje", "No seguias al usuario: "+seguido);
 						response.sendRedirect(request.getContextPath()+"/"+"Index");
 					}				
 				}else {
-					icon.finCasoUso();
+					ws.finCasoUso();
 					request.setAttribute("mensaje", "No se pudo dejar de seguir a "+seguido);
 					response.sendRedirect(request.getContextPath()+"/"+"Index");
 				}				

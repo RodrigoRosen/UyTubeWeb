@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.xml.rpc.ServiceException;
 
+import WS.WebClient;
 import WS.WebServices;
 import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
@@ -49,9 +50,9 @@ public class Index extends HttpServlet {
 				}
 				String[] categorias = ws.listarCategorias();
 				//CORREGIR
-				Map<String, String> canales = ws.listarCanalesPublicos();
-				HashMap<Integer, String> videos = ws.listarVideosPublicos();
-				HashMap<Integer, String> listas = ws.listarListasPublicas();
+				Map<String, String> canales = WebClient.listarCanalesPublicos();
+				HashMap<Integer, String> videos = WebClient.listarVideosPublicos();
+				HashMap<Integer, String> listas = WebClient.listarListasPublicas();
 				if (videos != null && !videos.isEmpty()) session.setAttribute("videosPublicos", videos);
 				if (listas != null && !listas.isEmpty()) session.setAttribute("listasPublicas", listas);
 				if (categorias != null && categorias.length > 0) session.setAttribute("categorias", categorias);

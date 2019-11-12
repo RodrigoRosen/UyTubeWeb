@@ -7,6 +7,10 @@
 
 package WS;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 public class DtVideo  implements java.io.Serializable {
     private int id;
 
@@ -61,6 +65,21 @@ public class DtVideo  implements java.io.Serializable {
            this.valoracionesPositivas = valoracionesPositivas;
            this.valoracionesNegativas = valoracionesNegativas;
     }
+	public DtVideo(int id,String nombre, Boolean privado, String canal, String descripcion, Integer duracion, String categoria,
+			Calendar fechaPub, String url) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.privado = privado;
+		this.canal = canal;
+		this.descripcion = descripcion;
+		this.duracion = duracion;
+		this.categoria = categoria;
+		this.fechaPub = fechaPub;
+		this.url = url;
+		this.valoracionesPositivas = null;
+		this.valoracionesNegativas = null;
+	}
 
 
     /**

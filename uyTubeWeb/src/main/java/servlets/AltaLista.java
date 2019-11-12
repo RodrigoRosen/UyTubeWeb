@@ -45,7 +45,6 @@ public class AltaLista extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		HttpSession session = request.getSession();
@@ -72,7 +71,6 @@ public class AltaLista extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		ws.ingresarTipoLista(false);
@@ -86,7 +84,7 @@ public class AltaLista extends HttpServlet {
 		DtUsuario user = ws.seleccionarUsuario(username);		
 		String resp = "altaLista.jsp";
 		if (ws.crearLista(user, nombreLista, privada, categoria)) {
-			request.setAttribute("mensaje", "La lista se creó correctamente");
+			request.setAttribute("mensaje", "La lista se creï¿½ correctamente");
 			ws.finCasoUso();
 			resp = "index.jsp";
 		}

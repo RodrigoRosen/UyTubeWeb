@@ -60,7 +60,7 @@ public class ValorarVideo extends HttpServlet {
 				valor = true;
 			else
 				valor = false;		
-			//VER POR QUE TIENE UN ARGUMENTO MENOS
+			//VER POR QUE TIENE UN ARGUMENTO MENOS	// o.O
 			boolean r = ws.valorarVideoPublico(id,user, valor);
 			if(r) {
 				request.setAttribute("mensaje", "Se ha valorado correctamente el video ");

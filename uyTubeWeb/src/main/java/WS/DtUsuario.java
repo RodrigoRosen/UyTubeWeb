@@ -7,28 +7,23 @@
 
 package WS;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
 public class DtUsuario  implements java.io.Serializable {
     private java.lang.String nickname;
-
     private java.lang.String email;
-
     private java.lang.String password;
-
     private java.lang.String nombre;
-
     private java.lang.String apellido;
-
     private java.util.Calendar fechaNac;
-
     private java.lang.String img;
-
     private WS.DtUsuarioSeguidoresEntry[] seguidores;
-
     private WS.DtUsuarioSeguidosEntry[] seguidos;
 
     public DtUsuario() {
     }
-
     public DtUsuario(
            java.lang.String nickname,
            java.lang.String email,
@@ -49,6 +44,20 @@ public class DtUsuario  implements java.io.Serializable {
            this.seguidores = seguidores;
            this.seguidos = seguidos;
     }
+    public DtUsuario(String nick,String email,String pass,String nombre,String apellido,Calendar fecha,String img) { 
+            this.nickname = nick;
+            this.email = email;
+            this.password = pass;
+            this.nombre = nombre;
+            this.apellido = apellido;
+            this.fechaNac = fecha;
+            this.img = img;
+            this.seguidores = null;
+            this.seguidos = null;
+     }
+	public DtUsuario(String nickname) {
+		this.nickname = nickname;
+	}
 
 
     /**
@@ -196,8 +205,12 @@ public class DtUsuario  implements java.io.Serializable {
      * 
      * @return seguidores
      */
-    public WS.DtUsuarioSeguidoresEntry[] getSeguidores() {
-        return seguidores;
+    public Map<String, DtUsuario> getSeguidores() {
+    	Map<String, DtUsuario> retorno = new HashMap<String, DtUsuario>();
+    	for(DtUsuarioSeguidoresEntry e: this.seguidores) {
+    		retorno.put(e.getKey(),e.getValue());
+    	}
+        return retorno;
     }
 
 
@@ -216,8 +229,12 @@ public class DtUsuario  implements java.io.Serializable {
      * 
      * @return seguidos
      */
-    public WS.DtUsuarioSeguidosEntry[] getSeguidos() {
-        return seguidos;
+    public Map<String, DtUsuario> getSeguidos() {
+    	Map<String, DtUsuario> retorno = new HashMap<String, DtUsuario>();
+    	for(DtUsuarioSeguidosEntry e: this.seguidos) {
+    		retorno.put(e.getKey(),e.getValue());
+    	}
+        return retorno;
     }
 
 
@@ -262,13 +279,7 @@ public class DtUsuario  implements java.io.Serializable {
               this.fechaNac.equals(other.getFechaNac()))) &&
             ((this.img==null && other.getImg()==null) || 
              (this.img!=null &&
-              this.img.equals(other.getImg()))) &&
-            ((this.seguidores==null && other.getSeguidores()==null) || 
-             (this.seguidores!=null &&
-              java.util.Arrays.equals(this.seguidores, other.getSeguidores()))) &&
-            ((this.seguidos==null && other.getSeguidos()==null) || 
-             (this.seguidos!=null &&
-              java.util.Arrays.equals(this.seguidos, other.getSeguidos())));
+              this.img.equals(other.getImg())));
         __equalsCalc = null;
         return _equals;
     }

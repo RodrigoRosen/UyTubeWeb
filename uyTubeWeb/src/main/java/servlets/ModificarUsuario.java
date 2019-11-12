@@ -23,6 +23,7 @@ import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
 import WS.DtCanal;
 import WS.DtUsuario;
+import WS.WebClient;
 
 @WebServlet("/ModificarUsuario")
 public class ModificarUsuario extends HttpServlet {
@@ -52,14 +53,13 @@ public class ModificarUsuario extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");
 
-		Map<DtUsuario, DtCanal> datos = ws.listarDatosUsuario(user);
+		Map<DtUsuario, DtCanal> datos = WebClient.listarDatosUsuario(user);
 		Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
 		DtUsuario dtu = null;
 		DtCanal dtc = null;
@@ -83,11 +83,10 @@ public class ModificarUsuario extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		ArrayList<String> listCategory = icon.listarCategorias();
+		ArrayList<String> listCategory = WebClient.listarCategorias();
 		request.setAttribute("listCategory", listCategory);
 
 		String nickname = request.getParameter("newNickname");

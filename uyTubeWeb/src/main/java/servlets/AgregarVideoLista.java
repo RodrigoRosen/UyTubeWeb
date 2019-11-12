@@ -47,7 +47,6 @@ public class AgregarVideoLista extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		HttpSession session = request.getSession();

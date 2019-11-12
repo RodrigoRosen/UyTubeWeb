@@ -35,7 +35,6 @@ public class AltaVideo extends HttpServlet {
 			try {
 				ws = wsLocator.getWebServicesPort();
 			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}	
 			String[] categorias = ws.listarCategorias();
@@ -56,7 +55,6 @@ public class AltaVideo extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

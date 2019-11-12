@@ -22,6 +22,7 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 import WS.DtCanal;
 import WS.DtUsuario;
 import WS.DtVideo;
+import WS.WebClient;
 import WS.WebServices;
 import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
@@ -39,28 +40,16 @@ public class ConsultaUsuario  extends HttpServlet {
    
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Utilizo fabrica y controlador relativos al proyecto anterior (.jar)
 		WebServicesService wsLocator = new WebServicesServiceLocator();
 		WebServices ws = null;
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		//traigo todos los usuarios
-		//ArrayList<String> usuarios = icon.listarUsuarios();
-		//if (!usuarios.isEmpty()) request.setAttribute("usuarios", usuarios);
-		
-		//traigo la sesion para traer el usuario, para comparar si el seleccionado, es el consultado
-		HttpSession session = request.getSession();
-		//String user = (String) session.getAttribute("logNick");
-		
-		String user2 = request.getParameter("nickname");
-		
-		 Map<DtUsuario, DtCanal> datos = ws.listarDatosUsuario(user2);
-		 Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
+		}HttpSession session = request.getSession();
+		String user2 = request.getParameter("nickname");		
+		Map<DtUsuario, DtCanal> datos = WebClient.listarDatosUsuario(user2);
+		Iterator<Entry<DtUsuario, DtCanal>> it = datos.entrySet().iterator();
 		while (it.hasNext()) {
 				Entry<DtUsuario, DtCanal> entry = it.next();
 				Usuario = entry.getKey();
@@ -69,40 +58,27 @@ public class ConsultaUsuario  extends HttpServlet {
 			if (!datos.isEmpty()) {
 				request.setAttribute("Usuario", Usuario);
 				request.setAttribute("Canal", Canal);
-			}
-			
-			
+			}			
 			Map<String, DtUsuario> seguidor = Usuario.getSeguidores();			
-			ArrayList<String> seguidores = new ArrayList();
+			ArrayList<String> seguidores = new ArrayList<String>();
 			for (DtUsuario Usr : seguidor.values()) {
 				seguidores.add(Usr.getNickname());
 			}
-
-			request.setAttribute("seguidores", seguidores);
-			
+			request.setAttribute("seguidores", seguidores);			
 			Map<String, DtUsuario> seguid = Usuario.getSeguidos();
-			ArrayList<String> seguidos = new ArrayList();
+			ArrayList<String> seguidos = new ArrayList<String>();
 			for (DtUsuario Usr : seguid.values()) {
 				seguidos.add(Usr.getNickname());
-			}
-			
-			request.setAttribute("seguidos", seguidos);
-		
+			}			
+			request.setAttribute("seguidos", seguidos);		
 			int num_seguidores = seguidores.size(); 
 			int num_seguidos = seguidos.size();
-
 			request.setAttribute("num_seguidos", num_seguidos);
-			request.setAttribute("num_seguidores", num_seguidores);
-			
-			Map<Integer, DtVideo> videos = Canal.getListaVideos();
-//			
-			Map<Integer, DtLista> listas = Canal.getListasReproduccion();
-			
+			request.setAttribute("num_seguidores", num_seguidores);			
+			Map<Integer, DtVideo> videos = Canal.getListaVideos();//			
+			Map<Integer, DtLista> listas = Canal.getListasReproduccion();			
 			if (videos != null) request.setAttribute("videos", videos);
-			if (listas != null) request.setAttribute("listas", listas);
-			
-			
-			
+			if (listas != null) request.setAttribute("listas", listas);			
 			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");
 			view.forward(request, response);
 	}

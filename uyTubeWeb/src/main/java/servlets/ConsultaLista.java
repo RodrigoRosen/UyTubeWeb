@@ -19,6 +19,7 @@ import WS.WebServicesServiceLocator;
 
 import WS.DtLista;
 import WS.DtVideo;
+import WS.WebClient;
 
 /**
  * Servlet implementation class ConsultaLista
@@ -45,7 +46,6 @@ public class ConsultaLista extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String idString = (String) request.getParameter("IDLISTA");		
@@ -60,9 +60,8 @@ public class ConsultaLista extends HttpServlet {
 				duenio = ws.findDuenioLista(id);
 				if (duenio.equals(username)) {
 					request.setAttribute("Propietario", "Propietario");
-					//FALTA REALIZAR LA CONVERSION
-					//HashMap<Integer,String> videosPrivados = ws.listarVideosPrivados(username);
-					//if (videosPrivados != null) request.setAttribute("videosPrivados", videosPrivados);		
+					HashMap<Integer,String> videosPrivados = WebClient.listarVideosPrivados(username);
+					if (videosPrivados != null) request.setAttribute("videosPrivados", videosPrivados);		
 				}
 			}
 			else {

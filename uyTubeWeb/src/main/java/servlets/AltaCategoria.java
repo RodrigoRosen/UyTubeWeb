@@ -33,14 +33,12 @@ public class AltaCategoria extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		String nombre = request.getParameter("nomCategoria");
 		ws.altaCategoria(nombre);
-		RequestDispatcher rd;
 		request.setAttribute("mensaje", "Se ha ingresado correctamente la categoria " + nombre);
-		rd = request.getRequestDispatcher("index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
 		doGet(request, response);
 	}
 

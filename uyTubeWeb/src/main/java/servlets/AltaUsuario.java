@@ -40,7 +40,6 @@ public class AltaUsuario extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		String nickname = request.getParameter("nickname");

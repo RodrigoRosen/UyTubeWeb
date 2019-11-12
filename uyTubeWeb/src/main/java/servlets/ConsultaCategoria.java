@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.rpc.ServiceException;
 
+import WS.WebClient;
 import WS.WebServices;
 import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
@@ -40,18 +41,16 @@ public class ConsultaCategoria extends HttpServlet {
 		try {
 			ws = wsLocator.getWebServicesPort();
 		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
 		String[] categorias = ws.listarCategorias();
 		if (categorias.length > 0) request.setAttribute("categorias", categorias);
 		String categoria = request.getParameter("categoriaSeleccionada");
 		if (categoria != null) {
-			//Falta realizar la conversion
-			//Map<String, String> videos = ws.videosXCatPublicos(categoria);
-			//Map<String, String> listas = ws.listasXCatPublicas(categoria);
-//			request.setAttribute("videos", videos);
-//			request.setAttribute("listas", listas);
+			Map<String, String> videos = WebClient.videosXCatPublicos(categoria);
+			Map<String, String> listas = WebClient.listasXCatPublicas(categoria);
+			request.setAttribute("videos", videos);
+			request.setAttribute("listas", listas);
 		}
 		RequestDispatcher view = request.getRequestDispatcher("consultaCategoria.jsp");
 		view.forward(request, response);

@@ -1,9 +1,9 @@
-<%@page import="datatypes.DtCanal"%>
-<%@page import="datatypes.DtUsuario"%>
+<%@page import="WS.DtCanal"%>
+<%@page import="WS.DtUsuario"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Map"%>
-<%@page import="datatypes.DtVideo"%>
-<%@page import="datatypes.DtLista"%>
+<%@page import="WS.DtVideo"%>
+<%@page import="WS.DtLista"%>
 <%@page import="java.util.ArrayList"%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -61,7 +61,7 @@
 			apellido = usr.getApellido();
 			password = usr.getPassword();
 			confpassword = usr.getPassword();
-			fecha = usr.getFechaNac();
+			fecha = usr.getFechaNac().getTime();
 			img = usr.getImg();
 			nom_canal = cnl.getNombre();
 			descripcion = cnl.getDescripcion();

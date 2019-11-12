@@ -3,10 +3,10 @@
    "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
-<%@page import="datatypes.DtVideo"%>
-<%@page import="datatypes.DtUsuario"%>
-<%@page import="datatypes.DtLista"%>
-<%@page import="datatypes.DtCanal"%>
+<%@page import="WS.DtVideo"%>
+<%@page import="WS.DtUsuario"%>
+<%@page import="WS.DtLista"%>
+<%@page import="WS.DtCanal"%>
 <html>
 
 

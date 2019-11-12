@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="datatypes.DtLista"%>
-<%@ page import="datatypes.DtVideo"%>
+<%@ page import="WS.DtLista"%>
+<%@ page import="WS.DtVideo"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Map"%>

@@ -1,5 +1,5 @@
-<%@page import="datatypes.DtVideo"%>
-<%@page import="datatypes.DtUsuario"%>
+<%@page import="WS.DtVideo"%>
+<%@page import="WS.DtUsuario"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"

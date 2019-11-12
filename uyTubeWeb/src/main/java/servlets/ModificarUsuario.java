@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -95,12 +96,15 @@ public class ModificarUsuario extends HttpServlet {
 		String apellido = request.getParameter("apellido");
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		String fecha = request.getParameter("fecha");
-		Date fechaNac = new Date();
+		//Se cambia  Date to Calendar
+		Date fechaNacDate = new Date();
 		try {
-			fechaNac = formatter.parse(fecha);
+			fechaNacDate = formatter.parse(fecha);
 		} catch (ParseException e) {
 			System.out.println(e);
 		}
+		Calendar fechaNac = Calendar.getInstance();
+		fechaNac.setTime(fechaNacDate);		
 		String img = request.getParameter("img");
 		String nombreCanal = request.getParameter("nom_canal");
 		String descripcion = request.getParameter("descripcion");
@@ -108,8 +112,8 @@ public class ModificarUsuario extends HttpServlet {
 		Boolean privado = false;
 		if (request.getParameter("privado") == "Si")
 			privado = true;
-		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado);
-		DtUsuario usuario = new DtUsuario(nickname, email, password, nombre, apellido, fechaNac, img);
+		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado, null, null);
+		DtUsuario usuario = new DtUsuario(nickname, email, password, nombre, apellido, fechaNac, img, null, null);
 
 		HttpSession session = request.getSession();
 		String user = (String) session.getAttribute("nickname");

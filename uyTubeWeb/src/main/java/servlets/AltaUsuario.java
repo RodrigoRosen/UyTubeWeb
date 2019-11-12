@@ -48,13 +48,13 @@ public class AltaUsuario extends HttpServlet {
 		String apellido = request.getParameter("apellido");
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
 		String fecha = request.getParameter("fechaNacimiento");
-		Date fechaNac = new Date();
-		Calendar test = new Calendar();
-		try {
-			fechaNac = formatter.parse(fecha);
-		} catch (ParseException e) {
-			System.out.println(e);
-        }
+		//CALENDAR DE PRUEBA
+		Calendar fechaNac = Calendar.getInstance();
+//		try {
+//			fechaNac = formatter.parse(fecha);
+//		} catch (ParseException e) {
+//			System.out.println(e);
+//        }
 		
 		String img = request.getParameter("img");
 		String nombreCanal = request.getParameter("canal");

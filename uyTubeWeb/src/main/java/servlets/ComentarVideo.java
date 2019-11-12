@@ -1,7 +1,7 @@
 package servlets;
 
 import java.io.IOException;
-
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -110,8 +110,8 @@ public class ComentarVideo extends HttpServlet {
 						}else {
 							System.out.println("######################################################################### null id");
 						}
-						//CAMBIAR A CALENDAR?
-						dtc.setFecha(new Date());
+						//Se cambio a CALENDAR
+						dtc.setFecha(Calendar.getInstance());
 						dtc.setTexto(com);
 						dtc.setNick(user);
 						Boolean b = ws.ingresarComentario(dtc);

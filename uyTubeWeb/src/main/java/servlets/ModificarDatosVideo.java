@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
@@ -79,7 +80,8 @@ public class ModificarDatosVideo extends HttpServlet {
 		Integer dur = Integer.parseInt(duracion);
 		String url = request.getParameter("url");
 		String descripcion = request.getParameter("descripcion");
-		Date fecha = new Date();
+		//SE CAMBIA DATE A CALENDAR
+		Calendar fecha = Calendar.getInstance();
 		Boolean esprivado = false;
 		if(request.getParameter("esprivado").equals("si"))
 			esprivado = true;

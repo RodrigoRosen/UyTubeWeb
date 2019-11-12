@@ -22,7 +22,7 @@ public class WebServicesServiceLocator extends org.apache.axis.client.Service im
     }
 
     // Use to get a proxy class for WebServicesPort
-    private java.lang.String WebServicesPort_address = "http://localhost:9292/ws/uytube";
+    private java.lang.String WebServicesPort_address = "http://localhost:9293/ws/uytube";
 
     public java.lang.String getWebServicesPortAddress() {
         return WebServicesPort_address;

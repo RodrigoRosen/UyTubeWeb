@@ -7,9 +7,6 @@
 
 package WS;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class DtCanal  implements java.io.Serializable {
     private java.lang.String nombre;
 
@@ -40,14 +37,6 @@ public class DtCanal  implements java.io.Serializable {
            this.listasReproduccion = listasReproduccion;
            this.listaVideos = listaVideos;
     }
-    public DtCanal(String nombre,String desc,String nick,boolean p) {
-            this.nombre = nombre;
-            this.descripcion = desc;
-            this.nick = nick;
-            this.privado = p;
-            this.listasReproduccion = null;
-            this.listaVideos = null;
-     }
 
 
     /**
@@ -135,12 +124,8 @@ public class DtCanal  implements java.io.Serializable {
      * 
      * @return listasReproduccion
      */
-    public Map<Integer, DtLista> getListasReproduccion() {
-    	Map<Integer, DtLista> retorno = new HashMap<Integer, DtLista>();
-    	for(DtCanalListasReproduccionEntry e: this.listasReproduccion) {
-    		retorno.put(e.getKey(),e.getValue());
-    	}
-        return retorno;
+    public WS.DtCanalListasReproduccionEntry[] getListasReproduccion() {
+        return listasReproduccion;
     }
 
 
@@ -159,12 +144,8 @@ public class DtCanal  implements java.io.Serializable {
      * 
      * @return listaVideos
      */
-    public Map<Integer, DtVideo> getListaVideos() {
-    	Map<Integer, DtVideo> retorno = new HashMap<Integer, DtVideo>();
-    	for(DtCanalListaVideosEntry e: this.listaVideos) {
-    		retorno.put(e.getKey(),e.getValue());
-    	}
-        return retorno;
+    public WS.DtCanalListaVideosEntry[] getListaVideos() {
+        return listaVideos;
     }
 
 
@@ -198,7 +179,13 @@ public class DtCanal  implements java.io.Serializable {
             ((this.nick==null && other.getNick()==null) || 
              (this.nick!=null &&
               this.nick.equals(other.getNick()))) &&
-            this.privado == other.isPrivado();
+            this.privado == other.isPrivado() &&
+            ((this.listasReproduccion==null && other.getListasReproduccion()==null) || 
+             (this.listasReproduccion!=null &&
+              java.util.Arrays.equals(this.listasReproduccion, other.getListasReproduccion()))) &&
+            ((this.listaVideos==null && other.getListaVideos()==null) || 
+             (this.listaVideos!=null &&
+              java.util.Arrays.equals(this.listaVideos, other.getListaVideos())));
         __equalsCalc = null;
         return _equals;
     }

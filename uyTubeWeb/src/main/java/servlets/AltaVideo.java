@@ -2,6 +2,7 @@ package servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 
@@ -64,7 +65,8 @@ public class AltaVideo extends HttpServlet {
 		Integer dur = Integer.parseInt(duracion);
 		String url = request.getParameter("url");
 		String descripcion = request.getParameter("descripcion");
-		Date fecha = new Date();
+		//SE CAMBIO DATE POR CALENDAR POR WEBSERVICE
+		Calendar fecha = Calendar.getInstance();
 
 		//Seleccion de Usuario y Categoria
 		HttpSession session = request.getSession();
@@ -76,7 +78,6 @@ public class AltaVideo extends HttpServlet {
 		
 		//Se ingresa el video
 		String resp = "altaVideo.jsp";
-		//HAY QUE CAMBIAR A CALENDAR
 		if (ws.ingresarVideo(nombre, dur, url, descripcion, fecha)) {
 			ws.finCasoUso();
 			request.setAttribute("mensaje", "El video se subio correctamente");

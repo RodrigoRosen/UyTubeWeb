@@ -44,58 +44,10 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices;
   }
   
-  public WS.DtUsuario seleccionarUsuario(java.lang.String arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.seleccionarUsuario(arg0);
-  }
-  
   public WS.DtLista[] listarListasParticulares(WS.DtUsuario arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
     return webServices.listarListasParticulares(arg0);
-  }
-  
-  public java.lang.String[] listarCategorias() throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.listarCategorias();
-  }
-  
-  public void finCasoUso() throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    webServices.finCasoUso();
-  }
-  
-  public boolean crearLista(WS.DtUsuario arg0, java.lang.String arg1, boolean arg2, java.lang.String arg3) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.crearLista(arg0, arg1, arg2, arg3);
-  }
-  
-  public void editarVideo(WS.DtVideo arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    webServices.editarVideo(arg0);
-  }
-  
-  public void dejarSeguir() throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    webServices.dejarSeguir();
-  }
-  
-  public boolean ingresarVideo(java.lang.String arg0, int arg1, java.lang.String arg2, java.lang.String arg3, java.util.Calendar arg4) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.ingresarVideo(arg0, arg1, arg2, arg3, arg4);
-  }
-  
-  public boolean altaCategoria(java.lang.String arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.altaCategoria(arg0);
   }
   
   public boolean ingresarUsuario(java.lang.String arg0, java.lang.String arg1, java.lang.String arg2, java.lang.String arg3, java.lang.String arg4, java.util.Calendar arg5, java.lang.String arg6, WS.DtCanal arg7) throws java.rmi.RemoteException{
@@ -104,46 +56,10 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices.ingresarUsuario(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
   }
   
-  public boolean login(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException{
+  public void dejarSeguir() throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.login(arg0, arg1);
-  }
-  
-  public WS.DtVideo findVideo(int arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.findVideo(arg0);
-  }
-  
-  public java.lang.String findDuenioLista(int arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.findDuenioLista(arg0);
-  }
-  
-  public WS.DtLista findLista(int arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.findLista(arg0);
-  }
-  
-  public java.lang.String findDuenioVideo(int arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.findDuenioVideo(arg0);
-  }
-  
-  public WS.DtLista seleccionarLista(java.lang.String arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.seleccionarLista(arg0);
-  }
-  
-  public WS.DtVideo[] videosEnLista(WS.DtLista arg0) throws java.rmi.RemoteException{
-    if (webServices == null)
-      _initWebServicesProxy();
-    return webServices.videosEnLista(arg0);
+    webServices.dejarSeguir();
   }
   
   public java.lang.String[] listarVideos() throws java.rmi.RemoteException{
@@ -152,10 +68,58 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices.listarVideos();
   }
   
-  public void seguirUsuario() throws java.rmi.RemoteException{
+  public WS.DtLista seleccionarLista(java.lang.String arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    webServices.seguirUsuario();
+    return webServices.seleccionarLista(arg0);
+  }
+  
+  public void finCasoUso() throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    webServices.finCasoUso();
+  }
+  
+  public java.lang.String[] listarUsuarios() throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.listarUsuarios();
+  }
+  
+  public boolean ingresarVideo(java.lang.String arg0, int arg1, java.lang.String arg2, java.lang.String arg3, java.util.Calendar arg4) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.ingresarVideo(arg0, arg1, arg2, arg3, arg4);
+  }
+  
+  public boolean login(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.login(arg0, arg1);
+  }
+  
+  public java.lang.String findDuenioLista(int arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.findDuenioLista(arg0);
+  }
+  
+  public java.lang.String findDuenioVideo(int arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.findDuenioVideo(arg0);
+  }
+  
+  public WS.DtLista findLista(int arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.findLista(arg0);
+  }
+  
+  public java.lang.String[] listarCategorias() throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.listarCategorias();
   }
   
   public boolean agregarVideo(java.lang.String arg0, WS.DtLista arg1) throws java.rmi.RemoteException{
@@ -164,10 +128,10 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices.agregarVideo(arg0, arg1);
   }
   
-  public WS.DtVideo seleccionarVideo(java.lang.String arg0) throws java.rmi.RemoteException{
+  public WS.DtVideo findVideo(int arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.seleccionarVideo(arg0);
+    return webServices.findVideo(arg0);
   }
   
   public void quitarVideo(WS.DtVideo arg0) throws java.rmi.RemoteException{
@@ -176,34 +140,40 @@ public class WebServicesProxy implements WS.WebServices {
     webServices.quitarVideo(arg0);
   }
   
-  public void ingresarTipoLista(boolean arg0) throws java.rmi.RemoteException{
+  public WS.DtVideo[] videosEnLista(WS.DtLista arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    webServices.ingresarTipoLista(arg0);
+    return webServices.videosEnLista(arg0);
   }
   
-  public void seleccionarComentario(WS.DtComentario arg0) throws java.rmi.RemoteException{
+  public WS.DtVideo seleccionarVideo(java.lang.String arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    webServices.seleccionarComentario(arg0);
+    return webServices.seleccionarVideo(arg0);
   }
   
-  public void seleccionarCategoria(java.lang.String arg0) throws java.rmi.RemoteException{
+  public void editarVideo(WS.DtVideo arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    webServices.seleccionarCategoria(arg0);
+    webServices.editarVideo(arg0);
   }
   
-  public boolean ingresarComentario(WS.DtComentario arg0) throws java.rmi.RemoteException{
+  public void seguirUsuario() throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.ingresarComentario(arg0);
+    webServices.seguirUsuario();
   }
   
-  public void modificarListaParticular(WS.DtLista arg0, WS.DtLista arg1) throws java.rmi.RemoteException{
+  public boolean crearLista(WS.DtUsuario arg0, java.lang.String arg1, boolean arg2, java.lang.String arg3) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    webServices.modificarListaParticular(arg0, arg1);
+    return webServices.crearLista(arg0, arg1, arg2, arg3);
+  }
+  
+  public boolean altaCategoria(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.altaCategoria(arg0);
   }
   
   public void modificarUsuarioCanal(WS.DtUsuario arg0, WS.DtCanal arg1) throws java.rmi.RemoteException{
@@ -212,16 +182,22 @@ public class WebServicesProxy implements WS.WebServices {
     webServices.modificarUsuarioCanal(arg0, arg1);
   }
   
-  public java.lang.String[] listarCanalesPublicos() throws java.rmi.RemoteException{
+  public void seleccionarCategoria(java.lang.String arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.listarCanalesPublicos();
+    webServices.seleccionarCategoria(arg0);
   }
   
-  public java.lang.Object[] listarListasPublicas() throws java.rmi.RemoteException{
+  public void seleccionarComentario(WS.DtComentario arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.listarListasPublicas();
+    webServices.seleccionarComentario(arg0);
+  }
+  
+  public boolean ingresarComentario(WS.DtComentario arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.ingresarComentario(arg0);
   }
   
   public java.lang.Object[] listarDatosUsuario(java.lang.String arg0) throws java.rmi.RemoteException{
@@ -230,10 +206,28 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices.listarDatosUsuario(arg0);
   }
   
+  public WS.DtUsuario seleccionarUsuario(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.seleccionarUsuario(arg0);
+  }
+  
+  public void ingresarTipoLista(boolean arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    webServices.ingresarTipoLista(arg0);
+  }
+  
   public java.lang.Object[] listarVideosPublicos() throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
     return webServices.listarVideosPublicos();
+  }
+  
+  public WS.DtVideo[] buscarVideosPublicos(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.buscarVideosPublicos(arg0);
   }
   
   public WS.DtCanal[] buscarCanalesPublicos(java.lang.String arg0) throws java.rmi.RemoteException{
@@ -242,10 +236,16 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices.buscarCanalesPublicos(arg0);
   }
   
-  public boolean valorarVideoPublico(int arg0, java.lang.String arg1, boolean arg2) throws java.rmi.RemoteException{
+  public void modificarListaParticular(WS.DtLista arg0, WS.DtLista arg1) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.valorarVideoPublico(arg0, arg1, arg2);
+    webServices.modificarListaParticular(arg0, arg1);
+  }
+  
+  public java.lang.Object[] listarListasPublicas() throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.listarListasPublicas();
   }
   
   public WS.DtLista[] buscarListasPublicas(java.lang.String arg0) throws java.rmi.RemoteException{
@@ -260,10 +260,16 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices.listarVideosPrivados(arg0);
   }
   
-  public WS.DtVideo[] buscarVideosPublicos(java.lang.String arg0) throws java.rmi.RemoteException{
+  public java.lang.String[] listasXCatPublicas(java.lang.String arg0) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.buscarVideosPublicos(arg0);
+    return webServices.listasXCatPublicas(arg0);
+  }
+  
+  public java.lang.String[] listarCanalesPublicos() throws java.rmi.RemoteException{
+    if (webServices == null)
+      _initWebServicesProxy();
+    return webServices.listarCanalesPublicos();
   }
   
   public java.lang.String[] videosXCatPublicos(java.lang.String arg0) throws java.rmi.RemoteException{
@@ -278,10 +284,10 @@ public class WebServicesProxy implements WS.WebServices {
     return webServices.videosEnListaPublica(arg0);
   }
   
-  public java.lang.String[] listasXCatPublicas(java.lang.String arg0) throws java.rmi.RemoteException{
+  public boolean valorarVideoPublico(int arg0, java.lang.String arg1, boolean arg2) throws java.rmi.RemoteException{
     if (webServices == null)
       _initWebServicesProxy();
-    return webServices.listasXCatPublicas(arg0);
+    return webServices.valorarVideoPublico(arg0, arg1, arg2);
   }
   
   

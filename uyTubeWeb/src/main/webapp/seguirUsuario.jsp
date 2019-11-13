@@ -51,7 +51,7 @@
 								String user = (String) se.getAttribute("nickname");
 								//IControlador icon = Fabrica.getInstancia().getIControlador();
 								WebServices ws = (new WebServicesServiceLocator()).getWebServicesPort();
-								ArrayList<String> users = ws.listarUsuarios();
+								String[] users = ws.listarUsuarios();
 								DtUsuario dtu = ws.seleccionarUsuario(user);
 								for(String s: users){
 									if(!user.equals(s)){

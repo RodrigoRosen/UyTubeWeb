@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.xml.rpc.ServiceException;
 
 import WS.DtUsuario;
+import WS.WebClient;
 import WS.WebServices;
 import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
@@ -39,7 +40,6 @@ public class DejarSeguir extends HttpServlet {
 				try {
 					ws = wsLocator.getWebServicesPort();
 				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				ws.finCasoUso();
@@ -47,7 +47,8 @@ public class DejarSeguir extends HttpServlet {
 				DtUsuario usr2 = ws.seleccionarUsuario(seguido);
 				if(usr1 != null && usr2 != null) {
 					//Ver como corregir esto
-					DtUsuario aux = usr1.getSeguidos().get(seguido);
+					//DtUsuario aux = usr1.getSeguidos().get(seguido);
+					DtUsuario aux = WebClient.getSeguido(usr1, seguido);
 					if(aux != null) {
 						ws.dejarSeguir();
 						ws.finCasoUso();

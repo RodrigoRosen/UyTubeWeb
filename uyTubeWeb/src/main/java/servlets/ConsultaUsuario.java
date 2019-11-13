@@ -59,13 +59,13 @@ public class ConsultaUsuario  extends HttpServlet {
 				request.setAttribute("Usuario", Usuario);
 				request.setAttribute("Canal", Canal);
 			}			
-			Map<String, DtUsuario> seguidor = Usuario.getSeguidores();			
+			Map<String, DtUsuario> seguidor = WebClient.getSeguidores(Usuario);			
 			ArrayList<String> seguidores = new ArrayList<String>();
 			for (DtUsuario Usr : seguidor.values()) {
 				seguidores.add(Usr.getNickname());
 			}
 			request.setAttribute("seguidores", seguidores);			
-			Map<String, DtUsuario> seguid = Usuario.getSeguidos();
+			Map<String, DtUsuario> seguid = WebClient.getSeguidos(Usuario);	
 			ArrayList<String> seguidos = new ArrayList<String>();
 			for (DtUsuario Usr : seguid.values()) {
 				seguidos.add(Usr.getNickname());
@@ -75,8 +75,8 @@ public class ConsultaUsuario  extends HttpServlet {
 			int num_seguidos = seguidos.size();
 			request.setAttribute("num_seguidos", num_seguidos);
 			request.setAttribute("num_seguidores", num_seguidores);			
-			Map<Integer, DtVideo> videos = Canal.getListaVideos();//			
-			Map<Integer, DtLista> listas = Canal.getListasReproduccion();			
+			Map<Integer, DtVideo> videos = WebClient.getListaVideos(Canal);//			
+			Map<Integer, DtLista> listas = WebClient.getListasReproduccion(Canal);			
 			if (videos != null) request.setAttribute("videos", videos);
 			if (listas != null) request.setAttribute("listas", listas);			
 			RequestDispatcher view = request.getRequestDispatcher("ConsultaUsuario.jsp");

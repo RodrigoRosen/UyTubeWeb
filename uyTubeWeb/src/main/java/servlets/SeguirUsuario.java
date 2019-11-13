@@ -14,6 +14,7 @@ import WS.WebServices;
 import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
 import WS.DtUsuario;
+import WS.WebClient;
 
 @WebServlet("/SeguirUsuario")
 public class SeguirUsuario extends HttpServlet {
@@ -39,14 +40,14 @@ public class SeguirUsuario extends HttpServlet {
 				try {
 					ws = wsLocator.getWebServicesPort();
 				} catch (ServiceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}	
 				ws.finCasoUso();
 				DtUsuario usr1 = ws.seleccionarUsuario(seguidor);
 				DtUsuario usr2 = ws.seleccionarUsuario(seguido);
 				if(usr1 != null && usr2 != null) {
-					DtUsuario aux = usr1.getSeguidos().get(seguido);
+					//DtUsuario aux = usr1.getSeguidos() //.get(seguido);
+					DtUsuario aux = WebClient.getSeguido(usr1, seguido);
 					if(aux == null) {
 						ws.seguirUsuario();
 						ws.finCasoUso();

@@ -8,15 +8,12 @@
 <%@ page import="java.util.Map.Entry"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%@ page import="interfaces.Fabrica"%> 
-<%@ page import="interfaces.IControlador"%>
 <%@ page import="WS.DtVideo"%>
 <%@ page import="WS.DtComentario"%>
 <% 
 	HttpSession se = request.getSession();
 	String login = (String) session.getAttribute("login");
 	String user = (String) se.getAttribute("nickname");
-	IControlador icon = Fabrica.getInstancia().getIControlador();
 
 	DtVideo v = null;
 	String fecha="Fecha";
@@ -35,11 +32,11 @@
 			DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
 			fecha = dateFormat.format(v.getFechaPub());
 			duracion = v.getDuracion().toString(); 
-			likes = v.getValoracionesPositivas().size()+" me gusta,\t"+v.getValoracionesNegativas().size()+" no me gusta";
+			likes = (v.getValoracionesPositivas()).length+" me gusta,\t"+(v.getValoracionesNegativas()).length+" no me gusta";
 		}
 	}else{		
-		v = new DtVideo(-1,"Nombre",true,null,"Descripcion",null,"categoria",null,"/url");
-		v.setCom(new ArrayList<DtComentario>());
+		v = new DtVideo(-1,"Nombre",true,null,"Descripcion",null,"categoria",null,"/url",new DtComentario[3],null,null);
+		//v.setCom(new ArrayList<DtComentario>());
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%> 
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%@ page import="interfaces.Fabrica"%> 
-<%@ page import="interfaces.IControlador"%>
+<%@ page import="WS.WebClient"%>
+<%@ page import="WS.WebServices"%>
+<%@ page import="WS.WebServicesServiceLocator"%>
 <%@ page import="WS.DtUsuario"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -48,13 +49,14 @@
 								<% 
 								HttpSession se = request.getSession();
 								String user = (String) se.getAttribute("nickname");
-								IControlador icon = Fabrica.getInstancia().getIControlador();
-								ArrayList<String> users = icon.listarUsuarios();
-								DtUsuario dtu = icon.seleccionarUsuario(user);
+								//IControlador icon = Fabrica.getInstancia().getIControlador();
+								WebServices ws = (new WebServicesServiceLocator()).getWebServicesPort();
+								ArrayList<String> users = ws.listarUsuarios();
+								DtUsuario dtu = ws.seleccionarUsuario(user);
 								for(String s: users){
 									if(!user.equals(s)){
 										boolean b = true;
-										for(String seg: dtu.getSeguidos().keySet()) {	//no pueda seguir a alguien que ya siga
+										for(String seg: WebClient.getSeguidos(dtu).keySet()) {	//no pueda seguir a alguien que ya siga
 											if(seg.equals(s)) {
 												b = false;
 											}

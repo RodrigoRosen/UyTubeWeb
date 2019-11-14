@@ -10,7 +10,7 @@
 
 </head>
 <body>	
-	<% ArrayList<String> categorias = (ArrayList<String>) session.getAttribute("categorias"); %>
+	<% String[] categorias = (String[]) session.getAttribute("categorias"); %>
 	
 	<div class="container-fluid mh-100">
 		<h3 class="d-block p-2 bg-dark text-white text-center">Categorias</h3>

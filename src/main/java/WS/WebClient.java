@@ -22,7 +22,7 @@ public class WebClient {
 	public static Map<String, String> stringString(Object[] o){
 		if(o != null) {
 			Map<String, String> retorno = new HashMap<String, String>();
-			for(int i = 0 ; i < o.length; i++) {
+			for(int i = 0 ; i < (o.length)-1; i++) {
 				retorno.put((String)o[i], (String)o[++i]);
 			}
 			return retorno;
@@ -31,7 +31,7 @@ public class WebClient {
 	public static HashMap<Integer, String> integerString(Object[] o){
 		if(o != null) {
 			HashMap<Integer, String> retorno = new HashMap<Integer, String>();
-			for(int i = 0 ; i < o.length; i++) {
+			for(int i = 0 ; i < (o.length)-1; i++) {
 				retorno.put((Integer)o[i], (String)o[++i]);
 			}
 			return retorno;
@@ -96,10 +96,10 @@ public class WebClient {
 		start();
 		if(ws != null) {
 			try {
-				Object[] o = ws.listarVideosPrivados(s);
+				Object[] o = ws.listarDatosUsuario(s);
 				if(o != null) {
 					Map<DtUsuario, DtCanal> retorno = new HashMap<DtUsuario, DtCanal>();
-					for(int i = 0 ; i < o.length; i++) {
+					for(int i = 0 ; i < (o.length)-1; i++) {
 						retorno.put((DtUsuario)o[i], (DtCanal)o[++i]);
 					}
 					return retorno;
@@ -152,11 +152,11 @@ public class WebClient {
 		start();
 		if(ws != null) {
 			try {
-				Object[] o = ws.listarCategorias();
+				String[] o = ws.listarCategorias();
 				if(o != null) {
 					ArrayList<String> retorno = new ArrayList<String>();
-					for(int i = 0 ; i < o.length; i++) {
-						retorno.add((String)o[i]);
+					for(String s: o) {
+						retorno.add(s);
 					}
 					return retorno;
 				}else {return null;}
@@ -182,7 +182,7 @@ public class WebClient {
 	public static Map<String, DtUsuario> stringUsuario(Object[] o){
 		if(o != null) {
 			Map<String, DtUsuario> retorno = new HashMap<String, DtUsuario>();
-			for(int i = 0 ; i < o.length; i++) {
+			for(int i = 0 ; i < (o.length)-1; i++) {
 				retorno.put((String)o[i], (DtUsuario)o[++i]);
 			}
 			return retorno;
@@ -201,11 +201,12 @@ public class WebClient {
 	
 	public static Map<Integer, DtVideo> getListaVideos(DtCanal can){
 		if(can != null) {
-			Object[] o = can.getListaVideos();
+			DtCanalListaVideosEntry[] o = can.getListaVideos();
 			if(o != null) {
 				Map<Integer, DtVideo> retorno = new HashMap<Integer, DtVideo>();
-				for(int i = 0 ; i < o.length; i++) {
-					retorno.put((Integer)o[i], (DtVideo)o[++i]);
+				for(int i = 0 ; i < (o.length)-1; i++) {
+					System.out.println("#######################################################################################"+i+" - "+o.length);
+					retorno.put(o[i].getKey(), o[++i].getValue()); 
 				}
 				return retorno;
 			}else {return null;}
@@ -213,11 +214,13 @@ public class WebClient {
 	}
 	public static Map<Integer, DtLista> getListasReproduccion(DtCanal can){
 		if(can != null) {
-			Object[] o = can.getListasReproduccion();
+			DtCanalListasReproduccionEntry[] o = can.getListasReproduccion();
 			if(o != null) {
 				Map<Integer, DtLista> retorno = new HashMap<Integer, DtLista>();
-				for(int i = 0 ; i < o.length; i++) {
-					retorno.put((Integer)o[i], (DtLista)o[++i]);
+				System.out.println("#######################################################################################"+" - "+o.length);
+				for(int i = 0 ; i < (o.length)-1; i++) {
+					System.out.println("#######################################################################################"+i+" - "+o.length);
+					retorno.put(o[i].getKey(), o[++i].getValue()); 
 				}
 				return retorno;
 			}else {return null;}

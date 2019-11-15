@@ -63,7 +63,7 @@
 					id="idCategoryList" name="categoria">
 					<option selected>Seleccionar Categoria...</option>
 					<%
-						ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias");
+						String[] categorias = (String[]) request.getAttribute("categorias");
 						if (categorias != null) {
 							for (String cat : categorias) {
 					%>

@@ -2,6 +2,7 @@
 <%@page import="WS.DtUsuario"%>
 <%@page import="WS.DtVideo"%>
 <%@page import="WS.DtLista"%>
+<%@page import="WS.WebClient"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.*"%>
@@ -137,7 +138,7 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text">Fecha de nacimiento</span>
 								</div>
-								<input type="text" value="<%=usr.getFechaNac()%>" readonly
+								<input type="text" value="<%= WebClient.getDate( usr.getFechaNac() ) %>" readonly
 									aria-label="First name" class="form-control">
 							</div>
 						</div>

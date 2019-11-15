@@ -47,7 +47,7 @@
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
-	<% ArrayList<String> vids = (ArrayList<String>) request.getAttribute("videos"); %>
+	<%String[] vids = (String[]) request.getAttribute("videos"); %>
 	<form action="DatosVideo" method="post" name="ModificarDatosVideo" id="modificarDatosVideo">
 		<div class="container">
 <!-- 			<div class="body row"> -->
@@ -130,7 +130,7 @@
 					aria-describedby="emailHelp" value="<%=descripcion%>">
 			</div>
 		
-			<% ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias"); %>
+			<% String[] categorias = (String[]) request.getAttribute("categorias"); %>
 			<div class="form-group row">
 				<h3 class="col-xs-4 col-sm-4">Categoria</h3>
 				<select class="custom-select col-xs-8 col-sm-8 col-md-8" id="categoria" name="categoria" >

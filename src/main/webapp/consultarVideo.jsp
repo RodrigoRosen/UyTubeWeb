@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.ArrayList"%> 
 <%@ page import="java.util.Iterator"%> 
-<%@ page import="java.text.DateFormat"%> 
-<%@ page import="java.text.SimpleDateFormat"%> 
+<%@page import="WS.WebClient"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.Map.Entry"%>
@@ -29,8 +28,7 @@
 			g = (Integer)request.getAttribute("gustar");			
 		}
 		if( (!v.getPrivado() )||(propio) ){ //el video es publico o es del usuario logueado
-			DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy"); 
-			fecha = dateFormat.format(v.getFechaPub());
+			fecha = WebClient.getDate(v.getFechaPub());
 			duracion = v.getDuracion().toString(); 
 			likes = (v.getValoracionesPositivas()).length+" me gusta,\t"+(v.getValoracionesNegativas()).length+" no me gusta";
 		}

@@ -1,7 +1,10 @@
 package WS;
 
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -225,6 +228,10 @@ public class WebClient {
 				return retorno;
 			}else {return null;}
 		}else {return null;}
+	}
+	
+	public static String getDate(Calendar c) {
+		return new SimpleDateFormat("dd/mm/yyyy").format(c.getTime());
 	}
 	
 }

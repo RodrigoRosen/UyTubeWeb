@@ -57,9 +57,9 @@ public class AgregarVideoLista extends HttpServlet {
 		nombreVideo = textVideo;		
 		String nombreLista = (String) request.getParameter("nombreLista");
 		if (username != null) {
-			String duenioVideo = ws.findDuenioVideo(Integer.parseInt(idVideo));	
+			String duenioVideo = ws.findDuenioVideo(Integer.parseInt(idVideo));
 			ws.seleccionarUsuario(duenioVideo);
-			ws.seleccionarUsuario(duenioVideo);
+			//ws.seleccionarUsuario(duenioVideo);
 			ws.seleccionarVideo(nombreVideo);
 			ws.seleccionarUsuario(username);
 			DtLista lst = ws.seleccionarLista(nombreLista);

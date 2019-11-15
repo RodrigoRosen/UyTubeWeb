@@ -187,8 +187,8 @@
 						</div>
 
 						<%
-							ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
-							if (videos != null && videos.size() != 0) {
+							DtVideo[] videos = (DtVideo[]) request.getAttribute("videos");
+							if (videos != null && videos.length > 0) {
 						%>
 						<div class="container">
 							<ul class="list-group px-md-5">

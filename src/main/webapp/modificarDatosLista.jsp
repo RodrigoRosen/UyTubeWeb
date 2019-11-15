@@ -130,7 +130,7 @@
 				</select>
 			</div>
 			<%
-				ArrayList<String> categorias = (ArrayList<String>) request.getAttribute("categorias");
+				String[] categorias = (String[]) request.getAttribute("categorias");
 			%>
 			<div class="form-group row">
 				<h6 class="col-xs-2 col-sm-2">Categoria</h6>

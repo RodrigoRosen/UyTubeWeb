@@ -23,151 +23,134 @@ public class WebClient {
 	}
 	
 	public static Map<String, String> stringString(Object[] o){
+		Map<String, String> retorno = new HashMap<String, String>();
 		if(o != null) {
-			Map<String, String> retorno = new HashMap<String, String>();
 			for(int i = 0 ; i < (o.length)-1; i++) {
 				retorno.put((String)o[i], (String)o[++i]);
 			}
-			return retorno;
-		}else {return null;}		
+		}
+		return retorno;	
 	}
 	public static HashMap<Integer, String> integerString(Object[] o){
+		HashMap<Integer, String> retorno = new HashMap<Integer, String>();
 		if(o != null) {
-			HashMap<Integer, String> retorno = new HashMap<Integer, String>();
 			for(int i = 0 ; i < (o.length)-1; i++) {
 				retorno.put((Integer)o[i], (String)o[++i]);
 			}
-			return retorno;
-		}else {return null;}		
+		}
+		return retorno;	
 	}
 	
 	public static List<DtLista> buscarListasPublicas(String s) {
+		List<DtLista> lst = new ArrayList<DtLista>();
 		start();
 		if(ws != null) {
 			try {
 				DtLista[] lp = ws.buscarListasPublicas(s);
 				if(lp != null) {
-					List<DtLista> lst = new ArrayList<DtLista>();
 					for(DtLista l: lp) {
 						lst.add(l);
 					}
-					return lst;
-				}else {return null;}
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}
+				}
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return lst;
 	}	
 	public static Map<String, String> videosXCatPublicos(String s){
+		Map<String, String> retorno = new HashMap<String, String>();
 		start();
 		if(ws != null) {
 			try {
 				Object[] o = ws.videosXCatPublicos(s);
-				return stringString(o);
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}	
+				retorno = stringString(o);
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;		
 	}
 	public static Map<String, String> listasXCatPublicas(String s){
+		Map<String, String> retorno = new HashMap<String, String>();
 		start();
 		if(ws != null) {
 			try {
 				Object[] o = ws.listasXCatPublicas(s);
-				return stringString(o);
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}	
+				retorno = stringString(o);
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;	
 	}
 	public static HashMap<Integer, String> listarVideosPrivados(String s){
+		HashMap<Integer, String> retorno = new HashMap<Integer, String>();
 		start();
 		if(ws != null) {
 			try {
 				Object[] o = ws.listarVideosPrivados(s);
-				return integerString(o);
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}	
+				retorno = integerString(o);
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;
 	}
 	public static Map<DtUsuario, DtCanal> listarDatosUsuario(String s){
+		Map<DtUsuario, DtCanal> retorno = new HashMap<DtUsuario, DtCanal>();
 		start();
 		if(ws != null) {
 			try {
 				Object[] o = ws.listarDatosUsuario(s);
 				if(o != null) {
-					Map<DtUsuario, DtCanal> retorno = new HashMap<DtUsuario, DtCanal>();
 					for(int i = 0 ; i < (o.length)-1; i++) {
 						retorno.put((DtUsuario)o[i], (DtCanal)o[++i]);
 					}
-					return retorno;
-				}else {return null;}
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}	
+				}
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;
 	}
 	public static Map<String, String> listarCanalesPublicos(){
+		Map<String, String> retorno = new HashMap<String, String>();
 		start();
 		if(ws != null) {
 			try {
 				Object[] o = ws.listarCanalesPublicos();
-				return stringString(o);
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}		
+				retorno = stringString(o);
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;	
 	}
 	public static HashMap<Integer, String> listarVideosPublicos(){
+		HashMap<Integer, String> retorno = new HashMap<Integer, String>();
 		start();
 		if(ws != null) {
 			try {
 				Object[] o = ws.listarVideosPublicos();
-				return integerString(o);
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {
-			return null;
-		}		
+				retorno = integerString(o);
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;
 	}
 	public static HashMap<Integer, String> listarListasPublicas(){
+		HashMap<Integer, String> retorno = new HashMap<Integer, String>();
 		start();
 		if(ws != null) {
 			try {
 				Object[] o = ws.listarListasPublicas();
-				return integerString(o);
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}		
+				retorno = integerString(o);
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;
 	}
 	public static ArrayList<String> listarCategorias(){
+		ArrayList<String> retorno = new ArrayList<String>();
 		start();
 		if(ws != null) {
 			try {
 				String[] o = ws.listarCategorias();
 				if(o != null) {
-					ArrayList<String> retorno = new ArrayList<String>();
 					for(String s: o) {
 						retorno.add(s);
 					}
-					return retorno;
-				}else {return null;}
-			}catch (RemoteException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}else {return null;}		
+				}
+			}catch (RemoteException e) { e.printStackTrace();}
+		}
+		return retorno;	
 	}
 	
 	public static DtUsuario getSeguido(DtUsuario usr,String nick) {
@@ -182,52 +165,54 @@ public class WebClient {
 		}else {return null;}
 	}
 	
-	public static Map<String, DtUsuario> stringUsuario(Object[] o){
-		if(o != null) {
-			Map<String, DtUsuario> retorno = new HashMap<String, DtUsuario>();
-			for(int i = 0 ; i < (o.length)-1; i++) {
-				retorno.put((String)o[i], (DtUsuario)o[++i]);
-			}
-			return retorno;
-		}else {return null;}
-	}	
 	public static Map<String, DtUsuario> getSeguidores(DtUsuario usr){
+		Map<String, DtUsuario> retorno = new HashMap<String, DtUsuario>();
 		if(usr != null) {
-			return stringUsuario(usr.getSeguidores());
-		}else {return null;}
+			DtUsuarioSeguidoresEntry[] seguidores = usr.getSeguidores();
+			if(seguidores != null && seguidores.length > 0) {
+				for(DtUsuarioSeguidoresEntry o: seguidores) {
+					retorno.put(o.getKey(), o.getValue());
+				}
+			}
+		}
+		return retorno;
 	}
 	public static Map<String, DtUsuario> getSeguidos(DtUsuario usr){
+		Map<String, DtUsuario> retorno = new HashMap<String, DtUsuario>();
 		if(usr != null) {
-			return stringUsuario(usr.getSeguidos());
-		}else {return null;}
+			DtUsuarioSeguidosEntry[] seguidores = usr.getSeguidos();
+			if(seguidores != null && seguidores.length > 0) {
+				for(DtUsuarioSeguidosEntry o: seguidores) {
+					retorno.put(o.getKey(), o.getValue());
+				}
+			}
+		}
+		return retorno;
 	}
 	
 	public static Map<Integer, DtVideo> getListaVideos(DtCanal can){
+		Map<Integer, DtVideo> retorno = new HashMap<Integer, DtVideo>();
 		if(can != null) {
 			DtCanalListaVideosEntry[] o = can.getListaVideos();
 			if(o != null) {
-				Map<Integer, DtVideo> retorno = new HashMap<Integer, DtVideo>();
-				for(int i = 0 ; i < (o.length)-1; i++) {
-					System.out.println("#######################################################################################"+i+" - "+o.length);
+				for(int i = 0 ; i < (o.length); i++) {
 					retorno.put(o[i].getKey(), o[++i].getValue()); 
 				}
-				return retorno;
-			}else {return null;}
-		}else {return null;}
+			}
+		}
+		return retorno;
 	}
 	public static Map<Integer, DtLista> getListasReproduccion(DtCanal can){
+		Map<Integer, DtLista> retorno = new HashMap<Integer, DtLista>();
 		if(can != null) {
 			DtCanalListasReproduccionEntry[] o = can.getListasReproduccion();
 			if(o != null) {
-				Map<Integer, DtLista> retorno = new HashMap<Integer, DtLista>();
-				System.out.println("#######################################################################################"+" - "+o.length);
-				for(int i = 0 ; i < (o.length)-1; i++) {
-					System.out.println("#######################################################################################"+i+" - "+o.length);
+				for(int i = 0 ; i < (o.length); i++) {
 					retorno.put(o[i].getKey(), o[++i].getValue()); 
 				}
-				return retorno;
-			}else {return null;}
-		}else {return null;}
+			}
+		}
+		return retorno;
 	}
 	
 	public static String getDate(Calendar c) {

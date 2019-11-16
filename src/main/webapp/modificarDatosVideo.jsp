@@ -94,7 +94,7 @@
 	<%if(url != null){ %>
 			<div class="form-group" style="text-align:center">
 					<iframe class="col-xs-12" width="560" height="315"
-						src="<%=url%>" frameborder="0"
+						src="https://www.youtube.com/embed/<%= url %>" frameborder="0"
 						allowfullscreen></iframe>
 			</div>
 	<%}else{%>

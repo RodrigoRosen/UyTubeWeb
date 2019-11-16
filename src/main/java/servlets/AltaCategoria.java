@@ -39,7 +39,7 @@ public class AltaCategoria extends HttpServlet {
 		ws.altaCategoria(nombre);
 		request.setAttribute("mensaje", "Se ha ingresado correctamente la categoria " + nombre);
 		RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-		doGet(request, response);
+		rd.forward(request, response);
 	}
 
 }

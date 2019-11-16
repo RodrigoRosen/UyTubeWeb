@@ -12,6 +12,7 @@ import javax.xml.rpc.ServiceException;
 import WS.DtLista;
 import WS.DtUsuario;
 import WS.DtVideo;
+import WS.WebClient;
 import WS.WebServices;
 import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
@@ -57,7 +58,7 @@ public class QuitarVideoLista extends HttpServlet {
 		String nombreLista = (String) request.getParameter("listaSelected");
 		if (username != null && nombreLista != null) {	
 			ws.seleccionarUsuario(username);
-			DtUsuario user = new DtUsuario(username, null, null, null, null, null, nombreLista, null, null);
+			DtUsuario user = WebClient.newUsuario(username, nombreLista);
 			ws.listarListasParticulares(user);
 			DtLista lst = new DtLista(0,nombreLista,false,false,null);
 			ws.videosEnLista(lst);

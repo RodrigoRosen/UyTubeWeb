@@ -195,8 +195,8 @@ public class WebClient {
 		if(can != null) {
 			DtCanalListaVideosEntry[] o = can.getListaVideos();
 			if(o != null) {
-				for(int i = 0 ; i < (o.length); i++) {
-					retorno.put(o[i].getKey(), o[++i].getValue()); 
+				for(int i = 0 ; i < (o.length); i++) {					
+					retorno.put(o[i].getKey(), o[i].getValue()); 
 				}
 			}
 		}
@@ -219,4 +219,7 @@ public class WebClient {
 		return new SimpleDateFormat("dd/mm/yyyy").format(c.getTime());
 	}
 	
+	public static DtUsuario newUsuario(String nick, String img) {
+		return new DtUsuario(nick, null, null, null, null, null, img, new DtUsuarioSeguidoresEntry[0], new DtUsuarioSeguidosEntry[0]);
+	}
 }

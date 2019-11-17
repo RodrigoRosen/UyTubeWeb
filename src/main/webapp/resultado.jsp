@@ -7,6 +7,8 @@
 <%@page import="WS.DtUsuario"%>
 <%@page import="WS.DtLista"%>
 <%@page import="WS.DtCanal"%>
+<%@page import="WS.DtCanalListaVideosEntry"%>
+<%@page import="WS.DtCanalListasReproduccionEntry"%>
 <html>
 
 
@@ -99,7 +101,7 @@
 					  </thead>
 					  <tbody>
 						<%
-							ArrayList<DtVideo> videos = (ArrayList<DtVideo>) request.getAttribute("videos");
+							DtVideo[] videos = (DtVideo[]) request.getAttribute("videos");
 							String url;
 							String img;
 							String nombrevid;
@@ -107,14 +109,15 @@
 							Integer id;
 							String agregado;
 							Integer num = 0;
-							for(DtVideo dtvideo : videos){
-								url = "https://www.youtube.com/embed/"+dtvideo.getUrl();
-								img = "https://i.ytimg.com/vi/" + dtvideo.getUrl() +"/default.jpg";
-								nombrevid = dtvideo.getNombre();
-								descripcionvid = dtvideo.getDescripcion();
+							Integer largo = videos.length;
+							for(Integer i = 0; i < largo;i++){
+								url = "https://www.youtube.com/embed/"+videos[i].getUrl();
+								img = "https://i.ytimg.com/vi/" + videos[i].getUrl() +"/default.jpg";
+								nombrevid = videos[i].getNombre();
+								descripcionvid = videos[i].getDescripcion();
 								System.out.println(img +" = "+ url);
-								id =dtvideo.getId();
-								agregado = dtvideo.getFechaPub().toString();
+								id =videos[i].getId();
+								agregado = videos[i].getFechaPub().toString();
 								num+=1;
 						%>
 					    <tr>
@@ -153,15 +156,15 @@
 						  </thead>
 						  <tbody>	
 						<%  
-						ArrayList<DtLista> listas = (ArrayList<DtLista>) request.getAttribute("listas");
-						String nombrelist;
+						DtCanalListasReproduccionEntry[] listas = (DtCanalListasReproduccionEntry[]) request.getAttribute("listas");						String nombrelist;
 						String categorialist;
 						Integer id;
 						Integer num = 0;
-						for(DtLista dtlista : listas){
-							nombrelist = dtlista.getNombre();
-							categorialist = dtlista.getCategoria();
-							id = dtlista.getId();
+						Integer largo = listas.length;
+						for(Integer i = 0; i < largo;i++){
+							nombrelist = listas[i].getValue().getNombre();
+							categorialist = listas[i].getValue().getCategoria();
+							id = listas[i].getValue().getId();
 							num+=1;
 						%>
 						<tr>
@@ -195,15 +198,16 @@
 						  </thead>
 						   <tbody>
 						<%
-						ArrayList<DtCanal> canales = (ArrayList<DtCanal>) request.getAttribute("canales");
+						DtCanal[] canales = (DtCanal[]) request.getAttribute("canales");
 						String nomCanal;
 						String descCanal;
 						String propietario;
 						Integer num = 0;
-						for(DtCanal dtcanal : canales){
-							nomCanal = dtcanal.getNombre();
-							descCanal = dtcanal.getDescripcion();
-							propietario = dtcanal.getNick();
+						Integer largo = canales.length;
+						for(Integer i = 0; i < largo; i++){
+							nomCanal = canales[i].getNombre();
+							descCanal = canales[i].getDescripcion();
+							propietario = canales[i].getNick();
 							num+=1;
 						%>
 						<tr>

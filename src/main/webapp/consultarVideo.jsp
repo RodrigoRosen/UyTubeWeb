@@ -19,7 +19,8 @@
 	String duracion="Duracion";
 	String likes = " 0 me gusta,\t0 no me gusta";
 	boolean propio=false;
-	int g= 0; // no hay valoraciones del usuario para el video	
+	int g= 0; // no hay valoraciones del usuario para el video
+	int vp=0, vn=0;	
 	
 	if(request.getAttribute("video") != null){	
 		v = (DtVideo)request.getAttribute("video");
@@ -30,7 +31,13 @@
 		if( (!v.getPrivado() )||(propio) ){ //el video es publico o es del usuario logueado
 			fecha = WebClient.getDate(v.getFechaPub());
 			duracion = v.getDuracion().toString(); 
-			likes = (v.getValoracionesPositivas()).length+" me gusta,\t"+(v.getValoracionesNegativas()).length+" no me gusta";
+			if(v.getValoracionesPositivas() != null){
+				vp = (v.getValoracionesPositivas()).length;
+			}
+			if(v.getValoracionesNegativas() != null){
+				vn = (v.getValoracionesNegativas()).length;
+			}
+			likes = vp +" me gusta,\t"+ vn +" no me gusta";
 		}
 	}else{		
 		v = new DtVideo(-1,"Nombre",true,null,"Descripcion",null,"categoria",null,"/url",new DtComentario[3],null,null);
@@ -144,8 +151,10 @@
 							<label class="label">Le Gusta:</label>
 							<select name="like" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="like">
 								<option  disabled="disabled" selected="selected">--Usuarios--</option>
-								<%for(String s: v.getValoracionesPositivas()){%>
-									<option value="<%=s%>"> <%=s%> </option>
+								<%if(vp > 0){%>
+									<%for(String s: v.getValoracionesPositivas()){%>
+										<option value="<%=s%>"> <%=s%> </option>
+									<%}%>
 								<%}%>												
 							</select>
 						</div>		
@@ -155,9 +164,11 @@
 							<label class="label">No le Gusta:</label>
 							<select name="dislike" class="form-control col-xs-12 col-sm-8 col-md-8 input" id="dislike">
 								<option  disabled="disabled" selected="selected">--Usuarios--</option>
-								<%for(String s: v.getValoracionesNegativas()){%>
-									<option value="<%=s%>"><%=s%></option>
-								<%}%>												
+								<%if(vn > 0){%>
+									<%for(String s: v.getValoracionesNegativas()){%>
+										<option value="<%=s%>"><%=s%></option>
+									<%}%>
+								<%}%>													
 							</select>
 						</div>		
 					</div>
@@ -204,21 +215,23 @@
 				<div class="chatHistoryContainer">
 			        <ul class="formComments">
 						<li class="commentLi commentstep-1" data-commentid="4">
-							<%for(DtComentario c: v.getCom()){%>
-								<table class="form-comments-table" style="margin-left:<%=c.getNivel()*40%>px;">
-									<tr>
-										<td><div class="comment-timestamp"><%=c.getFecha()%></div></td>
-										<td><div class="comment-user"><%=c.getNick()%></div></td>
-										<td><div id="comment-4" data-commentid="4" class="comment comment-step1"><%=c.getTexto()%></div></td>
-										<%if(login != null) {%>
-				                            <td>
-				                            	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#comentarVideo" onclick="comentar(<%=c.getId()%>)">
-				                                		<i class="fas fa-reply"></i> Responder
-			                                	</button>
-											</td>
-										<%}%>
-									</tr>
-								</table>
+							<%if(v.getCom() != null){ %>
+								<%for(DtComentario c: v.getCom()){%>
+									<table class="form-comments-table" style="margin-left:<%=c.getNivel()*40%>px;">
+										<tr>
+											<td><div class="comment-timestamp"><%=c.getFecha()%></div></td>
+											<td><div class="comment-user"><%=c.getNick()%></div></td>
+											<td><div id="comment-4" data-commentid="4" class="comment comment-step1"><%=c.getTexto()%></div></td>
+											<%if(login != null) {%>
+					                            <td>
+					                            	<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#comentarVideo" onclick="comentar(<%=c.getId()%>)">
+					                                		<i class="fas fa-reply"></i> Responder
+				                                	</button>
+												</td>
+											<%}%>
+										</tr>
+									</table>
+								<%}%>
 							<%}%>
 						</li>
 			        </ul>

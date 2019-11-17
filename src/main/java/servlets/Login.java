@@ -44,28 +44,21 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-
         String usu = request.getParameter("nickLogin");
         String pwd = request.getParameter("passLogin");
         WebServicesService wsLocator = new WebServicesServiceLocator();
 		WebServices ws = null;
 		try {
 			ws = wsLocator.getWebServicesPort();
-		} catch (ServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-        
+		}catch (ServiceException e) { e.printStackTrace();}	
         if (ws.login(usu, pwd)) {
         	session.setAttribute("nickname", usu);
-        	session.setAttribute("login", "Iniciaste sesión con éxito!");
+        	session.setAttribute("login", "Iniciaste sesiï¿½n con ï¿½xito!");
         }
         else {
-        	session.setAttribute("login", "Usuario y/o contraseña inválida, por favor intente de nuevo.");        	
-        }
-      
+        	session.setAttribute("login", "Usuario y/o contraseï¿½a invï¿½lida, por favor intente de nuevo.");        	
+        }      
         response.sendRedirect(request.getContextPath() + "/");
 	}
 

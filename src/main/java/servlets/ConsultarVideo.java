@@ -58,17 +58,23 @@ public class ConsultarVideo extends HttpServlet {
 						}
 						ws.finCasoUso();
 						if(!v.getPrivado()){
-							for(String s: v.getValoracionesPositivas()){
-								if(s.equals(user)){
-									gustar = 1; //el user le dio like al video
+							String[] val = v.getValoracionesPositivas();
+							if(val != null) {
+								for(String s: val){
+									if(s.equals(user)){
+										gustar = 1; //el user le dio like al video
+									}
 								}
 							}
 							if(gustar == 0){
-								for(String s: v.getValoracionesNegativas()){
-									if(s.equals(user)){
-										gustar = -1; //el user le dio dislike al video
+								val = v.getValoracionesNegativas();
+								if(val != null) {
+									for(String s: val){
+										if(s.equals(user)){
+											gustar = -1; //el user le dio dislike al video
+										}
 									}
-								}						
+								}
 							}
 						}
 						request.setAttribute("gustar", gustar);

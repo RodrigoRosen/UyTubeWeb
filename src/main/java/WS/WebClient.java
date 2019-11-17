@@ -208,7 +208,7 @@ public class WebClient {
 			DtCanalListasReproduccionEntry[] o = can.getListasReproduccion();
 			if(o != null) {
 				for(int i = 0 ; i < (o.length); i++) {
-					retorno.put(o[i].getKey(), o[++i].getValue()); 
+					retorno.put(o[i].getKey(), o[i].getValue()); 
 				}
 			}
 		}

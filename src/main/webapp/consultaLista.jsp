@@ -202,7 +202,11 @@
 								%>
 								<li
 									class="list-group-item d-flex justify-content-between align-items-center">
-									<img class="hover" src="<%=img%>"> <a href="ConsultarVideo?id=<%=vid.getId()%>"><%=vid.getNombre()%></a>
+									<img class="hover" src="<%=img%>"> <a class="mx-2" href="ConsultarVideo?id=<%=vid.getId()%>"><%=vid.getNombre()%></a>
+									<% if (datosLista.getNombre().equals("Historial")) { %>									
+										<span class="mx-2"><%=vid.getCantidadConsultas()%></span>
+										<span class="mx-2"><%=vid.getFechaUltimaConsulta().getTime()%></span>
+									<%}%>		
 									<button type="button" class="btn btn-danger"
 										onclick="quitarVideo('<%=vid.getNombre()%>')">
 										<i class="fas fa-minus-circle"></i>
@@ -212,11 +216,16 @@
 									} else if (!vid.getPrivado()) {
 								%>
 								<li
-									class="list-group-item d-flex justify-content-between align-items-center">
-									<img class="hover" src="<%=img%>"><a href="ConsultarVideo?id=<%=vid.getId()%>"> <%=vid.getNombre()%></a> 
+									class="list-group-item d-flex justify-content-between align-items-center" style="width:590px">
+									<img class="hover" src="<%=img%>"><a class="mx-2" href="ConsultarVideo?id=<%=vid.getId()%>"> <%=vid.getNombre()%></a> 
+									
 									<%
- 	if (duenio != null && duenio.equals("Propietario")) {
- %>
+ 										if (duenio != null && duenio.equals("Propietario")) {
+ 									%>
+ 									<% if (datosLista.getNombre().equals("Historial")) { %>
+ 										<span  class="mx-2">Visualizaciones <%=vid.getCantidadConsultas()%></span>
+										<span  class="mx-2"><%=vid.getFechaUltimaConsulta().getTime()%></span>
+									<%}%>	
 									<button type="button" class="btn btn-danger"
 										onclick="quitarVideo('<%=vid.getNombre()%>')">
 										<%

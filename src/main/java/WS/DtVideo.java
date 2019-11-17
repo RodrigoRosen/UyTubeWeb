@@ -24,6 +24,10 @@ public class DtVideo  implements java.io.Serializable {
 
     private java.util.Calendar fechaPub;
 
+    private java.util.Calendar fechaUltimaConsulta;
+
+    private java.lang.Integer cantidadConsultas;
+
     private java.lang.String url;
 
     private WS.DtComentario[] com;
@@ -44,6 +48,8 @@ public class DtVideo  implements java.io.Serializable {
            java.lang.Integer duracion,
            java.lang.String categoria,
            java.util.Calendar fechaPub,
+           java.util.Calendar fechaUltimaConsulta,
+           java.lang.Integer cantidadConsultas,
            java.lang.String url,
            WS.DtComentario[] com,
            java.lang.String[] valoracionesPositivas,
@@ -56,6 +62,8 @@ public class DtVideo  implements java.io.Serializable {
            this.duracion = duracion;
            this.categoria = categoria;
            this.fechaPub = fechaPub;
+           this.fechaUltimaConsulta = fechaUltimaConsulta;
+           this.cantidadConsultas = cantidadConsultas;
            this.url = url;
            this.com = com;
            this.valoracionesPositivas = valoracionesPositivas;
@@ -224,6 +232,46 @@ public class DtVideo  implements java.io.Serializable {
 
 
     /**
+     * Gets the fechaUltimaConsulta value for this DtVideo.
+     * 
+     * @return fechaUltimaConsulta
+     */
+    public java.util.Calendar getFechaUltimaConsulta() {
+        return fechaUltimaConsulta;
+    }
+
+
+    /**
+     * Sets the fechaUltimaConsulta value for this DtVideo.
+     * 
+     * @param fechaUltimaConsulta
+     */
+    public void setFechaUltimaConsulta(java.util.Calendar fechaUltimaConsulta) {
+        this.fechaUltimaConsulta = fechaUltimaConsulta;
+    }
+
+
+    /**
+     * Gets the cantidadConsultas value for this DtVideo.
+     * 
+     * @return cantidadConsultas
+     */
+    public java.lang.Integer getCantidadConsultas() {
+        return cantidadConsultas;
+    }
+
+
+    /**
+     * Sets the cantidadConsultas value for this DtVideo.
+     * 
+     * @param cantidadConsultas
+     */
+    public void setCantidadConsultas(java.lang.Integer cantidadConsultas) {
+        this.cantidadConsultas = cantidadConsultas;
+    }
+
+
+    /**
      * Gets the url value for this DtVideo.
      * 
      * @return url
@@ -360,6 +408,12 @@ public class DtVideo  implements java.io.Serializable {
             ((this.fechaPub==null && other.getFechaPub()==null) || 
              (this.fechaPub!=null &&
               this.fechaPub.equals(other.getFechaPub()))) &&
+            ((this.fechaUltimaConsulta==null && other.getFechaUltimaConsulta()==null) || 
+             (this.fechaUltimaConsulta!=null &&
+              this.fechaUltimaConsulta.equals(other.getFechaUltimaConsulta()))) &&
+            ((this.cantidadConsultas==null && other.getCantidadConsultas()==null) || 
+             (this.cantidadConsultas!=null &&
+              this.cantidadConsultas.equals(other.getCantidadConsultas()))) &&
             ((this.url==null && other.getUrl()==null) || 
              (this.url!=null &&
               this.url.equals(other.getUrl()))) &&
@@ -404,6 +458,12 @@ public class DtVideo  implements java.io.Serializable {
         }
         if (getFechaPub() != null) {
             _hashCode += getFechaPub().hashCode();
+        }
+        if (getFechaUltimaConsulta() != null) {
+            _hashCode += getFechaUltimaConsulta().hashCode();
+        }
+        if (getCantidadConsultas() != null) {
+            _hashCode += getCantidadConsultas().hashCode();
         }
         if (getUrl() != null) {
             _hashCode += getUrl().hashCode();
@@ -503,6 +563,20 @@ public class DtVideo  implements java.io.Serializable {
         elemField.setFieldName("fechaPub");
         elemField.setXmlName(new javax.xml.namespace.QName("", "fechaPub"));
         elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("fechaUltimaConsulta");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "fechaUltimaConsulta"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "dateTime"));
+        elemField.setMinOccurs(0);
+        elemField.setNillable(false);
+        typeDesc.addFieldDesc(elemField);
+        elemField = new org.apache.axis.description.ElementDesc();
+        elemField.setFieldName("cantidadConsultas");
+        elemField.setXmlName(new javax.xml.namespace.QName("", "cantidadConsultas"));
+        elemField.setXmlType(new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "int"));
         elemField.setMinOccurs(0);
         elemField.setNillable(false);
         typeDesc.addFieldDesc(elemField);

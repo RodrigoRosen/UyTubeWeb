@@ -62,7 +62,7 @@ public class QuitarVideoLista extends HttpServlet {
 			ws.listarListasParticulares(user);
 			DtLista lst = new DtLista(0,nombreLista,false,false,null);
 			ws.videosEnLista(lst);
-			DtVideo vid = new DtVideo(0,nombreVideo,false,null,null,0,null,null,null, null, null, null);
+			DtVideo vid = new DtVideo(0,nombreVideo,false,null,null,0,null,null,null, null, null, null, null, null);
 			ws.quitarVideo(vid);
 			ws.finCasoUso();
 		}

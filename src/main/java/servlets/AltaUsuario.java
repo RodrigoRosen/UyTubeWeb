@@ -3,6 +3,7 @@ package servlets;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.rpc.ServiceException;
 
 import WS.DtCanal;
+import WS.DtCanalListaVideosEntry;
+import WS.DtCanalListasReproduccionEntry;
 import WS.WebServices;
 import WS.WebServicesService;
 import WS.WebServicesServiceLocator;
@@ -65,8 +68,9 @@ public class AltaUsuario extends HttpServlet {
 		if(request.getParameter("privado") == "Si")
 			privado = true;
 		//Se cambio el constructor, puede que genere error..
-		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado, null, null);
-		System.out.println(canal.getNombre());
+		DtCanalListaVideosEntry[] videos = new DtCanalListaVideosEntry[2];
+		DtCanalListasReproduccionEntry[]  listas = new DtCanalListasReproduccionEntry[2];
+		DtCanal canal = new DtCanal(nombreCanal, descripcion, nickname, privado, listas, videos);
 		System.out.println(canal.getDescripcion());
 		System.out.println(canal.getNick());
 

@@ -14,6 +14,8 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">		
+
 <title>UyTube</title>
 
 <!-- JQuery -->
@@ -156,15 +158,16 @@
 						  </thead>
 						  <tbody>	
 						<%  
-						DtCanalListasReproduccionEntry[] listas = (DtCanalListasReproduccionEntry[]) request.getAttribute("listas");						String nombrelist;
+						DtLista[] listas = (DtLista[]) request.getAttribute("listas");
+						String nombrelist;
 						String categorialist;
 						Integer id;
 						Integer num = 0;
 						Integer largo = listas.length;
 						for(Integer i = 0; i < largo;i++){
-							nombrelist = listas[i].getValue().getNombre();
-							categorialist = listas[i].getValue().getCategoria();
-							id = listas[i].getValue().getId();
+							nombrelist = listas[i].getNombre();
+							categorialist = listas[i].getCategoria();
+							id = listas[i].getId();
 							num+=1;
 						%>
 						<tr>

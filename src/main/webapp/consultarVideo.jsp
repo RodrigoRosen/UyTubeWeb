@@ -40,7 +40,23 @@
 			likes = vp +" me gusta,\t"+ vn +" no me gusta";
 		}
 	}else{		
-		v = new DtVideo(-1,"Nombre",true,null,"Descripcion",null,"categoria",null,"/url",new DtComentario[3],null,null);
+		v = new DtVideo(-1,"Nombre",true,null,"Descripcion",null,"categoria",null,null, null,"/url",new DtComentario[0],new String[0],new String[0]);
+		/*
+		  int id,
+           java.lang.String nombre,
+           java.lang.Boolean privado,
+           java.lang.String canal,
+           java.lang.String descripcion,
+           java.lang.Integer duracion,
+           java.lang.String categoria,
+           java.util.Calendar fechaPub,
+           java.util.Calendar fechaUltimaConsulta,
+           java.lang.Integer cantidadConsultas,
+           java.lang.String url,
+           WS.DtComentario[] com,
+           java.lang.String[] valoracionesPositivas,
+           java.lang.String[] valoracionesNegativas)
+		*/
 		//v.setCom(new ArrayList<DtComentario>());
 	}
 %>
@@ -219,7 +235,7 @@
 								<%for(DtComentario c: v.getCom()){%>
 									<table class="form-comments-table" style="margin-left:<%=c.getNivel()*40%>px;">
 										<tr>
-											<td><div class="comment-timestamp"><%=c.getFecha()%></div></td>
+											<td><div class="comment-timestamp"><%= WebClient.getDate(c.getFecha()) %></div></td>
 											<td><div class="comment-user"><%=c.getNick()%></div></td>
 											<td><div id="comment-4" data-commentid="4" class="comment comment-step1"><%=c.getTexto()%></div></td>
 											<%if(login != null) {%>

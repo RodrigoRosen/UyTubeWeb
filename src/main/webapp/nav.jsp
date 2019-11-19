@@ -148,6 +148,7 @@
 		%>
 		<div class="btn-group">			
 			<a href="ConsultaUsuario?nickname=<%=username%>">Mi perfil</a>
+			<a href="BajaUsuario?nickname=<%=username%>">Darse de baja</a>
 			<form action="LogOut" method="post" style="margin-left:10px">
 				<button type="submit" id="btnModalLogOut" class="btn btn-primary">Salir</button>
 			</form>

@@ -44,8 +44,13 @@ public class BajaUsuario extends HttpServlet {
 		}HttpSession session = request.getSession();
 		String user = request.getParameter("nickname");
 		//ACA va el bajaUsuario del WS
-		if(ws.bajaUsuario(user))
-		System.out.println(user+"%%%%%%%%%%%%%%%%%%%%");
+		try {
+			if(ws.bajaUsuario(user))
+				System.out.println(user+"%%%%%%%%%%%%%%%%%%%%");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		request.getSession().invalidate();
 		RequestDispatcher view = request.getRequestDispatcher("index.jsp");
 		view.forward(request, response);

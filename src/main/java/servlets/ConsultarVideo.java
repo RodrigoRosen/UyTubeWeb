@@ -54,9 +54,14 @@ public class ConsultarVideo extends HttpServlet {
 						nick = user;
 						this.agregarConsultaHistorial(request, response);
 						ws.seleccionarUsuario(user);
-						if (ws.seleccionarVideo(v.getNombre()) != null) {
-							propio = true;
+						try {
+							if (ws.seleccionarVideo(v.getNombre()) != null) 
+								propio = true;
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
+						
+						
 						if (v.getPrivado() && !propio) {
 							request.setAttribute("mensaje", "ERROR al consultar el video.");
 							request.getRequestDispatcher("Index").forward(request, response);
